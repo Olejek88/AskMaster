@@ -37,6 +37,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
         new UserDetailPresenter(
                 fragment,
+                getApplicationContext(),
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
                 getIntent().getStringExtra(USER_ID));
 

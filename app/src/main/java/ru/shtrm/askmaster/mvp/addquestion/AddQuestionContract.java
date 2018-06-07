@@ -18,8 +18,6 @@ public interface AddQuestionContract {
 
         void showQuestionsList();
 
-        void showNetworkError();
-
     }
 
     interface Presenter extends BasePresenter {

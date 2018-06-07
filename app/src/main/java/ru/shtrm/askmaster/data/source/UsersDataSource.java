@@ -13,8 +13,12 @@ public interface UsersDataSource {
 
     Observable<User> getUser(@NonNull String userId);
 
-    void initData();
-
     Observable<List<User>> searchUsers(@NonNull String keyWords);
+
+    void saveUser(@NonNull User user);
+
+    void deleteUser(@NonNull String id);
+
+    boolean isUserExist(@NonNull String id);
 
 }

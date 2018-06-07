@@ -28,6 +28,7 @@ import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
 import ru.shtrm.askmaster.mvp.addquestion.AddQuestionActivity;
+import ru.shtrm.askmaster.mvp.questiondetails.QuestionDetailsActivity;
 import ru.shtrm.askmaster.mvp.search.SearchActivity;
 
 public class QuestionsFragment extends Fragment

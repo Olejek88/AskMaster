@@ -5,21 +5,12 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Date;
 
+import io.reactivex.disposables.CompositeDisposable;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
-import ru.shtrm.askmaster.data.source.QuestionWithUser;
-import ru.shtrm.askmaster.data.source.UsersDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
-import ru.shtrm.askmaster.retrofit.RetrofitClient;
-import ru.shtrm.askmaster.retrofit.RetrofitService;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
+import ru.shtrm.askmaster.data.source.UsersDataSource;
 
 public class AddQuestionPresenter implements AddQuestionContract.Presenter{
 

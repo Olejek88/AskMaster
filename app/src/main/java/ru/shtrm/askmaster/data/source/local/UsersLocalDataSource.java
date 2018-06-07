@@ -16,7 +16,7 @@ import io.realm.Sort;
 public class UsersLocalDataSource implements UsersDataSource {
 
     @Nullable
-    public static UsersLocalDataSource INSTANCE = null;
+    private static UsersLocalDataSource INSTANCE = null;
 
     // Prevent direct instantiation
     private UsersLocalDataSource() {
@@ -48,22 +48,13 @@ public class UsersLocalDataSource implements UsersDataSource {
     }
 
     @Override
-    public void initData() {
-        Realm rlm = RealmHelper.newRealmInstance();
-        rlm.beginTransaction();
-        rlm.commitTransaction();
-        rlm.close();
-
-    }
-
-    @Override
     public Observable<List<User>> searchUsers(@NonNull String keyWords) {
         Realm rlm = RealmHelper.newRealmInstance();
         List<User> results = rlm.copyFromRealm(
                 rlm.where(User.class)
                         .like("name","*" + keyWords + "*", Case.INSENSITIVE)
                         .or()
-                        .like("tel", "*" + keyWords + "*", Case.INSENSITIVE)
+                        .like("phone", "*" + keyWords + "*", Case.INSENSITIVE)
                         .or()
                         .like("website", "*" + keyWords + "*", Case.INSENSITIVE)
                         .findAllSorted("name", Sort.ASCENDING));
@@ -74,8 +65,44 @@ public class UsersLocalDataSource implements UsersDataSource {
 
     public User getAuthorisedUser() {
         Realm realm = RealmHelper.newRealmInstance();
-        return realm.where(User.class).equalTo("uuid",
+        return realm.where(User.class).equalTo("id",
                 ru.shtrm.gosport.model.AuthorizedUser.getInstance().getUuid()).findFirst();
+    }
+
+    public boolean isUserExist(@NonNull String id) {
+        Realm realm = RealmHelper.newRealmInstance();
+        User user =  realm.where(User.class).equalTo("id", id).findFirst();
+        return user != null;
+    }
+
+    public void deleteUser(@NonNull String id) {
+        Realm realm = RealmHelper.newRealmInstance();
+        final User user =  realm.where(User.class).equalTo("id", id).findFirst();
+        if (user!=null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    user.deleteFromRealm();
+                }
+            });
+        }
+    }
+
+    /**
+     * Save a user to database.
+     * @param user See {@link User}
+     */
+    @Override
+    public void saveUser(@NonNull final User user) {
+        Realm realm = RealmHelper.newRealmInstance();
+        // DO NOT forget begin and commit the transaction.
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(user);
+            }
+        });
+        realm.close();
     }
 
 }

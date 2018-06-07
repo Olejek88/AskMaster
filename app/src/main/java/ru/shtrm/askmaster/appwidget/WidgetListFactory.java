@@ -1,18 +1,16 @@
 package ru.shtrm.askmaster.appwidget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import java.util.List;
 
-import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.data.Question;
-import ru.shtrm.askmaster.mvp.questiondetails.QuestionDetailsActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.Sort;
+import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.Question;
 
 import static ru.shtrm.askmaster.realm.RealmHelper.DATABASE_NAME;
 

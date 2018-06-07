@@ -311,21 +311,6 @@ public class AddQuestionFragment extends Fragment
     }
 
     /**
-     * Show message that the network is in error.
-     */
-    @Override
-    public void showNetworkError() {
-        Snackbar.make(fab, R.string.network_error, Snackbar.LENGTH_SHORT)
-                .setAction(R.string.go_to_settings, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent().setAction(Settings.ACTION_SETTINGS));
-                    }
-                })
-                .show();
-    }
-
-    /**
      * Hide the input method like soft keyboard, etc... when they are active.
      */
     private void hideImm() {

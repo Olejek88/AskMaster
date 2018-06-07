@@ -39,13 +39,22 @@ public class UsersRepository implements UsersDataSource {
     }
 
     @Override
-    public void initData() {
-        localDataSource.initData();
-    }
-
-    @Override
     public Observable<List<User>> searchUsers(@NonNull String keyWords) {
         return localDataSource.searchUsers(keyWords);
     }
 
+    @Override
+    public boolean isUserExist(@NonNull String id) {
+        return localDataSource.isUserExist(id);
+    }
+
+    @Override
+    public void deleteUser(@NonNull String id) {
+        localDataSource.deleteUser(id);
+    }
+
+    @Override
+    public void saveUser(@NonNull User user) {
+        localDataSource.saveUser(user);
+    }
 }
