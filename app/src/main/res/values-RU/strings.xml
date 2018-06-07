@@ -116,28 +116,19 @@
     <!--Settings end-->
 
     <!--About-->
-    <string name="version">Version</string>
-    <string name="rate">Rate</string>
-    <string name="rate_desc">If you like the Espresso app, please do rate it.</string>
-    <string name="licenses">Licenses</string>
-    <string name="thanks">Thanks</string>
-    <string name="thanks_1">FengGo</string>
-    <string name="thanks_1_desc">Package Tracker Project</string>
-    <string name="thanks_1_url">https://github.com/fython/PackageTracker</string>
-    <string name="thanks_2">+Youlun Zhai</string>
-    <string name="thanks_2_desc">Poster designer</string>
-    <string name="thanks_2_url">https://plus.google.com/+YoulunZhai</string>
+    <string name="version">Версия</string>
+    <string name="rate">Оценка</string>
+    <string name="rate_desc">Если Вам нравится приложение - оцените его.</string>
+    <string name="licenses">Лицензия</string>
     <string name="source_code">GitHub Source code</string>
-    <string name="source_code_desc">https://github.com/TonnyL/Espresso</string>
-    <string name="support">Support</string>
-    <string name="send_advices">Send advices</string>
-    <string name="mail_account">mailto:marktonymengyi@gmail.com</string>
-    <string name="mail_topic">Espresso Advices</string>
-    <string name="send_advices_desc">Help me improve this app.</string>
-    <string name="donate">Donate</string>
-    <string name="donate_account">marktonymengyi@gmail.com</string>
-    <string name="donate_desc">Buy me a cup of coffee to keep me awake during my night coding sessions.</string>
-    <string name="donate_msg">Alipay account will be copied to clipboard. Launch Alipay and paste it to finish donating. Thanks for support!</string>
+    <string name="source_code_desc">https://github.com/Olejek88/AskMaster</string>
+    <string name="support">Поддержка</string>
+    <string name="send_advices">Связаться со мной</string>
+    <string name="mail_account">mailto:shtrmvk@gmail.com</string>
+    <string name="mail_topic">AskMaster</string>
+    <string name="send_advices_desc">Помогите мне улучшить приложение.</string>
+    <string name="web_site">Страница проекта в сети</string>
+    <string name="web_site_link">http://askmaster.ru</string>
     <string name="set_end_time_error">Start time can not be same as end time.</string>
     <string name="notification_new_message">\"The package has a new message\"</string>
     <!--About end-->
@@ -153,16 +144,16 @@
     <!--widget end-->
 
     <!--onboarding-->
-    <string name="onboarding_next_button_description">Next</string>
-    <string name="onboarding_finish_button_description">Finish</string>
-    <string name="onboarding_pre_button_description">Pre</string>
-    <string name="onboarding_section_1">Add your packages quickly and easily</string>
-    <string name="onboarding_intro_1">Support 640+ express companies all over the world.</string>
-    <string name="onboarding_section_2">Input numbers by just one touch</string>
-    <string name="onboarding_intro_2">Scan the number and then, they are recognized.</string>
-    <string name="onboarding_section_3">Keep the delivery status updated</string>
-    <string name="onboarding_intro_3">Push notification when the delivery status is refreshed, so you can get the latest information.</string>
-    <string name="onboarding_finish_button_description_wait">Preparing, please wait…</string>
+    <string name="onboarding_next_button_description">Дальше</string>
+    <string name="onboarding_finish_button_description">Закончить</string>
+    <string name="onboarding_pre_button_description">Назад</string>
+    <string name="onboarding_section_1">Добавляйте свои вопросы в любой непонятной ситуации</string>
+    <string name="onboarding_intro_1">Сопровождайте свои проблемы фото с места событий</string>
+    <string name="onboarding_section_2">Мастера своего дела обязательно ответят Вам</string>
+    <string name="onboarding_intro_2">И дадут свои рекомендации и советы</string>
+    <string name="onboarding_section_3">Голосуйте за хорошие советы и повышайте рейтинг</string>
+    <string name="onboarding_intro_3">Получайте уведомления об ответах на свои вопросы</string>
+    <string name="onboarding_finish_button_description_wait">Пожалуйста подождите…</string>
     <!--onboarding end-->
 
     <!--search-->
