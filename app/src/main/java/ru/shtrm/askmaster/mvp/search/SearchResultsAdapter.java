@@ -1,42 +1,26 @@
-/*
- *  Copyright(c) 2017 lizhaotailang
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.shtrm.askmaster.mvp.search;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
-
-/**
- * Created by lizhaotailang on 2017/3/26.
- */
+import ru.shtrm.askmaster.util.MainUtil;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -46,27 +30,25 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @NonNull
     private LayoutInflater inflater;
 
-    private List<Package> packages;
-    private List<Company> companies;
+    private List<Question> questions;
+    private List<User> users;
     private List<ItemWrapper> list;
-
-    private String[] packageStatus;
 
     private OnRecyclerViewItemClickListener listener;
 
-    public SearchResultsAdapter(@NonNull Context context,
-                                @NonNull List<Package> packages,
-                                @NonNull List<Company> companies) {
+    SearchResultsAdapter(@NonNull Context context,
+                         @NonNull List<Question> questions,
+                         @NonNull List<User> users) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.packages = packages;
-        this.companies = companies;
-        packageStatus = context.getResources().getStringArray(R.array.package_status);
+        this.questions = questions;
+        this.users = users;
+        this.list = new ArrayList<>();
         this.list = new ArrayList<>();
         this.list.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (packages.size() > 0) {
-            for (int i = 0; i < packages.size(); i++) {
-                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_PACKAGE);
+        if (questions.size() > 0) {
+            for (int i = 0; i < questions.size(); i++) {
+                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_QUESTION);
                 wrapper.index = i;
                 list.add(wrapper);
             }
@@ -75,9 +57,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         this.list.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (companies.size() > 0) {
-            for (int i = 0; i < companies.size(); i++) {
-                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_COMPANY);
+        if (users.size() > 0) {
+            for (int i = 0; i < users.size(); i++) {
+                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_USER);
                 wrapper.index = i;
                 list.add(wrapper);
             }
@@ -91,19 +73,23 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
             case ItemWrapper.TYPE_EMPTY:
-                viewHolder = new EmptyHolder(inflater.inflate(R.layout.item_search_result_empty, parent, false));
+                viewHolder = new EmptyHolder(inflater.inflate(
+                        R.layout.item_search_result_empty, parent, false));
                 break;
 
             case ItemWrapper.TYPE_CATEGORY:
-                viewHolder = new ResultCategoryHolder(inflater.inflate(R.layout.item_search_result_category, parent, false));
-                break;
-            
-            case ItemWrapper.TYPE_PACKAGE:
-                viewHolder = new PackageHolder(inflater.inflate(R.layout.item_question, parent, false), listener);
+                viewHolder = new ResultCategoryHolder(inflater.inflate(
+                        R.layout.item_search_result_category, parent, false));
                 break;
 
-            case ItemWrapper.TYPE_COMPANY:
-                viewHolder = new CompanyHolder(inflater.inflate(R.layout.item_user, parent, false), listener);
+            case ItemWrapper.TYPE_QUESTION:
+                viewHolder = new QuestionHolder(inflater.inflate(
+                        R.layout.item_question, parent, false), listener);
+                break;
+
+            case ItemWrapper.TYPE_USER:
+                viewHolder = new UserHolder(inflater.inflate(
+                        R.layout.item_user, parent, false), listener);
                 break;
         }
         return viewHolder;
@@ -116,51 +102,38 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             case ItemWrapper.TYPE_EMPTY:
                 EmptyHolder emptyHolder = (EmptyHolder) holder;
                 emptyHolder.textView.setText(
-                        (position == 1 ? packages == null : companies == null) ?
+                        (position == 1 ? questions == null : users == null) ?
                         R.string.item_loading :
                         R.string.no_result);
                 break;
 
-            case ItemWrapper.TYPE_CATEGORY:
-                ResultCategoryHolder categoryHolder = (ResultCategoryHolder) holder;
-                categoryHolder.textView.setText(position > 0 ? R.string.search_label_company : R.string.search_label_package);
+            case ItemWrapper.TYPE_QUESTION:
+                QuestionHolder questionHolder = (QuestionHolder) holder;
+                Question question = questions.get(iw.index);
+                String sDate = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US)
+                        .format(question.getDate());
+                questionHolder.textViewStatus.setText(question.getUser().getName().concat(" Ответов: нет"));
+                questionHolder.textViewDate.setText(sDate);
+                questionHolder.textViewTitle.setText(question.getTitle());
+                if (question.getAnswers() != null && question.getAnswers().size() > 0) {
+                    questionHolder.textViewStatus.setText(question.getUser().getName().
+                            concat(" Ответов:").concat(Integer.toString(question.getAnswers().size())));
+                }
+                if (question.getUser().getAvatar()!=null)
+                    questionHolder.avatar.setImageBitmap(MainUtil.getBitmapByPath(
+                        MainUtil.getPicturesDirectory(context),question.getUser().getAvatar()));
+                else
+                    questionHolder.avatar.setImageResource(R.drawable.user_random_icon_2);
                 break;
 
-            case ItemWrapper.TYPE_PACKAGE:
-                PackageHolder packageHolder = (PackageHolder) holder;
-                Package pkg = packages.get(iw.index);
-                if (pkg.getData() != null && pkg.getData().size() > 0) {
-                    int state = Integer.parseInt(pkg.getState());
-                    packageHolder.textViewStatus.setText(String.valueOf(packageStatus[state]) + " - " + pkg.getData().get(0).getContext());
-                    packageHolder.textViewTime.setText(pkg.getData().get(0).getTime());
-                } else {
-                    packageHolder.textViewTime.setText("");
-                    packageHolder.textViewStatus.setText(R.string.get_status_error);
-                }
-
-                if (pkg.isReadable()) {
-                    packageHolder.textViewPackageName.setTypeface(null, Typeface.BOLD);
-                    packageHolder.textViewTime.setTypeface(null, Typeface.BOLD);
-                    packageHolder.textViewStatus.setTypeface(null, Typeface.BOLD);
-                } else {
-                    packageHolder.textViewPackageName.setTypeface(null, Typeface.NORMAL);
-                    packageHolder.textViewTime.setTypeface(null, Typeface.NORMAL);
-                    packageHolder.textViewStatus.setTypeface(null, Typeface.NORMAL);
-                }
-
-                packageHolder.textViewPackageName.setText(pkg.getName());
-                packageHolder.textViewAvatar.setText(pkg.getName().substring(0,1));
-                packageHolder.avatar.setImageResource(pkg.getColorAvatar());
-
-                break;
-
-            case ItemWrapper.TYPE_COMPANY:
-                Company company = companies.get(iw.index);
-                CompanyHolder companyHolder = (CompanyHolder) holder;
-                companyHolder.textViewAvatar.setText(company.getName().substring(0, 1).toUpperCase());
-                companyHolder.textViewCompanyTel.setText(company.getTel());
-                companyHolder.textViewCompanyName.setText(company.getName());
-                companyHolder.avatar.setColorFilter(Color.parseColor(company.getAvatarColor()));
+            case ItemWrapper.TYPE_USER:
+                User user = users.get(iw.index);
+                UserHolder userHolder = (UserHolder) holder;
+                userHolder.textViewAvatar.setText(user.getName().substring(0, 1).toUpperCase());
+                userHolder.textViewName.setText(user.getName());
+                // TODO заменить на строчку статистики, формируемую через функцию из утилит
+                userHolder.textViewRate.setText("Q&A");
+                userHolder.avatar.setColorFilter(Color.BLUE);
                 break;
         }
     }
@@ -175,29 +148,29 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         return list.get(position).viewType;
     }
 
-    public void updateData(List<Package> packages, List<Company> companies) {
-        this.packages.clear();
-        this.companies.clear();
+    public void updateData(List<Question> questions, List<User> users) {
+        this.questions.clear();
+        this.users.clear();
         this.list.clear();
         this.list.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (packages.size() > 0) {
-            for (int i = 0; i < packages.size(); i++) {
-                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_PACKAGE);
+        if (questions.size() > 0) {
+            for (int i = 0; i < questions.size(); i++) {
+                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_QUESTION);
                 wrapper.index = i;
                 list.add(wrapper);
-                this.packages.add(packages.get(i));
+                this.questions.add(questions.get(i));
             }
         } else {
             list.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         }
 
         this.list.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (companies.size() > 0) {
-            for (int i = 0; i < companies.size(); i++) {
-                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_COMPANY);
+        if (users.size() > 0) {
+            for (int i = 0; i < users.size(); i++) {
+                ItemWrapper wrapper = new ItemWrapper(ItemWrapper.TYPE_USER);
                 wrapper.index = i;
                 list.add(wrapper);
-                this.companies.add(companies.get(i));
+                this.users.add(users.get(i));
             }
         } else {
             list.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
@@ -213,22 +186,21 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         return list.get(position).index;
     }
 
-    private class PackageHolder extends RecyclerView.ViewHolder
+    private class QuestionHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
 
         CircleImageView avatar;
-        AppCompatTextView textViewTime, textViewStatus;
-        AppCompatTextView textViewPackageName, textViewAvatar;
+        AppCompatTextView textViewDate, textViewStatus;
+        AppCompatTextView textViewTitle;
 
         private OnRecyclerViewItemClickListener listener;
 
-        PackageHolder(View itemView, OnRecyclerViewItemClickListener listener) {
+        QuestionHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
-            avatar = (CircleImageView) itemView.findViewById(R.id.circleImageView);
-            textViewPackageName = (AppCompatTextView) itemView.findViewById(R.id.textViewPackageName);
-            textViewStatus = (AppCompatTextView) itemView.findViewById(R.id.textViewStatus);
-            textViewTime = (AppCompatTextView) itemView.findViewById(R.id.textViewTime);
-            textViewAvatar = (AppCompatTextView) itemView.findViewById(R.id.textViewAvatar);
+            avatar = itemView.findViewById(R.id.circleImageView);
+            textViewTitle = itemView.findViewById(R.id.textViewQuestionTitle);
+            textViewDate = itemView.findViewById(R.id.textQuestionTime);
+            textViewStatus = itemView.findViewById(R.id.textQuestionStatus);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }
@@ -241,42 +213,41 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    private class ResultCategoryHolder extends RecyclerView.ViewHolder {
-
-        AppCompatTextView textView;
-
-        ResultCategoryHolder(View itemView) {
-            super(itemView);
-            textView = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
-        }
-
-    }
-
     private class EmptyHolder extends RecyclerView.ViewHolder {
 
         AppCompatTextView textView;
 
         EmptyHolder(View itemView) {
             super(itemView);
-            textView = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
+            textView = itemView.findViewById(R.id.tv_title);
         }
 
     }
 
-    private class CompanyHolder extends RecyclerView.ViewHolder
+    private class ResultCategoryHolder extends RecyclerView.ViewHolder {
+
+        AppCompatTextView textView;
+
+        ResultCategoryHolder(View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.tv_title);
+        }
+
+    }
+
+    private class UserHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         CircleImageView avatar;
-        AppCompatTextView textViewCompanyName, textViewAvatar, textViewCompanyTel;
+        TextView textViewName, textViewAvatar, textViewRate;
 
         private OnRecyclerViewItemClickListener listener;
 
-        CompanyHolder(View itemView, OnRecyclerViewItemClickListener listener) {
+        UserHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
-            avatar = (CircleImageView) itemView.findViewById(R.id.imageViewAvatar);
-            textViewAvatar = (AppCompatTextView) itemView.findViewById(R.id.textViewAvatar);
-            textViewCompanyName = (AppCompatTextView) itemView.findViewById(R.id.textViewCompanyName);
-            textViewCompanyTel = (AppCompatTextView) itemView.findViewById(R.id.textViewCompanyTel);
+            avatar = itemView.findViewById(R.id.imageViewAvatar);
+            textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewUserName);
+            textViewRate = (AppCompatTextView) itemView.findViewById(R.id.textViewUserStats);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }
@@ -291,14 +262,15 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public static class ItemWrapper {
 
-        public final static int TYPE_PACKAGE = 0, TYPE_COMPANY = 1, TYPE_CATEGORY = 2, TYPE_EMPTY = 3;
+        final static int TYPE_QUESTION = 0, TYPE_USER = 1, TYPE_ANSWER = 2,
+                TYPE_CATEGORY = 3, TYPE_EMPTY = 4;
 
-        public int viewType;
+        int viewType;
 
         // Optional
-        public int index;
+        int index;
 
-        public ItemWrapper(int viewType) {
+        ItemWrapper(int viewType) {
             this.viewType = viewType;
         }
 

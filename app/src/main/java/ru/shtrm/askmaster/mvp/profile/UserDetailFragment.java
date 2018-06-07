@@ -40,7 +40,6 @@ public class UserDetailFragment extends Fragment
 
     private UserDetailContract.Presenter presenter;
 
-    private String address;
     private String website;
     private String userUuid;
     private User user;
@@ -61,29 +60,34 @@ public class UserDetailFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
-
+        View view;
         Bundle b = getArguments();
         assert b != null;
         userUuid = b.getString("id");
         user = UsersLocalDataSource.getInstance().getAuthorisedUser();
         if (user!=null && !user.getId().equals(userUuid)) {
-            user = UsersLocalDataSource.getInstance().getUser()
+            user = UsersLocalDataSource.getInstance().getUserById(userUuid);
+            view = inflater.inflate(R.layout.fragment_edit_user, container, false);
+            owner = false;
         }
+        else
+            view = inflater.inflate(R.layout.fragment_view_user, container, false);
 
         initViews(view);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.saveUser (java.util.UUID.randomUUID().toString(),
-                        textViewName.getText().toString(),
-                        textViewAddress.getText().toString(),
-                        textViewWebsite.getText().toString(),
-                        textViewPhone.getText().toString(),
-                        imageView.getDrawingCache(), user);
-            }
-        });
+        if (owner) {
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.saveUser(java.util.UUID.randomUUID().toString(),
+                            textViewName.getText().toString(),
+                            textViewAddress.getText().toString(),
+                            textViewWebsite.getText().toString(),
+                            textViewPhone.getText().toString(),
+                            imageView.getDrawingCache(), user);
+                }
+            });
+        }
 
         textViewWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +127,8 @@ public class UserDetailFragment extends Fragment
     public void initViews(View view) {
         UserDetailActivity activity = (UserDetailActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (activity.getSupportActionBar()!=null)
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         textViewName = view.findViewById(R.id.profile_add_name);
         textViewAddress = view.findViewById(R.id.profile_add_address);
@@ -137,8 +142,11 @@ public class UserDetailFragment extends Fragment
             textViewAddress.setText(user.getAddress());
             textViewWebsite.setText(user.getWebsite());
             textViewPhone.setText(user.getPhone());
-            imageView.setImageBitmap(MainUtil.getBitmapByPath(MainUtil.getPicturesDirectory(),user.getAvatar()));
+            imageView.setImageBitmap(MainUtil.getBitmapByPath(
+                    MainUtil.getPicturesDirectory(mainActivityConnector),user.getAvatar()));
         }
+        if (owner)
+            submitButton = view.findViewById(R.id.profile_button_submit);
     }
 
     @Override
@@ -153,7 +161,6 @@ public class UserDetailFragment extends Fragment
 
     @Override
     public void setUserAddress(String address) {
-        this.address = address;
         textViewAddress.setText(address);
     }
 

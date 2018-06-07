@@ -170,8 +170,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            UsersRepository.getInstance(UsersLocalDataSource.getInstance())
-                    .initData();
+            // пока убрал ибо непонятно зачем
+            //UsersRepository.getInstance(UsersLocalDataSource.getInstance()).initData();
             return null;
         }
 

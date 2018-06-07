@@ -44,6 +44,11 @@ public class UsersRepository implements UsersDataSource {
     }
 
     @Override
+    public User getUserById(@NonNull String id) {
+        return localDataSource.getUserById(id);
+    }
+
+    @Override
     public boolean isUserExist(@NonNull String id) {
         return localDataSource.isUserExist(id);
     }

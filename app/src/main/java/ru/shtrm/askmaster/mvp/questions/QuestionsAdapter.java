@@ -21,6 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
+import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -65,7 +66,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         pvh.textViewQuestionTitle.setText(item.getTitle());
         pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
         // TODO что загружаем: фото пользователя или фото вопроса?
-        //pvh.circleImageView.setImageBitmap(item.getUser().getAvatar());
+        pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
+                MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
     }
 
     @Override
@@ -114,8 +116,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textViewAvatar = itemView.findViewById(R.id.textViewAvatar);
             imageViewAnswer = itemView.findViewById(R.id.imageViewAnswer);
             circleImageView = itemView.findViewById(R.id.circleImageView);
-            layoutMain = itemView.findViewById(R.id.layoutPackageItemMain);
-            wrapperView = itemView.findViewById(R.id.layoutPackageItem);
 
             this.listener = listener;
             itemView.setOnClickListener(this);

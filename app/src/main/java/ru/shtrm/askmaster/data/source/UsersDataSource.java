@@ -15,6 +15,8 @@ public interface UsersDataSource {
 
     Observable<List<User>> searchUsers(@NonNull String keyWords);
 
+    User getUserById(@NonNull String userId);
+
     void saveUser(@NonNull User user);
 
     void deleteUser(@NonNull String id);

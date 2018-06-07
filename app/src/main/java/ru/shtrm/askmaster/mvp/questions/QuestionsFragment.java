@@ -1,5 +1,7 @@
 package ru.shtrm.askmaster.mvp.questions;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import ru.shtrm.askmaster.mvp.search.SearchActivity;
 
 public class QuestionsFragment extends Fragment
         implements QuestionsContract.View {
+    private Activity mainActivityConnector = null;
 
     // View references
     private BottomNavigationView bottomNavigationView;
@@ -123,13 +126,13 @@ public class QuestionsFragment extends Fragment
         super.onPause();
         presenter.unsubscribe();
         setLoadingIndicator(false);
-        getActivity().sendBroadcast(AppWidgetProvider.getRefreshBroadcastIntent(getContext()));
+        mainActivityConnector.sendBroadcast(AppWidgetProvider.getRefreshBroadcastIntent(getContext()));
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.questions_list, menu);
+        inflater.inflate(R.menu.question_list, menu);
     }
 
     @Override
@@ -166,7 +169,7 @@ public class QuestionsFragment extends Fragment
         recyclerView =  view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout =  view.findViewById(R.id.refreshLayout);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(mainActivityConnector, R.color.colorPrimary));
 
         // ItemTouchHelper helps to handle the drag or swipe action.
         // In our app, we do nothing but return a false value
@@ -282,12 +285,12 @@ public class QuestionsFragment extends Fragment
     @Override
     public void showQuestions(@NonNull final List<Question> list) {
         if (adapter == null) {
-            adapter = new QuestionsAdapter(getContext(), list);
+            adapter = new QuestionsAdapter(mainActivityConnector, list);
             adapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(), QuestionDetailsActivity.class);
-                    intent.putExtra(QuestionDetailsActivity.PACKAGE_ID, list.get(position).getId());
+                    intent.putExtra(QuestionDetailsActivity.QUESTION_ID, list.get(position).getId());
                     startActivity(intent);
                 }
 
@@ -308,13 +311,14 @@ public class QuestionsFragment extends Fragment
         this.selectedQuestionNumber = id;
     }
 
-    /**
-     * Work with the activity which fragment attached to.
-     * Get the number which is selected.
-     * @return The selected question number.
-     */
-    public String getSelectedQuestionNumber() {
-        return selectedQuestionNumber;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mainActivityConnector = getActivity();
+        // TODO решить что делать если контекст не приехал
+        if (mainActivityConnector==null)
+            onDestroyView();
     }
 
 }

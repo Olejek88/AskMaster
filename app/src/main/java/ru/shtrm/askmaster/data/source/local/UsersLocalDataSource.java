@@ -48,6 +48,12 @@ public class UsersLocalDataSource implements UsersDataSource {
     }
 
     @Override
+    public User getUserById(@NonNull String id) {
+        Realm realm = RealmHelper.newRealmInstance();
+        return realm.where(User.class).equalTo("id", id).findFirst();
+    }
+
+    @Override
     public Observable<List<User>> searchUsers(@NonNull String keyWords) {
         Realm rlm = RealmHelper.newRealmInstance();
         List<User> results = rlm.copyFromRealm(

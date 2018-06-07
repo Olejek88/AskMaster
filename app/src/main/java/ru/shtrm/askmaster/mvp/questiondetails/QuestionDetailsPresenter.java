@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
@@ -73,7 +72,7 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
                         answers = new ArrayList<>(value.getAnswers());
                         images = new ArrayList<>(value.getImages());
 
-                        view.showQuestionAnswers(value);
+                        view.showQuestionDetails(value);
                     }
 
                     @Override
@@ -104,7 +103,7 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
                 .subscribeWith(new DisposableObserver<Question>() {
                     @Override
                     public void onNext(Question value) {
-                        view.showQuestionAnswers(value);
+                        view.showQuestionDetails(value);
                     }
 
                     @Override

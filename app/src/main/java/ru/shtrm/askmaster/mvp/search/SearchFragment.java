@@ -1,21 +1,6 @@
-/*
- *  Copyright(c) 2017 lizhaotailang
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.shtrm.askmaster.mvp.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,16 +20,15 @@ import android.view.inputmethod.InputMethodManager;
 import java.util.List;
 
 import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
 import ru.shtrm.askmaster.mvp.profile.UserDetailActivity;
 import ru.shtrm.askmaster.mvp.questiondetails.QuestionDetailsActivity;
 
-/**
- * Created by lizhaotailang on 2017/3/18.
- */
-
 public class SearchFragment extends Fragment
         implements SearchContract.View {
+    private Activity mainActivityConnector = null;
 
     private SearchView searchView;
     private RecyclerView recyclerView;
@@ -66,7 +50,8 @@ public class SearchFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         initViews(view);
@@ -106,16 +91,17 @@ public class SearchFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             hideImm();
-            getActivity().onBackPressed();
+            mainActivityConnector.onBackPressed();
         }
         return true;
     }
 
     @Override
     public void initViews(View view) {
-        SearchActivity activity = (SearchActivity) getActivity();
+        SearchActivity activity = (SearchActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (activity.getSupportActionBar()!=null)
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         searchView = view.findViewById(R.id.searchView);
         searchView.setIconified(false);
@@ -129,26 +115,27 @@ public class SearchFragment extends Fragment
     }
 
     @Override
-    public void showResult(final List<Package> packages, final List<Company> companies) {
-        if (packages == null || companies == null) {
+    public void showResult(final List<Question> questions, final List<User> users) {
+        if (questions == null || users == null) {
             return;
         }
         if (adapter == null) {
-            adapter = new SearchResultsAdapter(getContext(), packages, companies);
+            adapter = new SearchResultsAdapter(mainActivityConnector, questions, users);
             adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
 
-                    if (adapter.getItemViewType(position) == SearchResultsAdapter.ItemWrapper.TYPE_PACKAGE) {
+                    if (adapter.getItemViewType(position) == SearchResultsAdapter.ItemWrapper.TYPE_QUESTION) {
 
                         Intent intent = new Intent(getContext(), QuestionDetailsActivity.class);
-                        intent.putExtra(QuestionDetailsActivity.PACKAGE_ID, packages.get(adapter.getOriginalIndex(position)).getNumber());
+                        intent.putExtra(QuestionDetailsActivity.QUESTION_ID,
+                                questions.get(adapter.getOriginalIndex(position)).getId());
                         startActivity(intent);
 
-                    } else if (adapter.getItemViewType(position) == SearchResultsAdapter.ItemWrapper.TYPE_COMPANY) {
-
+                    } else if (adapter.getItemViewType(position) == SearchResultsAdapter.ItemWrapper.TYPE_USER) {
                         Intent intent = new Intent(getContext(), UserDetailActivity.class);
-                        intent.putExtra(UserDetailActivity.COMPANY_ID, companies.get(adapter.getOriginalIndex(position)).getId());
+                        intent.putExtra(UserDetailActivity.USER_ID,
+                                users.get(adapter.getOriginalIndex(position)).getId());
                         startActivity(intent);
 
                     }
@@ -156,7 +143,7 @@ public class SearchFragment extends Fragment
             });
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.updateData(packages, companies);
+            adapter.updateData(questions, users);
         }
     }
 
@@ -164,10 +151,19 @@ public class SearchFragment extends Fragment
      * Hide the input method like soft keyboard, etc... when they are active.
      */
     private void hideImm() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isActive()) {
+        InputMethodManager imm = (InputMethodManager)
+                mainActivityConnector.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && imm.isActive()) {
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mainActivityConnector = getActivity();
+        // TODO решить что делать если контекст не приехал
+        if (mainActivityConnector==null)
+            onDestroyView();
+    }
 }

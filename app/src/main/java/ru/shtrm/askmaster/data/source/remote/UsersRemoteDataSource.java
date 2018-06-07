@@ -60,6 +60,13 @@ public class UsersRemoteDataSource implements UsersDataSource {
     }
 
     @Override
+    public User getUserById(@NonNull String id) {
+        // Not required because the {@link UsersRepository} handles the logic
+        // of refreshing the users from all available data source
+        return null;
+    }
+
+    @Override
     public void saveUser(@NonNull User user) {
         // Not required because the {@link UsersRepository} handles the logic
         // of refreshing the users from all available data source

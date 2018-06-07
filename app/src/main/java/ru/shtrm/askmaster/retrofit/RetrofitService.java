@@ -10,7 +10,7 @@ public interface RetrofitService {
     //@GET(Api.USER_QUERY)
     //Observable<UserRecognition> query(@Query("text") String number);
 
-    @GET(Api.PACKAGE_STATE)
+    @GET(Api.QUESTION_STATE)
     Observable<Question> getQuestionClosed(@Query("type") String type, @Query("id") String id);
 
     @GET(Api.QUESTION_ID)

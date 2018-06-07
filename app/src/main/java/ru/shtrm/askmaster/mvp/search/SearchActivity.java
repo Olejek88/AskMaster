@@ -1,32 +1,17 @@
-/*
- *  Copyright(c) 2017 lizhaotailang
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.shtrm.askmaster.mvp.search;
 
+import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.data.source.CompaniesRepository;
-import ru.shtrm.askmaster.data.source.PackagesRepository;
-import ru.shtrm.askmaster.data.source.local.CompaniesLocalDataSource;
+import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
+import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
 
 public class SearchActivity extends AppCompatActivity {
@@ -39,12 +24,17 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.container);
 
         // Set the navigation bar color
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("navigation_bar_tint", true)) {
-            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        if (PreferenceManager.getDefaultSharedPreferences(this).
+                getBoolean("navigation_bar_tint", true)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setNavigationBarColor(
+                        ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            }
         }
 
         if (savedInstanceState != null) {
-            fragment = (SearchFragment) getSupportFragmentManager().getFragment(savedInstanceState, "SearchFragment");
+            fragment = (SearchFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState, "SearchFragment");
         } else {
             fragment = SearchFragment.newInstance();
         }
@@ -54,8 +44,9 @@ public class SearchActivity extends AppCompatActivity {
                 .commit();
 
         new SearchPresenter(fragment,
-                PackagesRepository.getInstance(QuestionsRemoteDataSource.getInstance(), QuestionsLocalDataSource.getInstance()),
-                CompaniesRepository.getInstance(CompaniesLocalDataSource.getInstance()));
+                QuestionsRepository.getInstance(QuestionsRemoteDataSource.getInstance(),
+                        QuestionsLocalDataSource.getInstance()),
+                UsersRepository.getInstance(UsersLocalDataSource.getInstance()));
 
     }
 

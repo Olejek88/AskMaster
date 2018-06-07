@@ -1,12 +1,8 @@
 package ru.shtrm.askmaster.mvp.questiondetails;
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.realm.RealmList;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.component.Timeline;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
-import ru.shtrm.askmaster.mvp.profile.UserDetailActivity;
-import io.realm.RealmList;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -41,21 +36,19 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private final List<Answer> answers;
 
-    public static final int TYPE_HEADER = 0x00;
-    public static final int TYPE_NORMAL = 0x01;
-    public static final int TYPE_START = 0x02;
-    public static final int TYPE_FINISH = 0x03;
-    public static final int TYPE_SINGLE = 0x04;
+    private static final int TYPE_HEADER = 0x00;
+    private static final int TYPE_NORMAL = 0x01;
+    private static final int TYPE_START = 0x02;
+    private static final int TYPE_FINISH = 0x03;
+    private static final int TYPE_SINGLE = 0x04;
 
-    public QuestionDetailsAdapter(@NonNull Context context, @NonNull Question question) {
+    QuestionDetailsAdapter(@NonNull Context context, @NonNull Question question) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.aQuestion = question;
 
         this.answers = new ArrayList<>();
-        for (Answer answer : question.getAnswers()) {
-            answers.add(answer);
-        }
+        answers.addAll(question.getAnswers());
     }
 
     @Override
@@ -147,13 +140,13 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private GridView photoGridView;
         private Timeline timeLine;
 
-        public AnswersViewHolder(View itemView) {
+        AnswersViewHolder(View itemView) {
             super(itemView);
             textViewAuthor = (AppCompatTextView) itemView.findViewById(R.id.answerAuthor);
             textViewText = (AppCompatTextView) itemView.findViewById(R.id.answerText);
-            timeLine = (Timeline) itemView.findViewById(R.id.timeLine);
-            imageViewAuthor = (ImageView) itemView.findViewById(R.id.answerAuthorImage);
-            photoGridView = (GridView) itemView.findViewById(R.id.answerPhotoGrid);
+            //timeLine = (Timeline) itemView.findViewById(R.id.tim);
+            imageViewAuthor = itemView.findViewById(R.id.answerAuthorImage);
+            photoGridView = itemView.findViewById(R.id.answerPhotoGrid);
         }
     }
 
@@ -168,7 +161,7 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView textViewDate;
         GridView photoGridView;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             textViewAuthor = itemView.findViewById(R.id.questionAuthor);
             textViewText = itemView.findViewById(R.id.questionText);

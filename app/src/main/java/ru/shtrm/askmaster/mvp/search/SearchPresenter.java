@@ -1,27 +1,9 @@
-/*
- *  Copyright(c) 2017 lizhaotailang
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ru.shtrm.askmaster.mvp.search;
 
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ru.shtrm.askmaster.data.source.CompaniesRepository;
-import ru.shtrm.askmaster.data.source.PackagesRepository;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -29,10 +11,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-
-/**
- * Created by lizhaotailang on 2017/3/26.
- */
+import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.QuestionsAndUsersPairs;
+import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.data.source.UsersRepository;
 
 public class SearchPresenter implements SearchContract.Presenter{
 
@@ -40,21 +23,21 @@ public class SearchPresenter implements SearchContract.Presenter{
     private SearchContract.View view;
 
     @NonNull
-    private PackagesRepository packagesRepository;
+    private QuestionsRepository questionsRepository;
 
     @NonNull
-    private CompaniesRepository companiesRepository;
+    private UsersRepository usersRepository;
 
     private CompositeDisposable compositeDisposable;
 
     private String queryWords = null;
 
     public SearchPresenter(@NonNull SearchContract.View view,
-                           @NonNull PackagesRepository packagesRepository,
-                           @NonNull CompaniesRepository companiesRepository) {
+                           @NonNull QuestionsRepository questionsRepository,
+                           @NonNull UsersRepository usersRepository) {
         this.view = view;
-        this.packagesRepository = packagesRepository;
-        this.companiesRepository = companiesRepository;
+        this.questionsRepository = questionsRepository;
+        this.usersRepository = usersRepository;
         this.view.setPresenter(this);
         compositeDisposable = new CompositeDisposable();
     }
@@ -78,26 +61,28 @@ public class SearchPresenter implements SearchContract.Presenter{
         }
         queryWords = keyWords;
 
-        Observable<List<Company>> companyObservable = companiesRepository
-                .searchCompanies(keyWords)
+        Observable<List<User>> userObservable = usersRepository
+                .searchUsers(keyWords)
                 .subscribeOn(Schedulers.io());
 
-        Observable<List<Package>> packageObservable = packagesRepository
-                .searchPackages(keyWords)
+        Observable<List<Question>> questionObservable = questionsRepository
+                .searchQuestions(keyWords)
                 .subscribeOn(Schedulers.io());
 
         Disposable disposable = Observable
-                .zip(packageObservable, companyObservable, new BiFunction<List<Package>, List<Company>, PackageAndCompanyPairs>() {
+                .zip(questionObservable, userObservable, new BiFunction<List<Question>,
+                        List<User>, QuestionsAndUsersPairs>() {
                     @Override
-                    public PackageAndCompanyPairs apply(List<Package> packages, List<Company> companies) throws Exception {
-                        return new PackageAndCompanyPairs(packages, companies);
+                    public QuestionsAndUsersPairs apply(List<Question> questions, List<User> users)
+                            throws Exception {
+                        return new QuestionsAndUsersPairs(questions, users);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<PackageAndCompanyPairs>() {
+                .subscribeWith(new DisposableObserver<QuestionsAndUsersPairs>() {
                     @Override
-                    public void onNext(PackageAndCompanyPairs value) {
-                        view.showResult(value.getPackages(), value.getCompanies());
+                    public void onNext(QuestionsAndUsersPairs value) {
+                        view.showResult(value.getQuestions(), value.getUsers());
                     }
 
                     @Override
@@ -112,7 +97,5 @@ public class SearchPresenter implements SearchContract.Presenter{
                 });
 
         compositeDisposable.add(disposable);
-
     }
-
 }

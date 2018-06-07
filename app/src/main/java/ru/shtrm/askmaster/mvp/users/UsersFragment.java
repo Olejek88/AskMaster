@@ -84,7 +84,7 @@ public class UsersFragment extends Fragment
 
     @Override
     public void initViews(View view) {
-        recyclerView = view.findViewById(R.id.recyclerViewCompaniesList);
+        recyclerView = view.findViewById(R.id.recyclerViewUsersList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
