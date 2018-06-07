@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Спроси Мастера</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--activities-->
+    <string name="activity_package_details">Package Details</string>
+    <string name="activity_add_package">Add Package</string>
+    <string name="activity_company_details">Company Details</string>
+    <string name="activity_search">Search</string>
+    <string name="activity_scan_code">Scan code</string>
+    <!--activities end-->
+
+    <!--navigation drawer-->
+    <string name="nav_profile">Профиль</string>
+    <string name="nav_users">Пользователи</string>
+    <string name="nav_questions">Вопросы</string>
+    <string name="nav_gallery">Галерея</string>
+    <string name="nav_tricks">Трюки</string>
+    <string name="nav_switch_theme">Режим день/ночь</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_about">О сервисе</string>
+    <!--navigation drawer end-->
+
+    <!--profile fragment-->
+    <string name="profile_submit_button">Добавить</string>
+    <!--navigation drawer end-->
+
+    <!--question list page-->
+    <string name="all">All</string>
+    <string name="on_the_way">On the way</string>
+    <string name="delivered">Delivered</string>
+    <string name="action_search">Search</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="copy_code">Copy code</string>
+    <string name="set_unread">Set unread</string>
+    <string name="set_read">Set read</string>
+    <string name="remove">Ответить</string>
+    <string name="get_answers_error">Unable to get the latest answer.</string>
+    <string name="network_error">Network error, try again later.</string>
+    <string name="package_number_copied">Package number has been copied successfully.</string>
+    <string name="package_removed_msg">has been removed.</string>
+    <string name="undo">UNDO</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="to_add_question">Нажмите кнопку, чтобы добавить вопрос</string>
+    <string name="latest_status">Latest status:&#160;</string>
+
+    <string-array name="question_status">
+        <item>Открыт</item>
+        <item>Закрыт</item>
+    </string-array>
+    <!--question list page end-->
+
+    <!--package details-->
+    <string name="user_name">Автор</string>
+    <string name="question_title">Вопрос</string>
+    <string name="delete_question_message">Вы уверены, что хотите удалить свой вопрос?</string>
+    <string name="edit_name">Редактирование вопроса</string>
+    <string name="input_empty">Вопрос не может быть пустым</string>
+    <!--package details end-->
+
+    <!--add question-->
+    <string name="tint_question_title">Вопрос</string>
+    <string name="tint_question_text">Описание</string>
+    <string name="wrong_title">Вопрос не указан</string>
+    <string name="require_permission">Нет разрешений на запись фотографий</string>
+    <string name="question">Вопрос</string>
+    <string name="question_exist">Вопрос с таким названием уже есть</string>
+    <string name="error">Ошибка</string>
+    <string name="something_wrong">Что-то пошло не так</string>
+    <string name="unable_to_open_camera">Не можем запустить камеру</string>
+    <string name="activity_add_question">Добавить вопрос</string>
+    <!--add question end-->
+
+    <!--company details-->
+    <string name="phone_number">Phone Number</string>
+    <string name="official_website">Official Website</string>
+    <!--company details end-->
+
+    <!--Settings-->
+    <string name="notifications">Notifications</string>
+    <string name="alert">Alert</string>
+    <string name="alert_desc">Send notifications when packages get updated.</string>
+    <string name="do_not_disturb_mode">Do not disturb mode</string>
+    <string name="do_not_disturb_mode_desc">Don\'t send notifications during the hours set.</string>
+    <string name="start_time">Start time</string>
+    <string name="start_time_desc">23:00</string>
+    <string name="end_time">End time</string>
+    <string name="end_time_desc">06:00</string>
+    <string name="notification_interval">Notification interval</string>
+    <string name="browser">Browser</string>
+    <string name="custom_tabs">Chrome custom tabs</string>
+    <string name="custom_tabs_desc">Open links with Chrome Custom Tabs.</string>
+    <string name="user_interface">User interface</string>
+    <string name="navigation_bar_tint">Navigation bar tint</string>
+    <string name="navigation_bar_tint_desc">Color the navigation bar.</string>
+    <string name="navigation_bar_restart_msg">Changes will be applied after restarting app.</string>
+    <string-array name="notification_interval">
+        <item>10 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>1.5 hours</item>
+        <item>2 hours</item>
+    </string-array>
+    <string-array name="notification_interval_item">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <!--Settings end-->
+
+    <!--About-->
+    <string name="version">Version</string>
+    <string name="rate">Rate</string>
+    <string name="rate_desc">If you like the Espresso app, please do rate it.</string>
+    <string name="licenses">Licenses</string>
+    <string name="thanks">Thanks</string>
+    <string name="thanks_1">FengGo</string>
+    <string name="thanks_1_desc">Package Tracker Project</string>
+    <string name="thanks_1_url">https://github.com/fython/PackageTracker</string>
+    <string name="thanks_2">+Youlun Zhai</string>
+    <string name="thanks_2_desc">Poster designer</string>
+    <string name="thanks_2_url">https://plus.google.com/+YoulunZhai</string>
+    <string name="source_code">GitHub Source code</string>
+    <string name="source_code_desc">https://github.com/TonnyL/Espresso</string>
+    <string name="support">Support</string>
+    <string name="send_advices">Send advices</string>
+    <string name="mail_account">mailto:marktonymengyi@gmail.com</string>
+    <string name="mail_topic">Espresso Advices</string>
+    <string name="send_advices_desc">Help me improve this app.</string>
+    <string name="donate">Donate</string>
+    <string name="donate_account">marktonymengyi@gmail.com</string>
+    <string name="donate_desc">Buy me a cup of coffee to keep me awake during my night coding sessions.</string>
+    <string name="donate_msg">Alipay account will be copied to clipboard. Launch Alipay and paste it to finish donating. Thanks for support!</string>
+    <string name="set_end_time_error">Start time can not be same as end time.</string>
+    <string name="notification_new_message">\"The package has a new message\"</string>
+    <!--About end-->
+
+    <!--shortcuts-->
+    <string name="shortcut_label_add_package">Add manually</string>
+    <string name="shortcut_label_search">Search</string>
+    <string name="shortcut_label_scan_code">Scan code</string>
+    <!--shortcuts end-->
+
+    <!--widget-->
+    <string name="all_packages_are_delivered">All packages are delivered.</string>
+    <!--widget end-->
+
+    <!--onboarding-->
+    <string name="onboarding_next_button_description">Next</string>
+    <string name="onboarding_finish_button_description">Finish</string>
+    <string name="onboarding_pre_button_description">Pre</string>
+    <string name="onboarding_section_1">Add your packages quickly and easily</string>
+    <string name="onboarding_intro_1">Support 640+ express companies all over the world.</string>
+    <string name="onboarding_section_2">Input numbers by just one touch</string>
+    <string name="onboarding_intro_2">Scan the number and then, they are recognized.</string>
+    <string name="onboarding_section_3">Keep the delivery status updated</string>
+    <string name="onboarding_intro_3">Push notification when the delivery status is refreshed, so you can get the latest information.</string>
+    <string name="onboarding_finish_button_description_wait">Preparing, please wait…</string>
+    <!--onboarding end-->
+
+    <!--search-->
+    <string name="no_result">NO RESULT</string>
+    <string name="search_hint">Package or company…</string>
+    <string name="search_label_package">PACKAGE</string>
+    <string name="search_label_company">COMPANY</string>
+    <string name="item_loading">Loading…</string>
+    <!--search end-->
+
+    <!--custom tabs-->
+    <string name="error_no_browser">No browser installed on the device.</string>
+    <!--custom tabs end-->
+
+</resources>

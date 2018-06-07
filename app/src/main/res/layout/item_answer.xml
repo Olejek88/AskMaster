@@ -1,0 +1,150 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- the circular icon on the left -->
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/user_random_icon_2"
+        android:tint="@android:color/white"
+        android:layout_marginEnd="24dp"
+        android:padding="4dp"
+        android:contentDescription="@string/app_name"
+        android:id="@+id/answerAuthorImage"/>
+
+    <!-- the blue line -->
+    <FrameLayout
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        android:padding="2dp"
+        android:id="@+id/item_line">
+
+        <!-- the semi transparent circle on the line -->
+        <View
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:background="@drawable/baseline_person_black_24dp"/>
+
+    </FrameLayout>
+
+    <!-- views at the right of the blue line -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingBottom="32dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:id="@+id/answerText"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:verticalSpacing="0dp"
+            android:horizontalSpacing="0dp"
+            android:stretchMode="columnWidth"
+            android:numColumns="3"
+            android:id="@+id/answerPhotoGrid"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerAuthor"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/answerRatePlusThumb"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_thumb_up_alt_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/answerRatePlusThumb"
+                android:text="+100"
+                android:id="@+id/answerRatePlus"/>
+
+            <ImageView
+                android:id="@+id/answerRateMinusThumb"
+                android:layout_toEndOf="@id/answerRatePlus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_thumb_down_alt_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:layout_toEndOf="@id/answerRateMinusThumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-500"
+                android:id="@+id/answerRateMinus"/>
+
+            <ImageView
+                android:layout_toEndOf="@id/answerRateMinus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_star_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name"
+                android:id="@+id/answerRate1" />
+
+            <ImageView
+                android:layout_toEndOf="@id/answerRateMinus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_star_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name"
+                android:id="@+id/answerRate2"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_star_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name"
+                android:layout_toEndOf="@id/answerRate2"
+                android:id="@+id/answerRate3"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_star_half_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name"
+                android:id="@+id/answerRate4"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_star_border_black_24dp"
+                android:padding="4dp"
+                android:contentDescription="@string/app_name"
+                android:id="@+id/answerRate5"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>
