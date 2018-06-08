@@ -31,11 +31,6 @@
             android:key="send_advices"
             android:summary="@string/send_advices_desc" />
 
-        <Preference
-            android:title="@string/donate"
-            android:key="donate"
-            android:summary="@string/donate_desc" />
-
     </PreferenceCategory>
 
 </PreferenceScreen>
