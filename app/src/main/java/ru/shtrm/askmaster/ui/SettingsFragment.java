@@ -1,5 +1,7 @@
 package ru.shtrm.askmaster.ui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,6 +18,7 @@ import ru.shtrm.askmaster.util.SettingsUtil;
 import ru.shtrm.askmaster.util.TimeFormatUtil;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+    private Activity mainActivityConnector = null;
 
     private Preference prefStartTime, prefsEndTime, prefAlert;
     private Preference prefNotificationInterval, prefNavigationBar;
@@ -34,11 +37,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         // Set the do-not-disturb-mode time initial range:
         // from 23:00 to 6:00
-        startHour = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_START_HOUR, 23);
+        startHour = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_START_HOUR, 22);
         startMinute = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_START_MINUTE, 0);
         prefStartTime.setSummary(TimeFormatUtil.formatTimeIntToString(startHour, startMinute));
 
-        endHour = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_END_HOUR, 6);
+        endHour = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_END_HOUR, 8);
         endMinute = sp.getInt(SettingsUtil.KEY_DO_NOT_DISTURB_MODE_END_MINUTE, 0);
         prefsEndTime.setSummary(TimeFormatUtil.formatTimeIntToString(endHour, endMinute));
 
@@ -59,7 +62,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                     // The final params setting true means that it is 24 hours mode.
                 }, startHour, startMinute, true);
-                dialog.show(getActivity().getFragmentManager(), "StartTimePickerDialog");
+                dialog.show(mainActivityConnector.getFragmentManager(), "StartTimePickerDialog");
 
                 return true;
             }
@@ -73,7 +76,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     @Override
                     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
                         if (startHour == endHour && startMinute == endMinute) {
-                            Toast.makeText(getContext(), R.string.set_end_time_error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),
+                                    R.string.set_end_time_error, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         // Save the hour and minute value to shared preferences
@@ -85,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                     // The final params setting true means that it is 24 hours mode.
                 }, endHour, endMinute, true);
-                dialog.show(getActivity().getFragmentManager(), "StartTimePickerDialog");
+                dialog.show(mainActivityConnector.getFragmentManager(), "StartTimePickerDialog");
 
                 return true;
             }
@@ -118,7 +122,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         prefNavigationBar.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Snackbar.make(getView(), R.string.navigation_bar_restart_msg, Snackbar.LENGTH_SHORT).show();
+                if (getView()!=null) {
+                    Snackbar.make(getView(),
+                            R.string.navigation_bar_restart_msg, Snackbar.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });
@@ -136,4 +143,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         prefNavigationBar = findPreference("navigation_bar_tint");
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mainActivityConnector = getActivity();
+        // TODO решить что делать если контекст не приехал
+        if (mainActivityConnector==null)
+            onDestroyView();
+    }
 }

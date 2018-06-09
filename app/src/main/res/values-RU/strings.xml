@@ -82,29 +82,25 @@
     <!--company details end-->
 
     <!--Settings-->
-    <string name="notifications">Notifications</string>
-    <string name="alert">Alert</string>
-    <string name="alert_desc">Send notifications when packages get updated.</string>
-    <string name="do_not_disturb_mode">Do not disturb mode</string>
-    <string name="do_not_disturb_mode_desc">Don\'t send notifications during the hours set.</string>
-    <string name="start_time">Start time</string>
+    <string name="notifications">Оповещения</string>
+    <string name="alert">Сообщения</string>
+    <string name="alert_desc">Посылать мне оповещения когда на мой вопрос появятся ответы</string>
+    <string name="do_not_disturb_mode">Режим не беспокоить</string>
+    <string name="do_not_disturb_mode_desc">Не оповещать меня в эти часы</string>
+    <string name="start_time">Начало</string>
     <string name="start_time_desc">23:00</string>
-    <string name="end_time">End time</string>
+    <string name="end_time">Конец</string>
     <string name="end_time_desc">06:00</string>
-    <string name="notification_interval">Notification interval</string>
-    <string name="browser">Browser</string>
-    <string name="custom_tabs">Chrome custom tabs</string>
-    <string name="custom_tabs_desc">Open links with Chrome Custom Tabs.</string>
-    <string name="user_interface">User interface</string>
-    <string name="navigation_bar_tint">Navigation bar tint</string>
-    <string name="navigation_bar_tint_desc">Color the navigation bar.</string>
-    <string name="navigation_bar_restart_msg">Changes will be applied after restarting app.</string>
+    <string name="notification_interval">Интервал оповещений</string>
+    <string name="other">Разное</string>
+    <string name="user_interface">Интерфейс</string>
+    <string name="navigation_bar_restart_msg">Изменения вступят в силу после перезапуска</string>
     <string-array name="notification_interval">
-        <item>10 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>1.5 hours</item>
-        <item>2 hours</item>
+        <item>10 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>1.5 часа</item>
+        <item>2 часа</item>
     </string-array>
     <string-array name="notification_interval_item">
         <item>0</item>

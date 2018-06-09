@@ -87,12 +87,8 @@
     <string name="end_time">End time</string>
     <string name="end_time_desc">06:00</string>
     <string name="notification_interval">Notification interval</string>
-    <string name="browser">Browser</string>
-    <string name="custom_tabs">Chrome custom tabs</string>
-    <string name="custom_tabs_desc">Open links with Chrome Custom Tabs.</string>
-    <string name="user_interface">User interface</string>
-    <string name="navigation_bar_tint">Navigation bar tint</string>
-    <string name="navigation_bar_tint_desc">Color the navigation bar.</string>
+    <string name="other">Разное</string>
+    <string name="user_interface">Интерфейс</string>
     <string name="navigation_bar_restart_msg">Changes will be applied after restarting app.</string>
     <string-array name="notification_interval">
         <item>10 minutes</item>
@@ -142,12 +138,12 @@
     <string name="onboarding_next_button_description">Next</string>
     <string name="onboarding_finish_button_description">Finish</string>
     <string name="onboarding_pre_button_description">Pre</string>
-    <string name="onboarding_section_1">Add your packages quickly and easily</string>
-    <string name="onboarding_intro_1">Support 640+ express companies all over the world.</string>
-    <string name="onboarding_section_2">Input numbers by just one touch</string>
-    <string name="onboarding_intro_2">Scan the number and then, they are recognized.</string>
-    <string name="onboarding_section_3">Keep the delivery status updated</string>
-    <string name="onboarding_intro_3">Push notification when the delivery status is refreshed, so you can get the latest information.</string>
+    <string name="onboarding_section_1">Add your questions quickly and easily</string>
+    <string name="onboarding_intro_1">Attach photo and any usefull description</string>
+    <string name="onboarding_section_2">Masters from all over world give you answer</string>
+    <string name="onboarding_intro_2">Feedback and informaton</string>
+    <string name="onboarding_section_3">Vote for good answers and tricks</string>
+    <string name="onboarding_intro_3">Share own tricks, power your profile and receive status</string>
     <string name="onboarding_finish_button_description_wait">Preparing, please wait…</string>
     <!--onboarding end-->
 
