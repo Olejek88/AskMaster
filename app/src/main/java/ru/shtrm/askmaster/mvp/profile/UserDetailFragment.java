@@ -62,15 +62,15 @@ public class UserDetailFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         View view;
         Bundle b = getArguments();
-        assert b != null;
-        userUuid = b.getString("id");
+        if (b!=null) {
+            userUuid = b.getString("id");
+        }
         user = UsersLocalDataSource.getInstance().getAuthorisedUser();
-        if (user!=null && !user.getId().equals(userUuid)) {
+        if (user != null && !user.getId().equals(userUuid)) {
             user = UsersLocalDataSource.getInstance().getUserById(userUuid);
             view = inflater.inflate(R.layout.fragment_edit_user, container, false);
             owner = false;
-        }
-        else
+        } else
             view = inflater.inflate(R.layout.fragment_view_user, container, false);
 
         initViews(view);

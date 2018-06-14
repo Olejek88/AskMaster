@@ -66,7 +66,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         pvh.textViewQuestionTitle.setText(item.getTitle());
         pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
         // TODO что загружаем: фото пользователя или фото вопроса?
-        pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
+        if (item.getUser()!=null)
+            pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
                 MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
     }
 

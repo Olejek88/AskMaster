@@ -8,8 +8,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.UsersRepository;
+import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
@@ -50,6 +52,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                 QuestionsRemoteDataSource.getInstance(),
                 QuestionsLocalDataSource.getInstance()),
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
+                ImagesLocalDataSource.getInstance(),
                 fragment);
 
     }

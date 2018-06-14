@@ -1,5 +1,7 @@
 package ru.shtrm.askmaster.mvp.addquestion;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -9,8 +11,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
+import ru.shtrm.askmaster.util.MainUtil;
 
 public class AddQuestionPresenter implements AddQuestionContract.Presenter{
 
@@ -21,6 +25,9 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
     private final QuestionsDataSource questionsDataSource;
 
     @NonNull
+    private final ImagesDataSource imagesDataSource;
+
+    @NonNull
     private final UsersDataSource usersDataSource;
 
     @NonNull
@@ -28,10 +35,12 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
 
     public AddQuestionPresenter(@NonNull QuestionsDataSource dataSource,
                                 @NonNull UsersDataSource userDataSource,
+                                @NonNull ImagesDataSource imagesDataSource,
                                 @NonNull AddQuestionContract.View view) {
         this.view = view;
         this.view.setPresenter(this);
         this.questionsDataSource = dataSource;
+        this.imagesDataSource = imagesDataSource;
         this.usersDataSource = userDataSource;
         compositeDisposable = new CompositeDisposable();
     }
@@ -45,12 +54,13 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
     }
 
     @Override
-    public void saveQuestion(String id, String title, String text, User user, ArrayList<Image> images) {
+    public void saveQuestion(Context context, String id, String title, String text, User user,
+                             ArrayList<Image> images) {
         compositeDisposable.clear();
-        checkQuestion(id, title, text, user, images);
+        checkQuestion(context, id, title, text, user, images);
     }
 
-    private void checkQuestion(final String id, final String title,
+    private void checkQuestion(Context context, final String id, final String title,
                                final String text, User user, ArrayList<Image> images) {
         // TODO id - это uuid так что не сработает
         if (questionsDataSource.isQuestionExist(id)) {
@@ -67,9 +77,22 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
 
         for (Image image : images) {
             // TODO добавить сохранение изображений в базе
-            //imagesDataSource.saveImage(image);
+            saveImage(context, image.getTitle(), image.getImageName());
         }
 
         view.showQuestionsList();
     }
+
+    private void saveImage(Context context, String title, String imageName) {
+        Bitmap bitmap = MainUtil.getBitmapByPath(MainUtil.getPicturesDirectory(context),imageName);
+        if (bitmap!=null) {
+            Image image = new Image();
+            image.setId(java.util.UUID.randomUUID().toString());
+            image.setImageName(imageName);
+            image.setDate(new Date());
+            image.setTitle(title);
+            imagesDataSource.saveImage(image);
+        }
+    }
+
 }

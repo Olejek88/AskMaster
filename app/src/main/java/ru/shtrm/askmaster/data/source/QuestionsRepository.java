@@ -80,12 +80,11 @@ public class QuestionsRepository implements QuestionsDataSource {
                 }
             });
         } else {
-
             cachedQuestions = new LinkedHashMap<>();
             // Return the cached questions.
             return questionsLocalDataSource
                     .getQuestions()
-                    .flatMap(new Function<List<Question>, ObservableSource<List<Question>>>() {
+                    .concatMap(new Function<List<Question>, ObservableSource<List<Question>>>() {
                         @Override
                         public ObservableSource<List<Question>> apply(List<Question> questions) throws Exception {
                             return Observable
@@ -101,7 +100,6 @@ public class QuestionsRepository implements QuestionsDataSource {
                         }
                     });
         }
-
     }
 
     /**
@@ -156,7 +154,7 @@ public class QuestionsRepository implements QuestionsDataSource {
     public Observable<List<Question>> refreshQuestions() {
         return questionsRemoteDataSource
                 .refreshQuestions()
-                .flatMap(new Function<List<Question>, ObservableSource<List<Question>>>() {
+                .concatMap(new Function<List<Question>, ObservableSource<List<Question>>>() {
                     @Override
                     public ObservableSource<List<Question>> apply(List<Question> questions) throws Exception {
 
@@ -188,7 +186,7 @@ public class QuestionsRepository implements QuestionsDataSource {
     public Observable<Question> refreshQuestion(@NonNull final String questionId) {
         return questionsRemoteDataSource
                 .refreshQuestion(questionId)
-                .flatMap(new Function<Question, ObservableSource<Question>>() {
+                .concatMap(new Function<Question, ObservableSource<Question>>() {
                     @Override
                     public ObservableSource<Question> apply(Question p) throws Exception {
                         return Observable

@@ -1,13 +1,16 @@
 package ru.shtrm.askmaster.mvp;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
@@ -27,17 +31,21 @@ import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
+import ru.shtrm.askmaster.mvp.profile.UserDetailFragment;
+import ru.shtrm.askmaster.mvp.profile.UserDetailPresenter;
 import ru.shtrm.askmaster.mvp.questions.QuestionFilterType;
 import ru.shtrm.askmaster.mvp.questions.QuestionsFragment;
 import ru.shtrm.askmaster.mvp.questions.QuestionsPresenter;
 import ru.shtrm.askmaster.mvp.users.UsersFragment;
 import ru.shtrm.askmaster.mvp.users.UsersPresenter;
 import ru.shtrm.askmaster.ui.PrefsActivity;
+import ru.shtrm.askmaster.util.MainUtil;
 import ru.shtrm.askmaster.util.PushUtil;
 import ru.shtrm.askmaster.util.SettingsUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final int REQUEST_WRITE_STORAGE = 2;
 
     private Toolbar toolbar;
 
@@ -45,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private QuestionsFragment questionsFragment;
     private UsersFragment usersFragment;
+    private UserDetailFragment profileFragment;
 
     private QuestionsPresenter questionsPresenter;
 
@@ -73,6 +82,8 @@ public class MainActivity extends AppCompatActivity
                     getFragment(savedInstanceState, "QuestionsFragment");
             usersFragment = (UsersFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState, "UsersFragment");
+            profileFragment = (UserDetailFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState, "UserDetailFragment");
             selectedNavItem = savedInstanceState.getInt(KEY_NAV_ITEM);
         } else {
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().
@@ -85,6 +96,12 @@ public class MainActivity extends AppCompatActivity
                     findFragmentById(R.id.content_main);
             if (usersFragment == null) {
                 usersFragment = UsersFragment.newInstance();
+            }
+
+            profileFragment = (UserDetailFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.content_main);
+            if (profileFragment == null) {
+                profileFragment = UserDetailFragment.newInstance();
             }
         }
 
@@ -102,6 +119,14 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
 
+        if (!profileFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_main, profileFragment, "UserDetailFragment")
+                    .commit();
+        }
+
+        CheckPermission();
+
         // Make sure the data in repository is the latest.
         // Also to void the repo only contains a package
         // when user has already gone to detail page
@@ -116,6 +141,10 @@ public class MainActivity extends AppCompatActivity
         new UsersPresenter(usersFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()));
 
+        new UserDetailPresenter(profileFragment, this,
+                UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
+                "");
+
         // Get data from Bundle.
         if (savedInstanceState != null) {
             QuestionFilterType currentFiltering = (QuestionFilterType) savedInstanceState.
@@ -126,9 +155,11 @@ public class MainActivity extends AppCompatActivity
 
         // Show the default fragment.
         if (selectedNavItem == 0) {
-            showPackagesFragment();
+            showProfileFragment();
         } else if (selectedNavItem == 1) {
             showUsersFragment();
+        } else if (selectedNavItem == 2) {
+            showQuestionsFragment();
         }
 
         PushUtil.startReminderService(this);
@@ -166,7 +197,10 @@ public class MainActivity extends AppCompatActivity
         Intent intent;
         switch (id) {
             case R.id.nav_profile:
-                showPackagesFragment();
+                showProfileFragment();
+                break;
+            case R.id.nav_questions:
+                showQuestionsFragment();
                 break;
             case R.id.nav_users:
                 showUsersFragment();
@@ -266,16 +300,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Show the packages list fragment.
+     * Show the questions list fragment.
      */
-    private void showPackagesFragment() {
+    private void showQuestionsFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(questionsFragment);
         fragmentTransaction.hide(usersFragment);
+        fragmentTransaction.hide(profileFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.app_name));
+        navigationView.setCheckedItem(R.id.nav_profile);
+
+    }
+
+    /**
+     * Show the profile fragment.
+     */
+    private void showProfileFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.show(profileFragment);
+        fragmentTransaction.hide(questionsFragment);
+        fragmentTransaction.hide(usersFragment);
+        fragmentTransaction.commit();
+
+        toolbar.setTitle(getResources().getString(R.string.nav_profile));
         navigationView.setCheckedItem(R.id.nav_profile);
 
     }
@@ -303,4 +354,26 @@ public class MainActivity extends AppCompatActivity
         questionsFragment.setSelectedQuestion(id);
     }
 
+    private void CheckPermission () {
+        // Create the storage directory if it does not exist
+        if (MainUtil.isExternalStorageWritable()) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult ( int requestCode,
+                                             @NonNull String permissions[], @NonNull int[] grantResults){
+        switch (requestCode) {
+            case REQUEST_WRITE_STORAGE:
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this,
+                            getResources().getString(R.string.message_no_write_permission),
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 }

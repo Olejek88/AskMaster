@@ -126,7 +126,8 @@ public class QuestionsFragment extends Fragment
         super.onPause();
         presenter.unsubscribe();
         setLoadingIndicator(false);
-        mainActivityConnector.sendBroadcast(AppWidgetProvider.getRefreshBroadcastIntent(getContext()));
+        //TODO temporary remove
+        //mainActivityConnector.sendBroadcast(AppWidgetProvider.getRefreshBroadcastIntent(getContext()));
     }
 
     @Override

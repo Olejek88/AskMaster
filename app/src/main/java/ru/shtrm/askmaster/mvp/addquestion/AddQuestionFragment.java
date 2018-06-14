@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,21 +29,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
+import ru.shtrm.askmaster.mvp.PhotoGridAdapter;
+import ru.shtrm.askmaster.util.MainUtil;
 
 import static android.app.Activity.RESULT_OK;
 
 public class AddQuestionFragment extends Fragment
         implements AddQuestionContract.View {
     private Activity mainActivityConnector = null;
-    private ArrayList<Image> images = null;
+    private ArrayList<Image> images = new ArrayList<>();
     public final static int ACTIVITY_PHOTO = 1;
     public final static int REQUEST_CAMERA_PERMISSION_CODE = 0;
 
@@ -51,7 +59,7 @@ public class AddQuestionFragment extends Fragment
     private TextInputEditText editText, editTextName;
     private FloatingActionButton fab;
     private ImageView imageView;
-    private NestedScrollView scrollView;
+    private GridView gridView;
 
     private AddQuestionContract.Presenter presenter;
 
@@ -74,7 +82,7 @@ public class AddQuestionFragment extends Fragment
 
         initViews(view);
 
-        addLayoutListener(scrollView, editTextName);
+        //addLayoutListener(scrollView, editTextName);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +97,10 @@ public class AddQuestionFragment extends Fragment
 
                 editTextName.setText(title);
                 final User user = UsersLocalDataSource.getInstance().getAuthorisedUser();
-                if (user != null) {
-                    presenter.saveQuestion (java.util.UUID.randomUUID().toString(), title,
-                            editText.getText().toString(), user, images);
-                }
+                //if (user != null) {
+                    presenter.saveQuestion (mainActivityConnector, java.util.UUID.randomUUID().toString(),
+                            title, editText.getText().toString(), user, images);
+                //}
             }
         });
 
@@ -169,13 +177,14 @@ public class AddQuestionFragment extends Fragment
 
         AddQuestionActivity activity = (AddQuestionActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = view.findViewById(R.id.question_add_image);
         editTextName = view.findViewById(R.id.editTextTitle);
         editText = view.findViewById(R.id.editDescription);
         fab = view.findViewById(R.id.fab);
-        scrollView = view.findViewById(R.id.scrollView);
+        gridView = view.findViewById(R.id.gridview);
+        //gridView.setAdapter(new PhotoGridAdapter(mainActivityConnector, null));
     }
 
     /**
@@ -201,6 +210,31 @@ public class AddQuestionFragment extends Fragment
                 if (resultCode == RESULT_OK) {
                     // TODO сохраняем в базу
                     // отображаем в гридвью
+                    Image image = new Image();
+                    String uuid = java.util.UUID.randomUUID().toString();
+                    image.setId(uuid);
+                    image.setImageName(uuid.concat(".jpg"));
+                    image.setDate(new Date());
+                    image.setTitle(getResources().getString(R.string.other));
+                    images.add(image);
+                    gridView.setAdapter(new PhotoGridAdapter(mainActivityConnector,images));
+                    gridView.invalidateViews();
+                    if (data!=null && data.getData()!=null) {
+                        InputStream inputStream = null;
+                        try {
+                            inputStream = mainActivityConnector.getApplicationContext()
+                                    .getContentResolver().openInputStream(data.getData());
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            if (bitmap!=null) {
+                                MainUtil.storeNewImage(bitmap, getContext(),
+                                        800, image.getImageName());
+                            }
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
                 break;
             default:

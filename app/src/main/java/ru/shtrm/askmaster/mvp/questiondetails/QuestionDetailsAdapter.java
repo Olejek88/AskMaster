@@ -69,7 +69,8 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             vh.textViewTitle.setText(aQuestion.getTitle());
             vh.textViewText.setText(aQuestion.getText());
             // TODO добавляем сюда рейтинг пользователя
-            vh.textViewAuthor.setText(aQuestion.getUser().getName());
+            if (aQuestion.getUser()!=null)
+                vh.textViewAuthor.setText(aQuestion.getUser().getName());
         } else {
             Answer item = answers.get(position - 1);
             AnswersViewHolder viewHolder = (AnswersViewHolder) holder;

@@ -95,15 +95,14 @@ public class QuestionsPresenter implements QuestionsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         view.showEmptyView(true);
-                        view.setLoadingIndicator(false);
+                        //view.setLoadingIndicator(false);
                     }
 
                     @Override
                     public void onComplete() {
-                        view.setLoadingIndicator(false);
+//                        view.setLoadingIndicator(false);
                     }
                 });
-
         compositeDisposable.add(disposable);
     }
 
@@ -112,6 +111,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter {
      */
     @Override
     public void refreshQuestions() {
+        /*
         Disposable disposable = questionsRepository
                 .refreshQuestions()
                 .observeOn(Schedulers.io())
@@ -124,16 +124,17 @@ public class QuestionsPresenter implements QuestionsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.setLoadingIndicator(false);
+                        //view.setLoadingIndicator(false);
                     }
 
                     @Override
                     public void onComplete() {
-                        view.setLoadingIndicator(false);
+                        //view.setLoadingIndicator(false);
                         loadQuestions();
                     }
                 });
         compositeDisposable.add(disposable);
+        */
     }
 
     /**

@@ -51,7 +51,7 @@ public class PushUtil {
                 Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(SettingsUtil.KEY_NOTIFICATION_INTERVAL, "1")));
         if (intervalTime > -1) {
-            startAlarmService(context, ReminderService.class, intervalTime);
+            //startAlarmService(context, ReminderService.class, intervalTime);
             Log.d(TAG, "startReminderService: interval time " + intervalTime);
         }
     }

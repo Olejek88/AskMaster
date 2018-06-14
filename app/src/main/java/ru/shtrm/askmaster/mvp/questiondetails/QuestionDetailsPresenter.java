@@ -69,8 +69,10 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
 
                         questionTitle = value.getTitle();
                         questionText = value.getText();
-                        answers = new ArrayList<>(value.getAnswers());
-                        images = new ArrayList<>(value.getImages());
+                        if (value.getAnswers().size()>0)
+                            answers = new ArrayList<>(value.getAnswers());
+                        if (value.getImages().size()>0)
+                            images = new ArrayList<>(value.getImages());
 
                         view.showQuestionDetails(value);
                     }

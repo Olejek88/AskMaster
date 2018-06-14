@@ -20,6 +20,18 @@ public class Image extends RealmObject {
     @SerializedName("title")
     private String title;
 
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    @Expose
+    @SerializedName("imageName")
+    private String imageName;
+
     @Expose
     @SerializedName("date")
     private Date date;

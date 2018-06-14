@@ -11,6 +11,7 @@
     <string name="activity_company_details">Company Details</string>
     <string name="activity_search">Search</string>
     <string name="activity_scan_code">Scan code</string>
+    <string name="message_no_write_permission">Нет разрешений на запись</string>
     <!--activities end-->
 
     <!--navigation drawer-->
@@ -126,7 +127,7 @@
     <string name="web_site">Страница проекта в сети</string>
     <string name="web_site_link">http://askmaster.ru</string>
     <string name="set_end_time_error">Start time can not be same as end time.</string>
-    <string name="notification_new_message">\"The package has a new message\"</string>
+    <string name="notification_new_answer">\"The question has a new answer\"</string>
     <!--About end-->
 
     <!--shortcuts-->

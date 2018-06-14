@@ -116,7 +116,8 @@ public class ReminderService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeDisposable.clear();
+        //Remove
+        //compositeDisposable.clear();
         Log.d(TAG, "onDestroy: ");
     }
 
@@ -158,18 +159,32 @@ public class ReminderService extends IntentService {
                     position, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
             String title = question.getTitle();
-            String subject = getString(R.string.notification_new_message);
+            String subject = getString(R.string.notification_new_answer);
             int smallIcon = R.drawable.ic_local_shipping_teal_24dp;
 
-            Notification notification = buildNotification(getApplicationContext(),
-                    title,
-                    subject,
-                    question.getAnswers().get(0).getText(),
-                    question.getAnswers().get(0).getDate().toString(),
-                    smallIcon,
-                    ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
-                    intent,
-                    null);
+            Notification notification;
+            if (question.getAnswers().size()>0) {
+                notification = buildNotification(getApplicationContext(),
+                        title,
+                        subject,
+                        question.getAnswers().get(0).getText(),
+                        question.getAnswers().get(0).getDate().toString(),
+                        smallIcon,
+                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
+                        intent,
+                        null);
+            }
+            else {
+                notification = buildNotification(getApplicationContext(),
+                        title,
+                        subject,
+                        "",
+                        question.getDate().toString(),
+                        smallIcon,
+                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
+                        intent,
+                        null);
+            }
 
             notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

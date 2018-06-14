@@ -73,7 +73,7 @@ public class MainUtil {
                 }
             }
         }
-        if (image_name.equals("")) {
+        if (image_name==null || image_name.equals("")) {
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm", Locale.US).format(new Date());
             image_name = "file_" + timeStamp + ".jpg";
         }

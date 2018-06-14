@@ -1,5 +1,7 @@
 package ru.shtrm.askmaster.mvp.addquestion;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -22,7 +24,8 @@ public interface AddQuestionContract {
 
     interface Presenter extends BasePresenter {
 
-        void saveQuestion(String id, String title, String text, User user, ArrayList<Image> images);
+        void saveQuestion(Context context, String id, String title, String text,
+                          User user, ArrayList<Image> images);
 
     }
 
