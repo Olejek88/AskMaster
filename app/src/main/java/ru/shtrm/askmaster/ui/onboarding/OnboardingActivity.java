@@ -206,7 +206,7 @@ public class OnboardingActivity extends AppCompatActivity {
                     .setShortLabel(getString(R.string.shortcut_label_scan_code))
                     .setIntent(
                             new Intent(OnboardingActivity.this, AddQuestionActivity.class)
-                                    .setAction("ru.shtrm.askmaster.mvp.addpackage.AddQuestionActivity")
+                                    .setAction("ru.shtrm.askmaster.mvp.addpackage.ImagesActivity")
                                     .addCategory(ShortcutInfo.SHORTCUT_CATEGORY_CONVERSATION)
                     )
                     .build();

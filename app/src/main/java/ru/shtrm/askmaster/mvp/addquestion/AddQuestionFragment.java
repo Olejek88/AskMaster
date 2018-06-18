@@ -53,7 +53,7 @@ public class AddQuestionFragment extends Fragment
     public final static int ACTIVITY_PHOTO = 1;
     public final static int REQUEST_CAMERA_PERMISSION_CODE = 0;
 
-    public static final String ACTION_CODE = "ru.shtrm.askmaster.mvp.addpackage.AddQuestionActivity";
+    public static final String ACTION_CODE = "ru.shtrm.askmaster.mvp.addpackage.ImagesActivity";
 
     // View references.
     private TextInputEditText editText, editTextName;

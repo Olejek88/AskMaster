@@ -16,6 +16,7 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.component.FastScrollRecyclerView;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
+import ru.shtrm.askmaster.util.MainUtil;
 
 public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements FastScrollRecyclerView.SectionedAdapter{
@@ -32,10 +33,10 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Nullable
     private OnRecyclerViewItemClickListener listener;
 
-    public static final int TYPE_NORMAL = 0;
-    public static final int TYPE_WITH_HEADER = 1;
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_WITH_HEADER = 1;
 
-    public UsersAdapter(@NonNull Context context, @NonNull List<User> list) {
+    UsersAdapter(@NonNull Context context, @NonNull List<User> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -55,17 +56,27 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         User user = list.get(position);
         String stats = "Q: " + Long.toString(user.getQuestions().size()) +
-                " / A: " + Long.toString(user.getAnswers().size()) +
-                " R: " + user.getRating();
+                " / A: " + Long.toString(user.getAnswers().size());
+        if (user.getRating()!=null) {
+            stats = stats.concat(" R: " + user.getRating());
+        }
 
         if (holder instanceof NormalViewHolder) {
             NormalViewHolder cvh = (NormalViewHolder) holder;
-            cvh.textViewAvatar.setText(user.getName().substring(0, 1).toUpperCase());
+            if (user.getAvatar()==null)
+                cvh.textViewAvatar.setText(user.getName().substring(0, 1).toUpperCase());
+            else
+                cvh.avatar.setImageBitmap(MainUtil.getBitmapByPath(
+                    MainUtil.getPicturesDirectory(context),user.getAvatar()));
             cvh.textViewUserStats.setText(stats);
             cvh.textViewUserName.setText(user.getName());
         } else if (holder instanceof WithHeaderViewHolder) {
             WithHeaderViewHolder wh = (WithHeaderViewHolder) holder;
-            wh.textViewAvatar.setText(user.getName().substring(0, 1).toUpperCase());
+            if (user.getAvatar()==null)
+                wh.textViewAvatar.setText(user.getName().substring(0, 1).toUpperCase());
+            else
+                wh.avatar.setImageBitmap(MainUtil.getBitmapByPath(
+                        MainUtil.getPicturesDirectory(context),user.getAvatar()));
             wh.textViewUserStats.setText(stats);
             wh.textViewUserName.setText(user.getName());
             wh.stickyHeaderText.setText(getSectionName(position));
@@ -97,7 +108,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         private OnRecyclerViewItemClickListener listener;
 
-        public NormalViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
+        NormalViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
 
             avatar = itemView.findViewById(R.id.imageViewAvatar);
@@ -137,7 +148,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         private OnRecyclerViewItemClickListener listener;
 
-        public WithHeaderViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
+        WithHeaderViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
             avatar = itemView.findViewById(R.id.imageViewAvatar);
             textViewAvatar = itemView.findViewById(R.id.textViewAvatar);

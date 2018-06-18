@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.hide(profileFragment);
         fragmentTransaction.commit();
 
-        toolbar.setTitle(getResources().getString(R.string.app_name));
+        toolbar.setTitle(getResources().getString(R.string.nav_questions));
         navigationView.setCheckedItem(R.id.nav_profile);
 
     }

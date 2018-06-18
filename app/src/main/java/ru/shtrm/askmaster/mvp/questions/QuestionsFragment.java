@@ -192,7 +192,6 @@ public class QuestionsFragment extends Fragment
                 // Here we call getDefaultUIUtil's function clearView to pass
                 // specified view.
                 getDefaultUIUtil().clearView(((QuestionsAdapter.QuestionViewHolder) viewHolder).layoutMain);
-                ((QuestionsAdapter.QuestionViewHolder) viewHolder).textViewAnswer.setVisibility(View.GONE);
                 ((QuestionsAdapter.QuestionViewHolder) viewHolder).imageViewAnswer.setVisibility(View.GONE);
             }
 
@@ -212,14 +211,12 @@ public class QuestionsFragment extends Fragment
                     // Left swipe
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).wrapperView.setBackgroundResource(R.color.deep_orange);
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).imageViewAnswer.setVisibility(View.VISIBLE);
-                    ((QuestionsAdapter.QuestionViewHolder) viewHolder).textViewAnswer.setVisibility(View.GONE);
                 }
 
                 if (dX < 0) {
                     // Right swipe
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).wrapperView.setBackgroundResource(R.color.deep_orange);
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).imageViewAnswer.setVisibility(View.GONE);
-                    ((QuestionsAdapter.QuestionViewHolder) viewHolder).textViewAnswer.setVisibility(View.VISIBLE);
                 }
 
             }

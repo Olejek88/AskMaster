@@ -64,11 +64,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         pvh.textViewDate.setText(sDate);
         pvh.textViewQuestionTitle.setTypeface(null, Typeface.BOLD);
         pvh.textViewQuestionTitle.setText(item.getTitle());
-        pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
-        // TODO что загружаем: фото пользователя или фото вопроса?
         if (item.getUser()!=null)
-            pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
-                MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
+            if (item.getUser().getAvatar()!=null)
+                pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
+                    MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
+            else
+                pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
     }
 
     @Override
@@ -99,7 +100,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         AppCompatTextView textViewQuestionTitle;
         AppCompatTextView textViewDate;
         AppCompatTextView textViewStatus;
-        AppCompatTextView textViewAnswer;
         AppCompatTextView textViewAvatar;
         ImageView imageViewAnswer;
         CircleImageView circleImageView;
@@ -113,7 +113,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textViewQuestionTitle = itemView.findViewById(R.id.textViewQuestionTitle);
             textViewStatus = itemView.findViewById(R.id.textQuestionStatus);
             textViewDate = itemView.findViewById(R.id.textQuestionTime);
-            textViewAnswer = itemView.findViewById(R.id.textViewAnswer);
             textViewAvatar = itemView.findViewById(R.id.textViewAvatar);
             imageViewAnswer = itemView.findViewById(R.id.imageViewAnswer);
             circleImageView = itemView.findViewById(R.id.circleImageView);
