@@ -12,7 +12,7 @@ import ru.shtrm.askmaster.data.Question;
 
 public interface ImagesDataSource {
 
-    Observable<List<Image>> getImages();
+    List<Image> getImages();
 
     Observable<Image> getImage(@NonNull final String id);
 

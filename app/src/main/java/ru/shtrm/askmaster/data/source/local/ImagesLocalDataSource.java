@@ -14,6 +14,8 @@ import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
 
+import static java.util.stream.Collectors.toList;
+
 public class ImagesLocalDataSource implements ImagesDataSource {
 
     @Nullable
@@ -32,13 +34,9 @@ public class ImagesLocalDataSource implements ImagesDataSource {
     }
 
     @Override
-    public Observable<List<Image>> getImages() {
+    public List<Image> getImages() {
         Realm realm = RealmHelper.newRealmInstance();
-        return Observable
-                .fromIterable(realm.copyFromRealm(
-                        realm.where(Image.class).findAllSorted("name", Sort.ASCENDING)))
-                .toList()
-                .toObservable();
+        return realm.copyFromRealm(realm.where(Image.class).findAllSorted("date", Sort.DESCENDING));
     }
 
     @Override

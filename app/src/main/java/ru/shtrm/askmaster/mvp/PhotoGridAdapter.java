@@ -57,7 +57,6 @@ public final class PhotoGridAdapter extends BaseAdapter {
         }
         picture = (ImageView) v.getTag(R.id.gridViewImage);
         Image item = getItem(i);
-        String path = MainUtil.getPicturesDirectory(context).concat(item.getImageName());
         Bitmap bitmap = MainUtil.getBitmapByPath(
                 MainUtil.getPicturesDirectory(context),item.getImageName());
         if (bitmap!=null)

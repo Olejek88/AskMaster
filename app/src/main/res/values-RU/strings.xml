@@ -11,6 +11,8 @@
     <string name="activity_user_details">Пользователь</string>
     <string name="activity_user_edit">Редактировать пользователя</string>
     <string name="activity_search">Поиск</string>
+    <string name="activity_images">Галерея</string>
+    <string name="activity_tricks">Трюки</string>
     <string name="activity_users">Пользователи</string>
     <string name="message_no_write_permission">Нет разрешений на запись</string>
     <!--activities end-->

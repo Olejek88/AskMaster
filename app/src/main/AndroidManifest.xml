@@ -52,6 +52,10 @@
             android:label="@string/activity_user_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".mvp.profile.ImagesActivity"
+            android:label="@string/activity_images"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".mvp.profileedit.UserEditActivity"
             android:label="@string/activity_user_edit"
             android:theme="@style/AppTheme.NoActionBar" />

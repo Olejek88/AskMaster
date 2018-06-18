@@ -30,11 +30,15 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
 import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.ImagesRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.UsersRepository;
+import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
+import ru.shtrm.askmaster.mvp.images.ImagesFragment;
+import ru.shtrm.askmaster.mvp.images.ImagesPresenter;
 import ru.shtrm.askmaster.mvp.profile.UserDetailFragment;
 import ru.shtrm.askmaster.mvp.profile.UserDetailPresenter;
 import ru.shtrm.askmaster.mvp.questions.QuestionFilterType;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private ImagesFragment imagesFragment;
     private QuestionsFragment questionsFragment;
     private UsersFragment usersFragment;
     private UserDetailFragment profileFragment;
@@ -103,6 +108,8 @@ public class MainActivity extends AppCompatActivity
                     getFragment(savedInstanceState, "UsersFragment");
             profileFragment = (UserDetailFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState, "UserDetailFragment");
+            imagesFragment = (ImagesFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState, "ImagesFragment");
             selectedNavItem = savedInstanceState.getInt(KEY_NAV_ITEM);
         } else {
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().
@@ -121,6 +128,12 @@ public class MainActivity extends AppCompatActivity
                     findFragmentById(R.id.content_main);
             if (profileFragment == null) {
                 profileFragment = UserDetailFragment.newInstance();
+            }
+
+            imagesFragment = (ImagesFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.content_main);
+            if (imagesFragment == null) {
+                imagesFragment = ImagesFragment.newInstance();
             }
         }
 
@@ -144,6 +157,12 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
 
+        if (!imagesFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_main, imagesFragment, "ImagesFragment")
+                    .commit();
+        }
+
         CheckPermission();
 
         // Make sure the data in repository is the latest.
@@ -162,6 +181,12 @@ public class MainActivity extends AppCompatActivity
         new UserDetailPresenter(profileFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
                 "");
+
+        new ImagesPresenter(QuestionsRepository.getInstance(
+                        QuestionsRemoteDataSource.getInstance(),
+                        QuestionsLocalDataSource.getInstance()),
+                ImagesRepository.getInstance(ImagesLocalDataSource.getInstance()),
+                imagesFragment);
 
         // Get data from Bundle.
         if (savedInstanceState != null) {
@@ -223,6 +248,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_users:
                 showUsersFragment();
+                break;
+            case R.id.nav_gallery:
+                showGalleryFragment();
                 break;
             case R.id.nav_switch_theme:
                 drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -294,6 +322,9 @@ public class MainActivity extends AppCompatActivity
         if (usersFragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, "UsersFragment", usersFragment);
         }
+        if (imagesFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "ImagesFragment", imagesFragment);
+        }
     }
 
     /**
@@ -330,6 +361,9 @@ public class MainActivity extends AppCompatActivity
                     case R.id.nav_users:
                         showUsersFragment();
                         break;
+                    case R.id.nav_gallery:
+                        showGalleryFragment();
+                        break;
                 }
                 return true;
             }
@@ -346,6 +380,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.show(questionsFragment);
         fragmentTransaction.hide(usersFragment);
         fragmentTransaction.hide(profileFragment);
+        fragmentTransaction.hide(imagesFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.nav_questions));
@@ -362,6 +397,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.show(profileFragment);
         fragmentTransaction.hide(questionsFragment);
         fragmentTransaction.hide(usersFragment);
+        fragmentTransaction.hide(imagesFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.nav_profile));
@@ -378,10 +414,25 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.show(usersFragment);
         fragmentTransaction.hide(questionsFragment);
         fragmentTransaction.hide(profileFragment);
+        fragmentTransaction.hide(imagesFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.nav_users));
         navigationView.setCheckedItem(R.id.nav_users);
+
+    }
+
+    private void showGalleryFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.show(imagesFragment);
+        fragmentTransaction.hide(usersFragment);
+        fragmentTransaction.hide(questionsFragment);
+        fragmentTransaction.hide(profileFragment);
+        fragmentTransaction.commit();
+
+        toolbar.setTitle(getResources().getString(R.string.nav_gallery));
+        navigationView.setCheckedItem(R.id.nav_gallery);
 
     }
 
