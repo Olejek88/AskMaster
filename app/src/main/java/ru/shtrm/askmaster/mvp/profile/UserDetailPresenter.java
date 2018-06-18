@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -25,17 +26,12 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
     private String userId;
 
     @NonNull
-    private Context context;
-
-    @NonNull
     private CompositeDisposable compositeDisposable;
 
     public UserDetailPresenter(@NonNull UserDetailContract.View view,
-                               @NonNull Context context,
                                @NonNull UsersRepository usersRepository,
                                @NonNull String userId) {
         this.view = view;
-        this.context = context;
         this.usersRepository = usersRepository;
         this.userId = userId;
         this.view.setPresenter(this);
@@ -53,9 +49,10 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
     }
 
     private void fetchUserData() {
-        Disposable disposable = usersRepository
-                .getUser(userId)
-                .subscribeOn(Schedulers.io())
+        Observable<User> user = usersRepository.getUser(userId);
+        if (user==null) return;
+
+        Disposable disposable = user.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<User>() {
                     @Override
@@ -69,7 +66,6 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showErrorMsg();
                     }
 
                     @Override
@@ -78,26 +74,5 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
                     }
                 });
         compositeDisposable.add(disposable);
-    }
-
-    @Override
-    public void saveUser(String id, String name, String address, String website, String phone,
-                         Bitmap avatar, User user) {
-        compositeDisposable.clear();
-        if (user==null) {
-            User newUser = new User();
-            String uuid = java.util.UUID.randomUUID().toString();
-            String fileName = uuid.concat(".jpg");
-            newUser.setId(uuid);
-            newUser.setName(name);
-            newUser.setAddress(address);
-            newUser.setWebsite(website);
-            newUser.setPhone(phone);
-            MainUtil.storeNewImage(avatar, context, 512, fileName);
-            newUser.setAvatar(fileName);
-            usersRepository.saveUser(newUser);
-        }
-        else
-            usersRepository.saveUser(user);
     }
 }

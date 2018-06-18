@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.component.Timeline;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.mvp.PhotoGridAdapter;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -68,9 +70,14 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             HeaderViewHolder vh = (HeaderViewHolder) holder;
             vh.textViewTitle.setText(aQuestion.getTitle());
             vh.textViewText.setText(aQuestion.getText());
-            // TODO добавляем сюда рейтинг пользователя
-            if (aQuestion.getUser()!=null)
-                vh.textViewAuthor.setText(aQuestion.getUser().getName());
+            vh.textViewAuthor.setText(aQuestion.getUser().getName());
+            String sDate =
+                    new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(aQuestion.getDate());
+            vh.textViewDate.setText(sDate);
+            vh.photoGridView.setAdapter(new PhotoGridAdapter(context, aQuestion.getImages()));
+            vh.photoGridView.invalidateViews();
+
+
         } else {
             Answer item = answers.get(position - 1);
             AnswersViewHolder viewHolder = (AnswersViewHolder) holder;
@@ -138,7 +145,6 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private TextView textViewText;
         private TextView textViewAuthor;
         private ImageView imageViewAuthor;
-        private GridView photoGridView;
         private Timeline timeLine;
 
         AnswersViewHolder(View itemView) {
@@ -147,7 +153,6 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             textViewText = (AppCompatTextView) itemView.findViewById(R.id.answerText);
             //timeLine = (Timeline) itemView.findViewById(R.id.tim);
             imageViewAuthor = itemView.findViewById(R.id.answerAuthorImage);
-            photoGridView = itemView.findViewById(R.id.answerPhotoGrid);
         }
     }
 
@@ -169,6 +174,7 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             textViewTitle = itemView.findViewById(R.id.questionTitle);
             textViewDate = itemView.findViewById(R.id.questionDate);
             photoGridView = itemView.findViewById(R.id.gridview);
+
         }
 
     }

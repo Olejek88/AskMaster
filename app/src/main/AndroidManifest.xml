@@ -41,15 +41,23 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mvp.addquestion.AddQuestionActivity"
-            android:label="@string/activity_add_package"
+            android:label="@string/activity_add_question"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mvp.questiondetails.QuestionDetailsActivity"
-            android:label="@string/activity_package_details"
+            android:label="@string/activity_question_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mvp.profile.UserDetailActivity"
-            android:label="@string/activity_company_details"
+            android:label="@string/activity_user_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mvp.profileedit.UserEditActivity"
+            android:label="@string/activity_user_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mvp.users.UsersActivity"
+            android:label="@string/activity_users"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.PrefsActivity"

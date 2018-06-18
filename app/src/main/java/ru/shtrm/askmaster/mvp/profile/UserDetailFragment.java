@@ -2,12 +2,16 @@ package ru.shtrm.askmaster.mvp.profile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -16,15 +20,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.customtabs.CustomTabsHelper;
+import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
+import ru.shtrm.askmaster.mvp.MainActivity;
+import ru.shtrm.askmaster.mvp.profileedit.UserEditActivity;
+import ru.shtrm.askmaster.mvp.questions.QuestionsFragment;
+import ru.shtrm.askmaster.mvp.users.UsersActivity;
+import ru.shtrm.askmaster.mvp.users.UsersFragment;
 import ru.shtrm.askmaster.util.MainUtil;
+
+import static ru.shtrm.askmaster.mvp.profile.UserDetailActivity.USER_ID;
 
 public class UserDetailFragment extends Fragment
         implements UserDetailContract.View {
@@ -34,14 +45,11 @@ public class UserDetailFragment extends Fragment
     private TextView textViewName;
     private TextView textViewAddress;
     private TextView textViewWebsite;
-    private TextView textViewPhone;
-    private ImageView imageView;
-    private Button submitButton;
+    private FloatingActionButton editUser;
 
     private UserDetailContract.Presenter presenter;
 
     private String website;
-    private String userUuid;
     private User user;
     private boolean owner = true;
 
@@ -59,35 +67,34 @@ public class UserDetailFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             @Nullable final Bundle savedInstanceState) {
         View view;
         Bundle b = getArguments();
         if (b!=null) {
-            userUuid = b.getString("id");
+            String userUuid = b.getString(USER_ID);
+            if (userUuid!=null)
+                user = UsersLocalDataSource.getInstance().getUserById(userUuid);
         }
-        user = UsersLocalDataSource.getInstance().getAuthorisedUser();
-        if (user != null && !user.getId().equals(userUuid)) {
-            user = UsersLocalDataSource.getInstance().getUserById(userUuid);
-            view = inflater.inflate(R.layout.fragment_edit_user, container, false);
-            owner = false;
-        } else
-            view = inflater.inflate(R.layout.fragment_view_user, container, false);
+        if (user==null)
+            user = UsersLocalDataSource.
+                getInstance().getUserById(AuthorizedUser.getInstance().getId());
 
+        if (user == null) {
+            Intent intent = new Intent(getContext(), UsersActivity.class);
+            startActivity(intent);
+        }
+
+        view = inflater.inflate(R.layout.fragment_view_user, container, false);
         initViews(view);
 
-        if (owner) {
-            submitButton.setOnClickListener(new View.OnClickListener() {
+        editUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    presenter.saveUser(java.util.UUID.randomUUID().toString(),
-                            textViewName.getText().toString(),
-                            textViewAddress.getText().toString(),
-                            textViewWebsite.getText().toString(),
-                            textViewPhone.getText().toString(),
-                            imageView.getDrawingCache(), user);
+                    Intent intent = new Intent(getContext(), UserEditActivity.class);
+                    intent.putExtra(USER_ID, user.getId());
+                    startActivity(intent);
                 }
             });
-        }
 
         textViewWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,20 +106,21 @@ public class UserDetailFragment extends Fragment
         });
 
         setHasOptionsMenu(true);
-
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
+        if (presenter!=null)
+            presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unsubscribe();
+        if (presenter!=null)
+            presenter.unsubscribe();
     }
 
     @Override
@@ -125,28 +133,23 @@ public class UserDetailFragment extends Fragment
 
     @Override
     public void initViews(View view) {
-        UserDetailActivity activity = (UserDetailActivity) mainActivityConnector;
-        activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        if (activity.getSupportActionBar()!=null)
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         textViewName = view.findViewById(R.id.profile_add_name);
         textViewAddress = view.findViewById(R.id.profile_add_address);
         textViewWebsite = view.findViewById(R.id.profile_add_website);
-        textViewPhone = view.findViewById(R.id.profile_add_phone);
-        imageView = view.findViewById(R.id.profile_add_image);
-        submitButton = view.findViewById(R.id.profile_button_submit);
+        TextView textViewPhone = view.findViewById(R.id.profile_add_phone);
+        ImageView imageView = view.findViewById(R.id.profile_add_image);
+        editUser = view.findViewById(R.id.editUser);
 
-        if (user!=null) {
-            textViewName.setText(user.getName());
-            textViewAddress.setText(user.getAddress());
-            textViewWebsite.setText(user.getWebsite());
-            textViewPhone.setText(user.getPhone());
-            imageView.setImageBitmap(MainUtil.getBitmapByPath(
-                    MainUtil.getPicturesDirectory(mainActivityConnector),user.getAvatar()));
+        textViewName.setText(user.getName());
+        textViewAddress.setText(user.getAddress());
+        textViewWebsite.setText(user.getWebsite());
+        textViewPhone.setText(user.getPhone());
+        String path = MainUtil.getPicturesDirectory(mainActivityConnector.getApplicationContext());
+        if (path != null) {
+            String avatar = user.getAvatar();
+            if (avatar != null)
+                imageView.setImageBitmap(MainUtil.getBitmapByPath(path, avatar));
         }
-        if (owner)
-            submitButton = view.findViewById(R.id.profile_button_submit);
     }
 
     @Override
@@ -170,11 +173,6 @@ public class UserDetailFragment extends Fragment
         Spannable spannable = new SpannableStringBuilder(website);
         spannable.setSpan(new URLSpan(website), 0, website.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textViewWebsite.setText(spannable);
-    }
-
-    @Override
-    public void showErrorMsg() {
-        Snackbar.make(submitButton, R.string.something_wrong, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

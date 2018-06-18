@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmResults;
+import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
@@ -40,17 +43,28 @@ public class UsersLocalDataSource implements UsersDataSource {
                 .toObservable();
     }
 
+    public User getLastUser() {
+        Realm realm = RealmHelper.newRealmInstance();
+        return realm.where(User.class).findFirst();
+    }
+
     @Override
     public Observable<User> getUser(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
-        return Observable
-                .just(realm.copyFromRealm(realm.where(User.class).equalTo("id", id).findFirst()));
+        User user = realm.where(User.class).equalTo("id", id).findFirst();
+        if (user!=null)
+            return Observable.just(realm.copyFromRealm(user));
+        else
+            return null;
     }
 
     @Override
     public User getUserById(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
-        return realm.where(User.class).equalTo("id", id).findFirst();
+        User user = realm.where(User.class).equalTo("id", id).findFirst();
+        if (user!=null)
+            return realm.copyFromRealm(user);
+        return null;
     }
 
     @Override
@@ -71,13 +85,21 @@ public class UsersLocalDataSource implements UsersDataSource {
 
     public User getAuthorisedUser() {
         Realm realm = RealmHelper.newRealmInstance();
-        return realm.where(User.class).equalTo("id",
-                ru.shtrm.gosport.model.AuthorizedUser.getInstance().getUuid()).findFirst();
+        AuthorizedUser aUser = AuthorizedUser.getInstance();
+        if (aUser!=null) {
+            User user = realm.where(User.class).equalTo("id",
+                    aUser.getId()).findFirst();
+            if (user!=null) {
+                return realm.copyFromRealm(user);
+            }
+        }
+        return null;
     }
 
     public boolean isUserExist(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
         User user =  realm.where(User.class).equalTo("id", id).findFirst();
+        realm.close();
         return user != null;
     }
 
@@ -92,6 +114,18 @@ public class UsersLocalDataSource implements UsersDataSource {
                 }
             });
         }
+        realm.close();
+    }
+
+    public void deleteUsers() {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(User.class).findAll().deleteAllFromRealm();
+            }
+        });
+        realm.close();
     }
 
     /**

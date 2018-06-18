@@ -1,15 +1,20 @@
 package ru.shtrm.askmaster.mvp.profile;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
+import ru.shtrm.askmaster.mvp.MainActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
-public class UserDetailActivity extends AppCompatActivity {
+public class UserDetailActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private UserDetailFragment fragment;
 
@@ -30,6 +35,10 @@ public class UserDetailActivity extends AppCompatActivity {
         }
 
         if (!fragment.isAdded()) {
+            Bundle b = new Bundle();
+            b.putString(USER_ID, getIntent().getStringExtra(USER_ID));
+            fragment.setArguments(b);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.view_pager, fragment, "UserDetailFragment")
                     .commit();
@@ -37,7 +46,6 @@ public class UserDetailActivity extends AppCompatActivity {
 
         new UserDetailPresenter(
                 fragment,
-                getApplicationContext(),
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
                 getIntent().getStringExtra(USER_ID));
 
@@ -49,5 +57,17 @@ public class UserDetailActivity extends AppCompatActivity {
         if (fragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, "UserDetailFragment", fragment);
         }
+    }
+
+    /**
+     * Handle different items of the navigation drawer
+     *
+     * @param item The selected item.
+     * @return Selected or not.
+     */
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
     }
 }

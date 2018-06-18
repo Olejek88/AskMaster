@@ -50,11 +50,12 @@ public class MainUtil {
     }
 
     public static String getPicturesDirectory(Context context) {
-        return Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + context.getPackageName()
-                + "/Files"
-                + File.separator;
+    String path = Environment.getExternalStorageDirectory()
+            + "/Android/data/"
+            + context.getPackageName()
+            + "/Files"
+            + File.separator;
+        return path;
     }
 
     public static Bitmap storeNewImage(Bitmap image, Context context, int width, String image_name) {

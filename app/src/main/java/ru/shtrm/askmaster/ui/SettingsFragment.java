@@ -118,18 +118,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
-
-        prefNavigationBar.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (getView()!=null) {
-                    Snackbar.make(getView(),
-                            R.string.navigation_bar_restart_msg, Snackbar.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
-
     }
 
     /**
@@ -140,7 +128,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         prefsEndTime = findPreference("do_not_disturb_mode_end");
         prefAlert = findPreference("alert");
         prefNotificationInterval = findPreference("notification_interval");
-        prefNavigationBar = findPreference("navigation_bar_tint");
     }
 
     @Override

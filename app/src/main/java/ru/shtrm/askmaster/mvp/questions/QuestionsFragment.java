@@ -26,7 +26,6 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
 import ru.shtrm.askmaster.mvp.addquestion.AddQuestionActivity;
@@ -86,13 +85,10 @@ public class QuestionsFragment extends Fragment
                 switch (item.getItemId()) {
                     case R.id.nav_profile:
                         break;
-
                     case R.id.nav_users:
                         break;
-
                     case R.id.nav_questions:
                         break;
-
                     case R.id.nav_gallery:
                         break;
                 }

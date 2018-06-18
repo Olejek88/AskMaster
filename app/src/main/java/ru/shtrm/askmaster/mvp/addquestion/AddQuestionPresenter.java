@@ -69,6 +69,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         Question question = new Question();
         question.setId(java.util.UUID.randomUUID().toString());
         question.setPushable(true);
+        question.setClosed(false);
         question.setUser(user);
         question.setTitle(title);
         question.setText(text);

@@ -1,4 +1,4 @@
-package ru.shtrm.gosport.model;
+package ru.shtrm.askmaster.data;
 
 public class AuthorizedUser {
 	
@@ -16,14 +16,14 @@ public class AuthorizedUser {
 	/**
 	 * @return the mUuid
 	 */
-	public String getUuid() {
+	public String getId() {
 		return mUuid;
 	}
 
 	/**
 	 * @param Uuid the mUuid to set
 	 */
-	public void setUuid(String Uuid) {
+	public void setId(String Uuid) {
 		this.mUuid = Uuid;
 	}
 

@@ -72,10 +72,12 @@
     <string name="activity_add_question">Add question</string>
     <!--add question end-->
 
-    <!--company details-->
+    <!--user details-->
+    <string name="profile_name">Your nickname</string>
+    <string name="profile_city">City or location</string>
     <string name="phone_number">Phone Number</string>
     <string name="official_website">Official Website</string>
-    <!--company details end-->
+    <!--user details end-->
 
     <!--Settings-->
     <string name="notifications">Notifications</string>

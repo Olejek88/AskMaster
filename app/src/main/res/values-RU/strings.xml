@@ -6,13 +6,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--activities-->
-    <string name="activity_package_details">Package Details</string>
-    <string name="activity_add_package">Add Package</string>
-    <string name="activity_company_details">Company Details</string>
-    <string name="activity_search">Search</string>
-    <string name="activity_scan_code">Scan code</string>
+    <string name="activity_question_details">Детали вопроса</string>
+    <string name="activity_add_question">Добавить вопрос</string>
+    <string name="activity_user_details">Пользователь</string>
+    <string name="activity_user_edit">Редактировать пользователя</string>
+    <string name="activity_search">Поиск</string>
+    <string name="activity_users">Пользователи</string>
     <string name="message_no_write_permission">Нет разрешений на запись</string>
     <!--activities end-->
+
+    <string name="user_master">Мастер</string>
+    <string name="user_user">Пользователь</string>
 
     <!--navigation drawer-->
     <string name="nav_profile">Профиль</string>
@@ -74,13 +78,15 @@
     <string name="error">Ошибка</string>
     <string name="something_wrong">Что-то пошло не так</string>
     <string name="unable_to_open_camera">Не можем запустить камеру</string>
-    <string name="activity_add_question">Добавить вопрос</string>
+    <string name="add_question">Добавить вопрос</string>
     <!--add question end-->
 
-    <!--company details-->
-    <string name="phone_number">Phone Number</string>
-    <string name="official_website">Official Website</string>
-    <!--company details end-->
+    <!--user details-->
+    <string name="profile_name">Ваше имя или никнейм</string>
+    <string name="profile_city">Город или локация</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="official_website">Страница в соцсети</string>
+    <!--user details end-->
 
     <!--Settings-->
     <string name="notifications">Оповещения</string>

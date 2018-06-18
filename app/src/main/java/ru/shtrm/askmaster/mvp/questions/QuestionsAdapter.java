@@ -39,7 +39,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private String[] packageStatus;
 
-    public QuestionsAdapter(@NonNull Context context, @NonNull List<Question> list) {
+    QuestionsAdapter(@NonNull Context context, @NonNull List<Question> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.list = list;
@@ -57,9 +57,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Question item = list.get(position);
         QuestionViewHolder pvh = (QuestionViewHolder) holder;
         if (item.isClosed())
-            pvh.textViewStatus.setText(String.valueOf(packageStatus[0]));
-        else
             pvh.textViewStatus.setText(String.valueOf(packageStatus[1]));
+        else
+            pvh.textViewStatus.setText(String.valueOf(packageStatus[0]));
         String sDate = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(item.getDate());
         pvh.textViewDate.setText(sDate);
         pvh.textViewQuestionTitle.setTypeface(null, Typeface.BOLD);

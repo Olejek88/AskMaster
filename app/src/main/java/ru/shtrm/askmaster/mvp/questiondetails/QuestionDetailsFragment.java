@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
@@ -34,6 +36,9 @@ public class QuestionDetailsFragment extends Fragment
     private Activity mainActivityConnector = null;
 
     private RecyclerView recyclerView;
+    private AppCompatTextView userName;
+    private AppCompatTextView userStatus;
+    private AppCompatTextView userStats;
 
     private FloatingActionButton fab;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -57,7 +62,7 @@ public class QuestionDetailsFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_package_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_question_details, container, false);
 
         initViews(view);
 
@@ -122,10 +127,9 @@ public class QuestionDetailsFragment extends Fragment
      */
     @Override
     public void initViews(View view) {
-
         QuestionDetailsActivity activity = (QuestionDetailsActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -134,6 +138,10 @@ public class QuestionDetailsFragment extends Fragment
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(mainActivityConnector, R.color.colorPrimary));
 
+        RelativeLayout user_info = view.findViewById(R.id.user_detail);
+        userName = user_info.findViewById(R.id.profile_name);
+        userStatus = user_info.findViewById(R.id.profile_status);
+        userStats = user_info.findViewById(R.id.profile_stats);
     }
 
     /**
@@ -186,6 +194,16 @@ public class QuestionDetailsFragment extends Fragment
         } else {
             adapter.updateData(question.getAnswers());
         }
+        if (question.getUser()!=null) {
+            userStatus.setText(R.string.user_master);
+            String stats = " [Q: ".
+                        concat(Integer.toString(question.getUser().getQuestions().size())).
+                        concat(" A: ").
+                        concat(Integer.toString(question.getUser().getAnswers().size())).
+                        concat("]");
+            userStats.setText(stats);
+            userName.setText(question.getUser().getName());
+        }
     }
 
     /**
@@ -228,7 +246,7 @@ public class QuestionDetailsFragment extends Fragment
         AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
         dialog.setTitle(getString(R.string.edit_name));
 
-        View view = getActivity().getLayoutInflater().
+        View view = mainActivityConnector.getLayoutInflater().
                 inflate(R.layout.dialog_edit_question_title, null);
         final AppCompatEditText editText = view.findViewById(R.id.editTextName);
         editText.setText(presenter.getQuestionTitle());

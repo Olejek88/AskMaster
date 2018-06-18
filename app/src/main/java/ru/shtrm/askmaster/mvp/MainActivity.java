@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
+import ru.shtrm.askmaster.data.AuthorizedUser;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_WRITE_STORAGE = 2;
 
     private Toolbar toolbar;
+    private BottomNavigationView navigation;
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -72,6 +77,20 @@ public class MainActivity extends AppCompatActivity
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setNavigationBarColor(
                         ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            }
+        }
+
+        if (savedInstanceState != null) {
+            AuthorizedUser aUser = AuthorizedUser.getInstance();
+            aUser.setToken(savedInstanceState.getString("token"));
+            aUser.setId(savedInstanceState.getString("userId"));
+        }
+        else {
+            User user = UsersLocalDataSource.getInstance().getAuthorisedUser();
+            if (user==null) {
+                user = UsersLocalDataSource.getInstance().getLastUser();
+                if (user != null)
+                    AuthorizedUser.getInstance().setId(user.getId());
             }
         }
 
@@ -119,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
 
-        if (!profileFragment.isAdded()) {
+        if (profileFragment!=null && !profileFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.content_main, profileFragment, "UserDetailFragment")
                     .commit();
@@ -137,11 +156,10 @@ public class MainActivity extends AppCompatActivity
                 QuestionsRepository.getInstance(
                         QuestionsRemoteDataSource.getInstance(),
                         QuestionsLocalDataSource.getInstance()));
-
         new UsersPresenter(usersFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()));
 
-        new UserDetailPresenter(profileFragment, this,
+        new UserDetailPresenter(profileFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
                 "");
 
@@ -183,6 +201,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 
     /**
      * Handle different items of the navigation drawer
@@ -297,12 +316,31 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigation = findViewById(R.id.bottomNavigationView);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_profile:
+                        showProfileFragment();
+                        break;
+                    case R.id.nav_questions:
+                        showQuestionsFragment();
+                        break;
+                    case R.id.nav_users:
+                        showUsersFragment();
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
 
     /**
      * Show the questions list fragment.
      */
-    private void showQuestionsFragment() {
+    public void showQuestionsFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(questionsFragment);
@@ -339,6 +377,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(usersFragment);
         fragmentTransaction.hide(questionsFragment);
+        fragmentTransaction.hide(profileFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.nav_users));
