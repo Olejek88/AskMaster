@@ -25,11 +25,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsFragment extends Fragment
         implements QuestionDetailsContract.View {
@@ -39,6 +41,7 @@ public class QuestionDetailsFragment extends Fragment
     private AppCompatTextView userName;
     private AppCompatTextView userStatus;
     private AppCompatTextView userStats;
+    private ImageView imageView;
 
     private FloatingActionButton fab;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -66,6 +69,7 @@ public class QuestionDetailsFragment extends Fragment
 
         initViews(view);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +77,14 @@ public class QuestionDetailsFragment extends Fragment
             }
         });
 
+/*
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 presenter.refreshQuestion();
             }
         });
+*/
 
         setHasOptionsMenu(true);
 
@@ -129,19 +135,22 @@ public class QuestionDetailsFragment extends Fragment
     public void initViews(View view) {
         QuestionDetailsActivity activity = (QuestionDetailsActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         fab = view.findViewById(R.id.fab);
+/*
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(mainActivityConnector, R.color.colorPrimary));
+*/
 
         RelativeLayout user_info = view.findViewById(R.id.user_detail);
         userName = user_info.findViewById(R.id.profile_name);
         userStatus = user_info.findViewById(R.id.profile_status);
         userStats = user_info.findViewById(R.id.profile_stats);
+        imageView = user_info.findViewById(R.id.profile_image);
     }
 
     /**
@@ -203,6 +212,13 @@ public class QuestionDetailsFragment extends Fragment
                         concat("]");
             userStats.setText(stats);
             userName.setText(question.getUser().getName());
+
+            String path = MainUtil.getPicturesDirectory(mainActivityConnector.getApplicationContext());
+            if (path != null) {
+                String avatar = question.getUser().getAvatar();
+                if (avatar != null)
+                    imageView.setImageBitmap(MainUtil.getBitmapByPath(path, avatar));
+            }
         }
     }
 

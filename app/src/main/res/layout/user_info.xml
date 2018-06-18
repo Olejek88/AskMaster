@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeHeaderLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/colorPrimary">
+    android:background="@color/colorPrimary">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -53,6 +52,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/star1"
         android:layout_below="@id/profile_status"
         android:layout_toEndOf="@id/profile_image"
@@ -61,6 +61,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/star2"
         android:layout_below="@id/profile_status"
         android:layout_toEndOf="@id/star1"
@@ -69,6 +70,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/star3"
         android:layout_below="@id/profile_status"
         android:layout_toEndOf="@id/star2"
@@ -77,6 +79,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/star4"
         android:layout_below="@id/profile_status"
         android:layout_toEndOf="@id/star3"
@@ -85,6 +88,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/star5"
         android:layout_below="@id/profile_status"
         android:layout_toEndOf="@id/star4"

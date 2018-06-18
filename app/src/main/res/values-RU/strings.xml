@@ -40,7 +40,7 @@
     <string name="action_search">Search</string>
     <string name="mark_all_read">Mark all read</string>
     <string name="share">Share</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Удалить</string>
     <string name="copy_code">Copy code</string>
     <string name="set_unread">Set unread</string>
     <string name="set_read">Set read</string>

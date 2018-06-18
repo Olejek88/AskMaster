@@ -3,9 +3,11 @@ package ru.shtrm.askmaster.data.source.remote;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 
@@ -58,4 +60,7 @@ public class ImagesRemoteDataSource implements ImagesDataSource {
         // of refreshing the Images from all available data source
     }
 
+    public RealmList<Image> saveImages(@NonNull ArrayList<Image> images) {
+        return null;
+    }
 }

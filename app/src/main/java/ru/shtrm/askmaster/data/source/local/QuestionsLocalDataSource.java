@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
@@ -66,6 +67,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         if (questionsDataSource.isQuestionExist(id)) {
             return;
         }
+        RealmList<Image> imageRealmList = new RealmList<>();
         Question question = new Question();
         question.setId(java.util.UUID.randomUUID().toString());
         question.setPushable(true);
@@ -74,12 +76,11 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         question.setTitle(title);
         question.setText(text);
         question.setDate(new Date());
-        questionsDataSource.saveQuestion(question);
-
         for (Image image : images) {
-            // TODO добавить сохранение изображений в базе
             saveImage(context, image.getTitle(), image.getImageName());
         }
+        question.setImages(imagesDataSource.saveImages(images));
+        questionsDataSource.saveQuestion(question);
 
         view.showQuestionsList();
     }

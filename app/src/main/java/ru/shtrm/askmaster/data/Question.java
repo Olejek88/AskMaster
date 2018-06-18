@@ -102,7 +102,6 @@ public class Question extends RealmObject {
         this.images = images;
     }
 
-
     public User getUser() {
         return user;
     }

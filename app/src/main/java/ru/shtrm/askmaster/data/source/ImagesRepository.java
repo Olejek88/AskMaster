@@ -3,9 +3,11 @@ package ru.shtrm.askmaster.data.source;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 
 public class ImagesRepository implements ImagesDataSource {
@@ -47,4 +49,10 @@ public class ImagesRepository implements ImagesDataSource {
     public void saveImage(@NonNull Image Image) {
         localDataSource.saveImage(Image);
     }
+
+    @Override
+    public RealmList<Image> saveImages(@NonNull ArrayList<Image> images) {
+        return localDataSource.saveImages(images);
+    }
+
 }

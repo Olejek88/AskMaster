@@ -76,8 +76,6 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             vh.textViewDate.setText(sDate);
             vh.photoGridView.setAdapter(new PhotoGridAdapter(context, aQuestion.getImages()));
             vh.photoGridView.invalidateViews();
-
-
         } else {
             Answer item = answers.get(position - 1);
             AnswersViewHolder viewHolder = (AnswersViewHolder) holder;
@@ -174,7 +172,6 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             textViewTitle = itemView.findViewById(R.id.questionTitle);
             textViewDate = itemView.findViewById(R.id.questionDate);
             photoGridView = itemView.findViewById(R.id.gridview);
-
         }
 
     }
