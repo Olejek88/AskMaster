@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-
         // Add the fragments.
         if (!questionsFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
@@ -210,8 +209,8 @@ public class MainActivity extends AppCompatActivity
                 imagesFragment);
 
         new TricksPresenter(tricksFragment,
-                TricksRepository.getInstance(TricksLocalDataSource.getInstance(),
-                TricksRemoteDataSource.getInstance()));
+                TricksRepository.getInstance(TricksRemoteDataSource.getInstance(),
+                TricksLocalDataSource.getInstance()));
 
         // Get data from Bundle.
         if (savedInstanceState != null) {
@@ -405,76 +404,34 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    /**
-     * Show the questions list fragment.
-     */
     public void showQuestionsFragment() {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.show(questionsFragment);
-        fragmentTransaction.hide(usersFragment);
-        fragmentTransaction.hide(profileFragment);
-        fragmentTransaction.hide(imagesFragment);
-        fragmentTransaction.commit();
-
+        changeFragment(questionsFragment);
         toolbar.setTitle(getResources().getString(R.string.nav_questions));
         navigationView.setCheckedItem(R.id.nav_profile);
-
     }
 
-    /**
-     * Show the profile fragment.
-     */
     private void showProfileFragment() {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.show(profileFragment);
-        fragmentTransaction.hide(questionsFragment);
-        fragmentTransaction.hide(usersFragment);
-        fragmentTransaction.hide(imagesFragment);
-        fragmentTransaction.commit();
-
+        changeFragment(profileFragment);
         toolbar.setTitle(getResources().getString(R.string.nav_profile));
         navigationView.setCheckedItem(R.id.nav_profile);
-
     }
 
-    /**
-     * Show the user list fragment.
-     */
     private void showUsersFragment() {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.show(usersFragment);
-        fragmentTransaction.hide(questionsFragment);
-        fragmentTransaction.hide(profileFragment);
-        fragmentTransaction.hide(imagesFragment);
-        fragmentTransaction.commit();
-
+        changeFragment(usersFragment);
         toolbar.setTitle(getResources().getString(R.string.nav_users));
         navigationView.setCheckedItem(R.id.nav_users);
-
     }
 
     private void showGalleryFragment() {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.show(imagesFragment);
-        fragmentTransaction.hide(usersFragment);
-        fragmentTransaction.hide(questionsFragment);
-        fragmentTransaction.hide(profileFragment);
-        fragmentTransaction.commit();
-
+        changeFragment(imagesFragment);
         toolbar.setTitle(getResources().getString(R.string.nav_gallery));
         navigationView.setCheckedItem(R.id.nav_gallery);
-
     }
 
     private void showTricksFragment() {
         changeFragment(tricksFragment);
         toolbar.setTitle(getResources().getString(R.string.nav_tricks));
         navigationView.setCheckedItem(R.id.nav_tricks);
-
     }
 
     void changeFragment(Fragment selectedFragment) {

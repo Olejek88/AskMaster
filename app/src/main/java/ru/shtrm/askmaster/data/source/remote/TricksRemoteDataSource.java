@@ -58,7 +58,7 @@ public class TricksRemoteDataSource implements TricksDataSource {
     }
 
     @Override
-    public void saveTrick(@NonNull Trick Trick) {
+    public void saveTrick(@NonNull Trick trick) {
         // Not required because the {@link TricksRepository} handles the logic
         // of refreshing the Tricks from all available data source
     }

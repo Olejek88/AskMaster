@@ -15,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 
 public class TricksRepository implements TricksDataSource {
@@ -23,25 +24,25 @@ public class TricksRepository implements TricksDataSource {
     private static TricksRepository INSTANCE = null;
 
     @NonNull
-    private final TricksDataSource TricksRemoteDataSource;
+    private final TricksDataSource tricksRemoteDataSource;
 
     @NonNull
-    private final TricksDataSource TricksLocalDataSource;
+    private final TricksDataSource tricksLocalDataSource;
 
     private Map<String, Trick> cachedTricks;
 
     // Prevent direct instantiation
-    private TricksRepository(@NonNull TricksDataSource TricksRemoteDataSource,
-                             @NonNull TricksDataSource TricksLocalDataSource) {
-        this.TricksRemoteDataSource = TricksRemoteDataSource;
-        this.TricksLocalDataSource = TricksLocalDataSource;
+    private TricksRepository(@NonNull TricksDataSource tricksRemoteDataSource,
+                             @NonNull TricksDataSource tricksLocalDataSource) {
+        this.tricksRemoteDataSource = tricksRemoteDataSource;
+        this.tricksLocalDataSource = tricksLocalDataSource;
     }
 
     // The access for other classes.
-    public static TricksRepository getInstance(@NonNull TricksDataSource TricksRemoteDataSource,
-                                               @NonNull TricksDataSource TricksLocalDataSource) {
+    public static TricksRepository getInstance(@NonNull TricksDataSource tricksRemoteDataSource,
+                                               @NonNull TricksDataSource tricksLocalDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new TricksRepository(TricksRemoteDataSource, TricksLocalDataSource);
+            INSTANCE = new TricksRepository(tricksRemoteDataSource, tricksLocalDataSource);
         }
         return INSTANCE;
     }
@@ -57,7 +58,7 @@ public class TricksRepository implements TricksDataSource {
      */
     @Override
     public List<Trick> getTricks() {
-        return TricksLocalDataSource.getTricks();
+        return tricksLocalDataSource.getTricks();
     }
 
     /**
@@ -67,7 +68,7 @@ public class TricksRepository implements TricksDataSource {
      */
     @Override
     public Trick getTrick(@NonNull final String id) {
-        return TricksLocalDataSource.getTrick(id);
+        return tricksLocalDataSource.getTrick(id);
     }
 
     /**
@@ -75,20 +76,20 @@ public class TricksRepository implements TricksDataSource {
      * It is supposed to save it to database and network too.
      * But we have no cloud(The account system) yet.
      * It may change either.
-     * @param Trick The Trick to save. See more @{@link Trick}.
+     * @param trick The Trick to save. See more @{@link Trick}.
      */
     @Override
-    public void saveTrick(@NonNull Trick Trick) {
-        TricksLocalDataSource.saveTrick(Trick);
+    public void saveTrick(@NonNull Trick trick) {
+        tricksLocalDataSource.saveTrick(trick);
     }
 
     /**
      * Delete a Trick from data source and cache.
-     * @param TrickId The primary id or in another words, the Trick number.
+     * @param trickId The primary id or in another words, the Trick number.
      *                  See more @{@link Trick#id}.
      */
     @Override
-    public void deleteTrick(@NonNull String TrickId) {
-        TricksLocalDataSource.deleteTrick(TrickId);
+    public void deleteTrick(@NonNull String trickId) {
+        tricksLocalDataSource.deleteTrick(trickId);
     }
 }

@@ -176,7 +176,7 @@ public class AddQuestionFragment extends Fragment
 
         AddQuestionActivity activity = (AddQuestionActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = view.findViewById(R.id.question_add_image);
         editTextName = view.findViewById(R.id.editTextTitle);

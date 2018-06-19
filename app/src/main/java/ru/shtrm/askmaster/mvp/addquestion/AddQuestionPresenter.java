@@ -67,7 +67,6 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         if (questionsDataSource.isQuestionExist(id)) {
             return;
         }
-        RealmList<Image> imageRealmList = new RealmList<>();
         Question question = new Question();
         question.setId(java.util.UUID.randomUUID().toString());
         question.setPushable(true);

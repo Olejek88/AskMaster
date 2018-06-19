@@ -57,7 +57,7 @@
                         android:layout_gravity="center"
                         android:background="@color/colorPrimary"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/user_no_image" />
+                        android:src="@drawable/question" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/inputLayoutTitle"
@@ -76,7 +76,7 @@
                             android:drawablePadding="16dp"
                             android:drawableStart="@drawable/ic_info_black_24dp"
                             android:drawableTint="@color/colorPrimaryText"
-                            android:hint="@string/tint_question_title"
+                            android:hint="@string/tint_trick_title"
                             android:inputType="text"
                             android:textColor="@color/colorPrimaryText"
                             tools:targetApi="m" />
@@ -117,6 +117,17 @@
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_mode_edit_white_24dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@id/trick_add_image"
+            app:layout_anchorGravity="bottom|end" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

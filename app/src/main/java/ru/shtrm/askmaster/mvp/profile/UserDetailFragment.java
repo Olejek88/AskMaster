@@ -80,8 +80,9 @@ public class UserDetailFragment extends Fragment
                 getInstance().getUserById(AuthorizedUser.getInstance().getId());
 
         if (user == null) {
-            Intent intent = new Intent(getContext(), UsersActivity.class);
+            Intent intent = new Intent(getContext(), UserEditActivity.class);
             startActivity(intent);
+            return null;
         }
 
         view = inflater.inflate(R.layout.fragment_view_user, container, false);

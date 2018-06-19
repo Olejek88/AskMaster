@@ -63,16 +63,16 @@ public class TricksLocalDataSource implements TricksDataSource {
 
     /**
      * Save a Trick to database.
-     * @param Trick The Trick to save. See {@link Trick}
+     * @param trick The Trick to save. See {@link Trick}
      */
     @Override
-    public void saveTrick(@NonNull final Trick Trick) {
+    public void saveTrick(@NonNull final Trick trick) {
         Realm realm = RealmHelper.newRealmInstance();
         // DO NOT forget begin and commit the transaction.
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(Trick);
+                realm.copyToRealmOrUpdate(trick);
             }
         });
         realm.close();
@@ -86,14 +86,14 @@ public class TricksLocalDataSource implements TricksDataSource {
     @Override
     public void deleteTrick(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
-        final Trick Trick = realm.where(Trick.class)
+        final Trick trick = realm.where(Trick.class)
                 .equalTo("id", id)
                 .findFirst();
-        if (Trick != null) {
+        if (trick != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Trick.deleteFromRealm();
+                    trick.deleteFromRealm();
                 }
             });
         }

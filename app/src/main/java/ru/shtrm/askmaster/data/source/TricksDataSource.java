@@ -13,7 +13,7 @@ public interface TricksDataSource {
 
     Trick getTrick(@NonNull final String id);
 
-    void saveTrick(@NonNull Trick Trick);
+    void saveTrick(@NonNull Trick trick);
 
     void deleteTrick(@NonNull String id);
 
