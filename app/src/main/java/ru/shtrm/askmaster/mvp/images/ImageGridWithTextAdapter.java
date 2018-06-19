@@ -1,4 +1,4 @@
-package ru.shtrm.askmaster.mvp;
+package ru.shtrm.askmaster.mvp.images;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -15,14 +16,14 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.util.MainUtil;
 
-public final class PhotoGridAdapter extends BaseAdapter {
+public final class ImageGridWithTextAdapter extends BaseAdapter {
     @NonNull
     private final Context context;
 
     private List<Image> mItems;
     private final LayoutInflater mInflater;
 
-    public PhotoGridAdapter(@NonNull Context context, List<Image> images) {
+    public ImageGridWithTextAdapter(@NonNull Context context, List<Image> images) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
         this.mItems = images;
@@ -50,17 +51,22 @@ public final class PhotoGridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = view;
         ImageView picture;
+        TextView description;
 
         if (v == null) {
-            v = mInflater.inflate(R.layout.item_image, viewGroup, false);
+            v = mInflater.inflate(R.layout.item_image_text, viewGroup, false);
             v.setTag(R.id.gridViewImage, v.findViewById(R.id.gridViewImage));
+            v.setTag(R.id.gridViewText, v.findViewById(R.id.gridViewText));
         }
         picture = (ImageView) v.getTag(R.id.gridViewImage);
+        description = (TextView) v.getTag(R.id.gridViewText);
+
         Image item = getItem(i);
         Bitmap bitmap = MainUtil.getBitmapByPath(
                 MainUtil.getPicturesDirectory(context),item.getImageName());
         if (bitmap!=null)
             picture.setImageBitmap(bitmap);
+        description.setText(item.getTitle());
         return v;
     }
 }

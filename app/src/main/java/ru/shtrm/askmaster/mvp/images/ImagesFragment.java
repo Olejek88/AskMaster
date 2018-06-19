@@ -18,7 +18,6 @@ import java.util.List;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.mvp.MainActivity;
-import ru.shtrm.askmaster.mvp.PhotoGridAdapter;
 
 public class ImagesFragment extends Fragment
         implements ImagesContract.View {
@@ -77,7 +76,7 @@ public class ImagesFragment extends Fragment
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         GridView gridView = view.findViewById(R.id.gridview);
         List<Image> images = presenter.getImages();
-        gridView.setAdapter(new PhotoGridAdapter(mainActivityConnector,images));
+        gridView.setAdapter(new ImageGridWithTextAdapter(mainActivityConnector,images));
         gridView.invalidateViews();
     }
 

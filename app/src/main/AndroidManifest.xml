@@ -52,7 +52,7 @@
             android:label="@string/activity_user_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mvp.profile.ImagesActivity"
+            android:name=".mvp.images.ImagesActivity"
             android:label="@string/activity_images"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

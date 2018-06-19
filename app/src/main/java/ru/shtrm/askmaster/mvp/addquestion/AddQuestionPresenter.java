@@ -77,7 +77,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         question.setText(text);
         question.setDate(new Date());
         for (Image image : images) {
-            saveImage(context, image.getTitle(), image.getImageName());
+            saveImage(context, title, image.getImageName());
         }
         question.setImages(imagesDataSource.saveImages(images));
         questionsDataSource.saveQuestion(question);

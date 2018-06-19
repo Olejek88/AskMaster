@@ -20,7 +20,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -41,7 +40,7 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
-import ru.shtrm.askmaster.mvp.PhotoGridAdapter;
+import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
 import ru.shtrm.askmaster.util.MainUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -217,7 +216,7 @@ public class AddQuestionFragment extends Fragment
                     image.setDate(new Date());
                     image.setTitle(getResources().getString(R.string.other));
                     images.add(image);
-                    gridView.setAdapter(new PhotoGridAdapter(mainActivityConnector,images));
+                    gridView.setAdapter(new ImageGridAdapter(mainActivityConnector,images));
                     gridView.invalidateViews();
                     if (data!=null && data.getData()!=null) {
                         InputStream inputStream = null;
