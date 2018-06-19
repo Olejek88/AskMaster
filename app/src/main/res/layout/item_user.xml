@@ -14,8 +14,8 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="center"
             android:id="@+id/imageViewAvatar"
             android:src="@color/colorPrimary"/>
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewAvatar"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
+            android:textSize="32sp"
             android:layout_gravity="center" />
         
     </FrameLayout>
@@ -44,7 +44,7 @@
             android:id="@+id/textViewUserName"
             android:gravity="start|center_vertical"
             android:textColor="@color/colorPrimaryText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -52,9 +52,7 @@
             android:id="@+id/textViewUserStats"
             android:gravity="start|center_vertical"
             android:textColor="@color/colorSecondaryText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:layout_marginTop="4dp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     </LinearLayout>
-
 </LinearLayout>

@@ -11,8 +11,6 @@ public interface QuestionDetailsContract {
 
     interface View extends BaseView<Presenter> {
 
-        void setLoadingIndicator(boolean loading);
-
         void showNetworkError();
 
         void showQuestionDetails(@NonNull Question question);

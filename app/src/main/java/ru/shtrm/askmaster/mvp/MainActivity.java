@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -32,11 +33,14 @@ import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.ImagesRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.data.source.TricksRepository;
 import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
+import ru.shtrm.askmaster.data.source.local.TricksLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
+import ru.shtrm.askmaster.data.source.remote.TricksRemoteDataSource;
 import ru.shtrm.askmaster.mvp.images.ImagesFragment;
 import ru.shtrm.askmaster.mvp.images.ImagesPresenter;
 import ru.shtrm.askmaster.mvp.profile.UserDetailFragment;
@@ -44,6 +48,8 @@ import ru.shtrm.askmaster.mvp.profile.UserDetailPresenter;
 import ru.shtrm.askmaster.mvp.questions.QuestionFilterType;
 import ru.shtrm.askmaster.mvp.questions.QuestionsFragment;
 import ru.shtrm.askmaster.mvp.questions.QuestionsPresenter;
+import ru.shtrm.askmaster.mvp.tricks.TricksFragment;
+import ru.shtrm.askmaster.mvp.tricks.TricksPresenter;
 import ru.shtrm.askmaster.mvp.users.UsersFragment;
 import ru.shtrm.askmaster.mvp.users.UsersPresenter;
 import ru.shtrm.askmaster.ui.PrefsActivity;
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity
     private QuestionsFragment questionsFragment;
     private UsersFragment usersFragment;
     private UserDetailFragment profileFragment;
+    private TricksFragment tricksFragment;
 
     private QuestionsPresenter questionsPresenter;
 
@@ -110,6 +117,8 @@ public class MainActivity extends AppCompatActivity
                     getFragment(savedInstanceState, "UserDetailFragment");
             imagesFragment = (ImagesFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState, "ImagesFragment");
+            tricksFragment = (TricksFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState, "TricksFragment");
             selectedNavItem = savedInstanceState.getInt(KEY_NAV_ITEM);
         } else {
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().
@@ -134,6 +143,12 @@ public class MainActivity extends AppCompatActivity
                     findFragmentById(R.id.content_main);
             if (imagesFragment == null) {
                 imagesFragment = ImagesFragment.newInstance();
+            }
+
+            tricksFragment = (TricksFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.content_main);
+            if (tricksFragment == null) {
+                tricksFragment = TricksFragment.newInstance();
             }
         }
 
@@ -163,6 +178,12 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
 
+        if (!tricksFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_main, tricksFragment, "TricksFragment")
+                    .commit();
+        }
+
         CheckPermission();
 
         // Make sure the data in repository is the latest.
@@ -187,6 +208,10 @@ public class MainActivity extends AppCompatActivity
                         QuestionsLocalDataSource.getInstance()),
                 ImagesRepository.getInstance(ImagesLocalDataSource.getInstance()),
                 imagesFragment);
+
+        new TricksPresenter(tricksFragment,
+                TricksRepository.getInstance(TricksLocalDataSource.getInstance(),
+                TricksRemoteDataSource.getInstance()));
 
         // Get data from Bundle.
         if (savedInstanceState != null) {
@@ -251,6 +276,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_gallery:
                 showGalleryFragment();
+                break;
+            case R.id.nav_tricks:
+                showTricksFragment();
                 break;
             case R.id.nav_switch_theme:
                 drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -325,6 +353,9 @@ public class MainActivity extends AppCompatActivity
         if (imagesFragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, "ImagesFragment", imagesFragment);
         }
+        if (tricksFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "TricksFragment", tricksFragment);
+        }
     }
 
     /**
@@ -360,6 +391,9 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case R.id.nav_users:
                         showUsersFragment();
+                        break;
+                    case R.id.nav_tricks:
+                        showTricksFragment();
                         break;
                     case R.id.nav_gallery:
                         showGalleryFragment();
@@ -434,6 +468,34 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle(getResources().getString(R.string.nav_gallery));
         navigationView.setCheckedItem(R.id.nav_gallery);
 
+    }
+
+    private void showTricksFragment() {
+        changeFragment(tricksFragment);
+        toolbar.setTitle(getResources().getString(R.string.nav_tricks));
+        navigationView.setCheckedItem(R.id.nav_tricks);
+
+    }
+
+    void changeFragment(Fragment selectedFragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.hide(tricksFragment);
+        fragmentTransaction.hide(usersFragment);
+        fragmentTransaction.hide(questionsFragment);
+        fragmentTransaction.hide(profileFragment);
+        fragmentTransaction.hide(imagesFragment);
+
+        if (selectedFragment==tricksFragment)
+            fragmentTransaction.show(tricksFragment);
+        if (selectedFragment==usersFragment)
+            fragmentTransaction.show(usersFragment);
+        if (selectedFragment==questionsFragment)
+            fragmentTransaction.show(questionsFragment);
+        if (selectedFragment==profileFragment)
+            fragmentTransaction.show(profileFragment);
+        if (selectedFragment==imagesFragment)
+            fragmentTransaction.show(imagesFragment);
+        fragmentTransaction.commit();
     }
 
     /**

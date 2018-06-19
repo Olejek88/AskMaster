@@ -8,7 +8,9 @@
     <!--activities-->
     <string name="activity_question_details">Детали вопроса</string>
     <string name="activity_add_question">Добавить вопрос</string>
+    <string name="activity_add_trick">Добавить совет</string>
     <string name="activity_user_details">Пользователь</string>
+    <string name="activity_trick_details">Детали совета</string>
     <string name="activity_user_edit">Редактировать пользователя</string>
     <string name="activity_search">Поиск</string>
     <string name="activity_images">Галерея</string>
@@ -62,10 +64,13 @@
     </string-array>
     <!--question list page end-->
 
-    <!--package details-->
+    <string name="to_add_trick">Нажмите кнопку, чтобы добавить рецепт</string>
+
+    <!--details-->
     <string name="user_name">Автор</string>
     <string name="question_title">Вопрос</string>
     <string name="delete_question_message">Вы уверены, что хотите удалить свой вопрос?</string>
+    <string name="delete_trick_message">Вы уверены, что хотите удалить свой совет?</string>
     <string name="edit_name">Редактирование вопроса</string>
     <string name="input_empty">Вопрос не может быть пустым</string>
     <!--package details end-->

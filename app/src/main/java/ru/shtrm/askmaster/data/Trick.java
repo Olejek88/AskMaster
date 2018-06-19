@@ -8,11 +8,9 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.RealmResults;
-import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
-public class Answer extends RealmObject {
+public class Trick extends RealmObject {
 
     @PrimaryKey
     @Expose
@@ -32,15 +30,10 @@ public class Answer extends RealmObject {
     private Date date;
 
     private RealmList<Image> images;
+
+    @Expose
+    @SerializedName("user")
     private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public int getVoteUp() {
         return voteUp;
@@ -98,6 +91,14 @@ public class Answer extends RealmObject {
         this.images = images;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -105,6 +106,7 @@ public class Answer extends RealmObject {
     public void setDate(Date date) {
         this.date = date;
     }
+
     @Override
     public String toString() {
         return new Gson().toJson(this);

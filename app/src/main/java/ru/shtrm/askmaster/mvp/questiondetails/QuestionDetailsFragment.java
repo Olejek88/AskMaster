@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
@@ -44,7 +43,6 @@ public class QuestionDetailsFragment extends Fragment
     private ImageView imageView;
 
     private FloatingActionButton fab;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     private QuestionDetailsAdapter adapter;
 
@@ -160,20 +158,6 @@ public class QuestionDetailsFragment extends Fragment
     @Override
     public void setPresenter(@NonNull QuestionDetailsContract.Presenter presenter) {
         this.presenter = presenter;
-    }
-
-    /**
-     * Set the refresh layout as an indicator. Change the indicator's loading status.
-     * @param loading Whether is loading.
-     */
-    @Override
-    public void setLoadingIndicator(final boolean loading) {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(loading);
-            }
-        });
     }
 
     /**

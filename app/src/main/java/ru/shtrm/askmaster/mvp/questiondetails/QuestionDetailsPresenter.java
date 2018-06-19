@@ -110,13 +110,14 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
 
                     @Override
                     public void onError(Throwable e) {
-                        view.setLoadingIndicator(false);
+                        //view.setLoadingIndicator(false);
                         view.showNetworkError();
                     }
 
                     @Override
                     public void onComplete() {
-                        view.setLoadingIndicator(false);
+
+                        //view.setLoadingIndicator(false);
                     }
                 });
         compositeDisposable.add(disposable);
