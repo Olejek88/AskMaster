@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 import io.reactivex.Observable;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 
 public class UsersRepository implements UsersDataSource {
@@ -62,4 +63,11 @@ public class UsersRepository implements UsersDataSource {
     public void saveUser(@NonNull User user) {
         localDataSource.saveUser(user);
     }
+
+/*
+    @Override
+    public void addQuestion(@NonNull Question question) {
+        localDataSource.addQuestion(question);
+    }
+*/
 }

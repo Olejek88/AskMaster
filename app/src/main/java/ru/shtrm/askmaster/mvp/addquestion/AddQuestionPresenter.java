@@ -80,7 +80,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         }
         question.setImages(imagesDataSource.saveImages(images));
         questionsDataSource.saveQuestion(question);
-
+        //usersDataSource.a
         view.showQuestionsList();
     }
 

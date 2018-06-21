@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.reactivex.Observable;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 
 public interface UsersDataSource {
@@ -23,4 +24,5 @@ public interface UsersDataSource {
 
     boolean isUserExist(@NonNull String id);
 
+    //void addQuestion(@NonNull Question question);
 }

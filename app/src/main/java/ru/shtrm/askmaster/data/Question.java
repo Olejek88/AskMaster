@@ -68,6 +68,9 @@ public class Question extends RealmObject {
     @SerializedName("answers")
     private RealmList<Answer> answers;
 
+    //@LinkingObjects("users")
+    //private final RealmResults<User> user = null;
+
     private User user;
 
     public String getId() {

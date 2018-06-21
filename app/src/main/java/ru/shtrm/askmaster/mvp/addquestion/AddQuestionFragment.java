@@ -82,7 +82,6 @@ public class AddQuestionFragment extends Fragment
         initViews(view);
 
         //addLayoutListener(scrollView, editTextName);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,10 +95,8 @@ public class AddQuestionFragment extends Fragment
 
                 editTextName.setText(title);
                 final User user = UsersLocalDataSource.getInstance().getAuthorisedUser();
-                //if (user != null) {
-                    presenter.saveQuestion (mainActivityConnector, java.util.UUID.randomUUID().toString(),
-                            title, editText.getText().toString(), user, images);
-                //}
+                presenter.saveQuestion (mainActivityConnector, java.util.UUID.randomUUID().toString(),
+                        title, editText.getText().toString(), user, images);
             }
         });
 
