@@ -17,7 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/headerText"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/mdtp_white"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="24dp"
             android:paddingLeft="@dimen/activity_margin_half"
             android:paddingRight="@dimen/activity_margin_half" />
 

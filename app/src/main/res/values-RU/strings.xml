@@ -73,7 +73,8 @@
     <string name="delete_trick_message">Вы уверены, что хотите удалить свой совет?</string>
     <string name="edit_name">Редактирование вопроса</string>
     <string name="input_empty">Вопрос не может быть пустым</string>
-    <!--package details end-->
+    <string name="delete_trick">Удалить совет</string>
+    <!--details end-->
 
     <!--add question-->
     <string name="tint_question_title">Вопрос</string>

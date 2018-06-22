@@ -55,8 +55,12 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         User user = list.get(position);
-        String stats = "Q: " + Long.toString(user.getQuestions().size()) +
-                " / A: " + Long.toString(user.getAnswers().size());
+        String stats = "[Q: ".concat(Long.toString(user.getQuestions().size())).
+                concat(" / A: ").
+                concat(Long.toString(user.getAnswers().size())).
+                concat(" / T: ").
+                concat(Long.toString(user.getAnswers().size())).
+                concat("]");
         if (user.getRating()!=null) {
             stats = stats.concat(" R: " + user.getRating());
         }
@@ -95,7 +99,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return "";
+        return list.get(position).getName().substring(0,1);
     }
 
     public class NormalViewHolder extends RecyclerView.ViewHolder
