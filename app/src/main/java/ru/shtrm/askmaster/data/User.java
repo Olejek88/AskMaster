@@ -63,6 +63,10 @@ public class User extends RealmObject {
         this.answers = answers;
     }
 
+    @Expose
+    @SerializedName("tricks")
+    private RealmList<Trick> tricks;
+
     public RealmList<Trick> getTricks() {
         return tricks;
     }
@@ -70,10 +74,6 @@ public class User extends RealmObject {
     public void setTricks(RealmList<Trick> tricks) {
         this.tricks = tricks;
     }
-
-    @Expose
-    @SerializedName("tricks")
-    private RealmList<Trick> tricks;
 
 
     public String getPhone() {
@@ -137,4 +137,16 @@ public class User extends RealmObject {
         return new Gson().toJson(this);
     }
 
+    public String getStats() {
+        String stats = " [Q: ".
+                concat(Integer.toString(questions.size())).
+                concat(" A: ").
+                concat(Integer.toString(answers.size())).
+                concat(" T: ").
+                concat(Integer.toString(tricks.size())).
+                concat("]");
+        if (rating!=null)
+            stats = stats.concat(" R: ").concat(rating);
+        return stats;
+    }
 }

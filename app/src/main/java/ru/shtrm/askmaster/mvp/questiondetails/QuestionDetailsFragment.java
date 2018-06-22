@@ -189,12 +189,7 @@ public class QuestionDetailsFragment extends Fragment
         }
         if (question.getUser()!=null) {
             userStatus.setText(R.string.user_master);
-            String stats = " [Q: ".
-                        concat(Integer.toString(question.getUser().getQuestions().size())).
-                        concat(" A: ").
-                        concat(Integer.toString(question.getUser().getAnswers().size())).
-                        concat("]");
-            userStats.setText(stats);
+            userStats.setText(question.getUser().getStats());
             userName.setText(question.getUser().getName());
 
             String path = MainUtil.getPicturesDirectory(mainActivityConnector.getApplicationContext());

@@ -55,16 +55,6 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         User user = list.get(position);
-        String stats = "[Q: ".concat(Long.toString(user.getQuestions().size())).
-                concat(" / A: ").
-                concat(Long.toString(user.getAnswers().size())).
-                concat(" / T: ").
-                concat(Long.toString(user.getAnswers().size())).
-                concat("]");
-        if (user.getRating()!=null) {
-            stats = stats.concat(" R: " + user.getRating());
-        }
-
         if (holder instanceof NormalViewHolder) {
             NormalViewHolder cvh = (NormalViewHolder) holder;
             if (user.getAvatar()==null)
@@ -72,7 +62,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             else
                 cvh.avatar.setImageBitmap(MainUtil.getBitmapByPath(
                     MainUtil.getPicturesDirectory(context),user.getAvatar()));
-            cvh.textViewUserStats.setText(stats);
+            cvh.textViewUserStats.setText(user.getStats());
             cvh.textViewUserName.setText(user.getName());
         } else if (holder instanceof WithHeaderViewHolder) {
             WithHeaderViewHolder wh = (WithHeaderViewHolder) holder;
@@ -81,7 +71,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             else
                 wh.avatar.setImageBitmap(MainUtil.getBitmapByPath(
                         MainUtil.getPicturesDirectory(context),user.getAvatar()));
-            wh.textViewUserStats.setText(stats);
+            wh.textViewUserStats.setText(user.getStats());
             wh.textViewUserName.setText(user.getName());
             wh.stickyHeaderText.setText(getSectionName(position));
         }

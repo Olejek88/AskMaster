@@ -121,7 +121,7 @@ public class QuestionsFragment extends Fragment
     public void onPause() {
         super.onPause();
         presenter.unsubscribe();
-        setLoadingIndicator(false);
+        //setLoadingIndicator(false);
         //TODO temporary remove
         //mainActivityConnector.sendBroadcast(AppWidgetProvider.getRefreshBroadcastIntent(getContext()));
     }

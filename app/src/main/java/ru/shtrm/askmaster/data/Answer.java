@@ -32,6 +32,7 @@ public class Answer extends RealmObject {
     private Date date;
 
     private RealmList<Image> images;
+
     private User user;
 
     public User getUser() {

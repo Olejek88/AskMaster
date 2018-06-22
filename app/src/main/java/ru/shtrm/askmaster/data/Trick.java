@@ -31,8 +31,6 @@ public class Trick extends RealmObject {
 
     private RealmList<Image> images;
 
-    @Expose
-    @SerializedName("user")
     private User user;
 
     public int getVoteUp() {
