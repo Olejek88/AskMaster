@@ -80,7 +80,8 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         }
         question.setImages(imagesDataSource.saveImages(images));
         questionsDataSource.saveQuestion(question);
-        //usersDataSource.a
+        user.getQuestions().add(question);
+        usersDataSource.saveUser(user);
         view.showQuestionsList();
     }
 
@@ -92,7 +93,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
             image.setImageName(imageName);
             image.setDate(new Date());
             image.setTitle(title);
-            imagesDataSource.saveImage(image);
+            //imagesDataSource.saveImage(image);
         }
     }
 

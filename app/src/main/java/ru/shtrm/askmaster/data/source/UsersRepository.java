@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
 
 public class UsersRepository implements UsersDataSource {
@@ -64,10 +65,13 @@ public class UsersRepository implements UsersDataSource {
         localDataSource.saveUser(user);
     }
 
-/*
     @Override
-    public void addQuestion(@NonNull Question question) {
-        localDataSource.addQuestion(question);
+    public void addQuestion(@NonNull Question question, User user) {
+        localDataSource.addQuestion(question, user);
     }
-*/
+
+    @Override
+    public void addTrick(@NonNull Trick trick, User user) {
+        localDataSource.addTrick(trick, user);
+    }
 }

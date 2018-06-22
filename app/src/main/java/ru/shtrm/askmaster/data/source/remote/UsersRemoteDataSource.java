@@ -14,6 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
@@ -90,4 +91,15 @@ public class UsersRemoteDataSource implements UsersDataSource {
         return null;
     }
 
+    @Override
+    public void addQuestion(@NonNull Question question, User user) {
+        // Not required because the {@link UsersRepository} handles the logic
+        // of refreshing the users from all available data source
+    }
+
+    @Override
+    public void addTrick(@NonNull Trick trick, User user) {
+        // Not required because the {@link UsersRepository} handles the logic
+        // of refreshing the users from all available data source
+    }
 }

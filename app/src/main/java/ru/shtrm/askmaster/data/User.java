@@ -43,13 +43,38 @@ public class User extends RealmObject {
     @SerializedName("questions")
     private RealmList<Question> questions;
 
-    public RealmList<Question> getAnswers() {
-        return answers;
+    public RealmList<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(RealmList<Question> questions) {
+        this.questions = questions;
     }
 
     @Expose
     @SerializedName("answers")
-    private RealmList<Question> answers;
+    private RealmList<Answer> answers;
+
+    public RealmList<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(RealmList<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public RealmList<Trick> getTricks() {
+        return tricks;
+    }
+
+    public void setTricks(RealmList<Trick> tricks) {
+        this.tricks = tricks;
+    }
+
+    @Expose
+    @SerializedName("tricks")
+    private RealmList<Trick> tricks;
+
 
     public String getPhone() {
         return phone;
@@ -75,14 +100,6 @@ public class User extends RealmObject {
         this.avatar = avatar;
     }
 
-    public RealmList<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(RealmList<Question> questions) {
-        this.questions = questions;
-    }
-
     public String getRating() {
         return rating;
     }
@@ -91,17 +108,12 @@ public class User extends RealmObject {
         this.rating = rating;
     }
 
-
     public String getWebsite() {
         return website;
     }
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public void setAnswers(RealmList<Question> answers) {
-        this.answers = answers;
     }
 
     public String getName() {

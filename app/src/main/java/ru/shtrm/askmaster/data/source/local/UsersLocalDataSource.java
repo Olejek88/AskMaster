@@ -8,6 +8,8 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 import ru.shtrm.askmaster.data.AuthorizedUser;
+import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
@@ -145,4 +147,27 @@ public class UsersLocalDataSource implements UsersDataSource {
         realm.close();
     }
 
+    @Override
+    public void addQuestion(@NonNull final Question question, final User user) {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                user.getQuestions().add(question);
+            }
+        });
+        realm.close();
+    }
+
+    @Override
+    public void addTrick(@NonNull final Trick trick, final User user) {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                user.getTricks().add(trick);
+            }
+        });
+        realm.close();
+    }
 }
