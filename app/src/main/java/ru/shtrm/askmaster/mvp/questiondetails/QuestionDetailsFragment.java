@@ -24,6 +24,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -37,12 +40,20 @@ public class QuestionDetailsFragment extends Fragment
     private Activity mainActivityConnector = null;
 
     private RecyclerView recyclerView;
+    private View view;
     private AppCompatTextView userName;
     private AppCompatTextView userStatus;
     private AppCompatTextView userStats;
     private ImageView imageView;
 
+    private boolean FAB_Status = false;
+    private Question currentQuestion;
+
     private FloatingActionButton fab;
+    private FloatingActionButton fab_edit_text;
+    private FloatingActionButton fab_edit;
+    private FloatingActionButton fab_delete;
+    private FloatingActionButton fab_answer;
 
     private QuestionDetailsAdapter adapter;
 
@@ -63,19 +74,55 @@ public class QuestionDetailsFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_question_details, container, false);
+        view = inflater.inflate(R.layout.fragment_question_details, container, false);
 
         initViews(view);
 
-
         fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!FAB_Status) {
+                    expandFAB();
+                    FAB_Status = true;
+                } else {
+                    hideFAB();
+                    FAB_Status = false;
+                }
+            }
+        });
+
+        fab_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEditTextDialog();
             }
         });
 
-/*
+        fab_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+            }
+        });
+
+        fab_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.deleteQuestion();
+                mainActivityConnector.finish();
+            }
+        });
+
+        fab_answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(getContext(), QuestionAnswerActivity.class);
+                //intent.putExtra(QuestionAnswerActivity.QUESTION_ID, currentQuestion.getId());
+                //startActivity(intent);
+            }
+        });
+
+        /*
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,12 +180,18 @@ public class QuestionDetailsFragment extends Fragment
     public void initViews(View view) {
         QuestionDetailsActivity activity = (QuestionDetailsActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (activity.getSupportActionBar()!=null)
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         fab = view.findViewById(R.id.fab);
-/*
+        fab_edit_text = view.findViewById(R.id.fab_edit_text);
+        fab_edit = view.findViewById(R.id.fab_edit);
+        fab_delete = view.findViewById(R.id.fab_delete);
+        fab_answer = view.findViewById(R.id.fab_answer);
+
+        /*
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(mainActivityConnector, R.color.colorPrimary));
@@ -181,6 +234,7 @@ public class QuestionDetailsFragment extends Fragment
      */
     @Override
     public void showQuestionDetails(@NonNull Question question) {
+        currentQuestion = question;
         if (adapter == null) {
             adapter = new QuestionDetailsAdapter(mainActivityConnector, question);
             recyclerView.setAdapter(adapter);
@@ -238,7 +292,7 @@ public class QuestionDetailsFragment extends Fragment
      * Show the dialog which contains an EditText.
      */
     private void showEditTextDialog() {
-        AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+        AlertDialog dialog = new AlertDialog.Builder(mainActivityConnector).create();
         dialog.setTitle(getString(R.string.edit_name));
 
         View view = mainActivityConnector.getLayoutInflater().
@@ -278,6 +332,43 @@ public class QuestionDetailsFragment extends Fragment
     private void showInputIsEmpty() {
         Snackbar.make(fab, R.string.input_empty, Snackbar.LENGTH_SHORT).show();
     }
+
+    private void expandFAB() {
+        showFloatingActionButton(R.id.fab_edit_text, R.anim.fab1_show, 0, 4.0);
+        showFloatingActionButton(R.id.fab_edit, R.anim.fab2_show, 0, 3.0);
+        showFloatingActionButton(R.id.fab_delete, R.anim.fab3_show, 0, 2.0);
+        showFloatingActionButton(R.id.fab_answer, R.anim.fab4_show, 0.0, 1.0);
+    }
+
+    private void showFloatingActionButton(int buttonId, int animationId, double kw, double kh) {
+        FloatingActionButton fab = view.findViewById(buttonId);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fab.getLayoutParams();
+        lp.rightMargin += (int) (fab.getWidth() * kw);
+        lp.bottomMargin += (int) (fab.getHeight() * kh);
+        fab.setLayoutParams(lp);
+        Animation animation = AnimationUtils.loadAnimation(mainActivityConnector, animationId);
+        fab.startAnimation(animation);
+        fab.setClickable(true);
+    }
+
+    private void hideFAB() {
+        hideFloatingActionButton(R.id.fab_edit_text, R.anim.fab1_hide, 0, 4.0);
+        hideFloatingActionButton(R.id.fab_edit, R.anim.fab2_hide, 0, 3.0);
+        hideFloatingActionButton(R.id.fab_delete, R.anim.fab3_hide, 0, 2.0);
+        hideFloatingActionButton(R.id.fab_answer, R.anim.fab4_hide, 0, 1.0);
+    }
+
+    private void hideFloatingActionButton(int buttonId, int animationId, double kw, double kh) {
+        FloatingActionButton fab = view.findViewById(buttonId);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fab.getLayoutParams();
+        lp.rightMargin -= (int) (fab.getWidth() * kw);
+        lp.bottomMargin -= (int) (fab.getHeight() * kh);
+        fab.setLayoutParams(lp);
+        Animation animation = AnimationUtils.loadAnimation(mainActivityConnector, animationId);
+        fab.startAnimation(animation);
+        fab.setClickable(false);
+    }
+
 
     @Override
     public void onAttach(Context context) {

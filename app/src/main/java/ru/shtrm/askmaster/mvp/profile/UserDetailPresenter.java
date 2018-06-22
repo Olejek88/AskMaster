@@ -1,7 +1,5 @@
 package ru.shtrm.askmaster.mvp.profile;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import io.reactivex.Observable;
@@ -12,7 +10,6 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.UsersRepository;
-import ru.shtrm.askmaster.util.MainUtil;
 
 public class UserDetailPresenter implements UserDetailContract.Presenter {
 
