@@ -1,4 +1,4 @@
-package io.github.marktony.askmaster.settings;
+package ru.shtrm.askmaster.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.github.marktony.espresso.R;
-import io.github.marktony.espresso.ui.PrefsActivity;
+import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.ui.PrefsActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -23,8 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
 /**
- * Created by lizhaotailang on 2017/5/14.
- * The tests for {@link io.github.marktony.espresso.ui.SettingsFragment}.
+ * The tests for {@link ru.shtrm.askmaster.ui.SettingsFragment}.
  */
 
 @RunWith(AndroidJUnit4.class)

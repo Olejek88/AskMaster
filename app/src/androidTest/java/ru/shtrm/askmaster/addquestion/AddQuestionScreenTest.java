@@ -1,7 +1,6 @@
-package ru.shtrm.askmaster.addpackage;
+package ru.shtrm.askmaster.addquestion;
 
 import android.os.Build;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -34,10 +33,10 @@ import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class AddPackageScreenTest {
+public class AddQuestionScreenTest {
 
-    private String validPackageNumber;
-    private String invalidPackageNumber;
+    private String validQuestionNumber;
+    private String invalidQuestionNumber;
 
     /**
      * {@link ActivityTestRule} is a JUnit {@link Rule @Rule} to launch your activity under test.
@@ -47,14 +46,8 @@ public class AddPackageScreenTest {
      * blocks of Junit tests.
      */
     @Rule
-    public ActivityTestRule<AddQuestionActivity> mAddPackageActivityTestRule
+    public ActivityTestRule<AddQuestionActivity> mAddQuestionActivityTestRule
             = new ActivityTestRule<>(AddQuestionActivity.class);
-
-    @Before
-    public void initNumbers() {
-        validPackageNumber = "958381347318";
-        invalidPackageNumber = "12345";
-    }
 
     @Before
     public void grantCameraPermission() {
@@ -68,9 +61,9 @@ public class AddPackageScreenTest {
     }
 
     @Test
-    public void test_AddPackageScreenDisplayed() {
+    public void test_AddQuestionScreenDisplayed() {
         // Check that the toolbar title was correct.
-        onView(withText(R.string.activity_add_package))
+        onView(withText(R.string.activity_add_question))
                 .check(matches(withParent(withId(R.id.toolbar))));
     }
 
@@ -81,25 +74,25 @@ public class AddPackageScreenTest {
 
         // Check that the snack bar was displayed.
         onView(allOf(withId(android.support.design.R.id.snackbar_text),
-                withText(R.string.wrong_number_and_check)))
+                withText(R.string.wrong_title)))
                 .check(matches(isDisplayed()));
     }
 
     @Test
     public void typeValidNumber_ShowHomeScreen() {
-        onView(withId(R.id.editTextNumber))
+        onView(withId(R.id.editTextTitle))
                 .check(matches(isCompletelyDisplayed()));
 
         // Type the valid number.
-        onView(withId(R.id.editTextNumber))
-                .perform(typeText(validPackageNumber), closeSoftKeyboard());
+        onView(withId(R.id.editTextTitle))
+                .perform(typeText(validQuestionNumber), closeSoftKeyboard());
 
         // Click the floating action button.
         onView(withId(R.id.fab)).perform(click());
 
-        // Check that the package name edit text was filled automatically.
-        String name = mAddPackageActivityTestRule.getActivity().getString(R.string.package_name_default_pre)
-                + validPackageNumber.substring(0, 4);
+        // Check that the Question name edit text was filled automatically.
+        String name = mAddQuestionActivityTestRule.getActivity().getString(R.string.question_title)
+                + validQuestionNumber.substring(0, 4);
         onView(withId(R.id.editTextName))
                 .check(matches(withText(name)));
 
@@ -107,51 +100,47 @@ public class AddPackageScreenTest {
 
     @Test
     public void typeInvalidNumber_ShowErrorTip() {
-        onView(withId(R.id.editTextNumber))
+        onView(withId(R.id.editTextTitle))
                 .check(matches(isCompletelyDisplayed()));
 
         // Type the valid number.
-        onView(withId(R.id.editTextNumber))
-                .perform(typeText(invalidPackageNumber), closeSoftKeyboard());
+        onView(withId(R.id.editTextTitle))
+                .perform(typeText(invalidQuestionNumber), closeSoftKeyboard());
 
         // Click the floating action button.
         onView(withId(R.id.fab)).perform(click());
 
-        // Check that the package name edit text was filled automatically.
-        String name = mAddPackageActivityTestRule.getActivity().getString(R.string.package_name_default_pre)
-                + invalidPackageNumber.substring(0, 4);
+        // Check that the Question name edit text was filled automatically.
+        String name = mAddQuestionActivityTestRule.getActivity().getString(R.string.question_title)
+                + invalidQuestionNumber.substring(0, 4);
         onView(withId(R.id.editTextName))
                 .check(matches(withText(name)));
 
         // Check that the snack bar with error message was displayed.
         onView(allOf(withId(android.support.design.R.id.snackbar_text),
-                withText(R.string.wrong_number_and_check)))
+                withText(R.string.wrong_title)))
                 .check(matches(isDisplayed()));
     }
 
     @Test
     public void typeEmptyNumber_ShowErrorTip() {
-        onView(withId(R.id.editTextNumber))
+        onView(withId(R.id.editTextTitle))
                 .check(matches(isCompletelyDisplayed()));
 
         // Type empty.
-        onView(withId(R.id.editTextNumber))
+        onView(withId(R.id.editTextTitle))
                 .perform(typeText(""), closeSoftKeyboard());
 
         // Click the floating action button.
         onView(withId(R.id.fab)).perform(click());
 
-        // Check that the progress bar was gone.
-        onView(withId(R.id.progressBar))
-                .check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-
-        // Check that the package name edit text was filled automatically.
+        // Check that the Question name edit text was filled automatically.
         onView(withId(R.id.editTextName))
                 .check(matches(withText("")));
 
         // Check that the snack bar with error message was displayed.
         onView(allOf(withId(android.support.design.R.id.snackbar_text),
-                withText(R.string.wrong_number_and_check)))
+                withText(R.string.wrong_title)))
                 .check(matches(isDisplayed()));
     }
 

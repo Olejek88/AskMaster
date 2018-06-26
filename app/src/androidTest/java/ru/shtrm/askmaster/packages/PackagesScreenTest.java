@@ -1,4 +1,4 @@
-package io.github.marktony.askmaster.packages;
+package ru.shtrm.askmaster.packages;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -10,8 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.github.marktony.espresso.R;
-import io.github.marktony.espresso.mvp.packages.MainActivity;
+import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.mvp.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -23,8 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
- * Created by lizhaotailang on 2017/5/12.
- * The tests for {@link io.github.marktony.espresso.mvp.packages.PackagesFragment}.
+ * The tests for {@link ru.shtrm.askmaster.mvp.questions.QuestionsFragment}.
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -43,7 +42,7 @@ public class PackagesScreenTest {
 
         // Start packages screen
         onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_home));
+                .perform(navigateTo(R.id.nav_profile));
     }
 
     @Test

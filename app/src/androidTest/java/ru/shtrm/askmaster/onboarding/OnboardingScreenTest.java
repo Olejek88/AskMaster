@@ -1,4 +1,4 @@
-package io.github.marktony.askmaster.onboarding;
+package ru.shtrm.askmaster.onboarding;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.SmallTest;
@@ -9,8 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.github.marktony.espresso.R;
-import io.github.marktony.espresso.ui.onboarding.OnboardingActivity;
+import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.ui.onboarding.OnboardingActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -22,7 +22,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVi
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
- * Created by lizhaotailang on 2017/5/13.
  * Tests for the {@link android.support.v4.view.ViewPager} and
  * other layout components in {@link OnboardingActivity}.
  */

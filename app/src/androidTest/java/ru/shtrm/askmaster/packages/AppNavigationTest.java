@@ -1,4 +1,4 @@
-package io.github.marktony.askmaster.packages;
+package ru.shtrm.askmaster.packages;
 
 import android.graphics.drawable.ColorDrawable;
 import android.support.test.filters.LargeTest;
@@ -15,8 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.github.marktony.espresso.R;
-import io.github.marktony.espresso.mvp.packages.MainActivity;
+import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.mvp.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -31,7 +31,6 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 /**
- * Created by lizhaotailang on 2017/5/12.
  * Tests for the {@link android.support.v4.widget.DrawerLayout} layout
  * component in {@link MainActivity} which manages the navigation
  * within the app.
@@ -60,11 +59,11 @@ public class AppNavigationTest {
                 .perform(open()); // Open the drawer.
 
         // Start packages screen
-        onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_home));
+        onView(withId(R.id.nav_profile))
+                .perform(navigateTo(R.id.nav_profile));
 
         // Check that packages fragment was opened.
-        onView(withId(R.id.fragment_packages))
+        onView(withId(R.id.nav_questions))
                 .check(matches(isDisplayed()));
 
     }
@@ -78,10 +77,10 @@ public class AppNavigationTest {
 
         // Start companies screen
         onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_companies));
+                .perform(navigateTo(R.id.nav_users));
 
         // Check that companies fragment was opened.
-        onView(withId(R.id.recyclerViewCompaniesList))
+        onView(withId(R.id.recyclerViewUsersList))
                 .check(matches(isDisplayed()));
     }
 
