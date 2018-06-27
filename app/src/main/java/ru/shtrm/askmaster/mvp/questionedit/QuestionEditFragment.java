@@ -1,4 +1,4 @@
-package ru.shtrm.askmaster.mvp.questiondetails;
+package ru.shtrm.askmaster.mvp.questionedit;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,8 +35,8 @@ import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.util.MainUtil;
 
-public class QuestionDetailsFragment extends Fragment
-        implements QuestionDetailsContract.View {
+public class QuestionEditFragment extends Fragment
+        implements QuestionEditContract.View {
     private Activity mainActivityConnector = null;
 
     private RecyclerView recyclerView;
@@ -55,14 +55,14 @@ public class QuestionDetailsFragment extends Fragment
     private FloatingActionButton fab_delete;
     private FloatingActionButton fab_answer;
 
-    private QuestionDetailsAdapter adapter;
+    private QuestionEditAdapter adapter;
 
-    private QuestionDetailsContract.Presenter presenter;
+    private QuestionEditContract.Presenter presenter;
 
-    public QuestionDetailsFragment() {}
+    public QuestionEditFragment() {}
 
-    public static QuestionDetailsFragment newInstance() {
-        return new QuestionDetailsFragment();
+    public static QuestionEditFragment newInstance() {
+        return new QuestionEditFragment();
     }
 
     @Override
@@ -178,7 +178,7 @@ public class QuestionDetailsFragment extends Fragment
      */
     @Override
     public void initViews(View view) {
-        QuestionDetailsActivity activity = (QuestionDetailsActivity) mainActivityConnector;
+        QuestionEditActivity activity = (QuestionEditActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         if (activity.getSupportActionBar()!=null)
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -206,10 +206,10 @@ public class QuestionDetailsFragment extends Fragment
 
     /**
      * Bind the presenter to view.
-     * @param presenter The presenter. See at {@link QuestionDetailsPresenter}
+     * @param presenter The presenter. See at {@link QuestionEditPresenter}
      */
     @Override
-    public void setPresenter(@NonNull QuestionDetailsContract.Presenter presenter) {
+    public void setPresenter(@NonNull QuestionEditContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -233,10 +233,10 @@ public class QuestionDetailsFragment extends Fragment
      * @param question The question. See at {@link Question}
      */
     @Override
-    public void showQuestionDetails(@NonNull Question question) {
+    public void showQuestionEdit(@NonNull Question question) {
         currentQuestion = question;
         if (adapter == null) {
-            adapter = new QuestionDetailsAdapter(mainActivityConnector, question);
+            adapter = new QuestionEditAdapter(mainActivityConnector, question);
             recyclerView.setAdapter(adapter);
         } else {
             adapter.updateData(question.getAnswers());

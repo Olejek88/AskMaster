@@ -206,6 +206,7 @@ public class QuestionsFragment extends Fragment
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+/*
                 getDefaultUIUtil().onDraw(c, recyclerView, ((QuestionsAdapter.QuestionViewHolder) viewHolder).layoutMain, dX, dY, actionState, isCurrentlyActive);
                 if (dX > 0) {
                     // Left swipe
@@ -218,7 +219,7 @@ public class QuestionsFragment extends Fragment
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).wrapperView.setBackgroundResource(R.color.deep_orange);
                     ((QuestionsAdapter.QuestionViewHolder) viewHolder).imageViewAnswer.setVisibility(View.GONE);
                 }
-
+*/
             }
 
             @Override

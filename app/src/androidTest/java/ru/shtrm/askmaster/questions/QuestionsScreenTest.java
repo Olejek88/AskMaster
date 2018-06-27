@@ -1,4 +1,4 @@
-package ru.shtrm.askmaster.packages;
+package ru.shtrm.askmaster.questions;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -28,25 +28,25 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class PackagesScreenTest {
+public class QuestionsScreenTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule
             = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void navigateToPackagesScreen() {
+    public void navigateToQuestionsScreen() {
         onView(withId(R.id.drawer_layout))
                 .check(matches(isClosed(Gravity.LEFT))) // Left drawer should be closed.
                 .perform(open()); // Open the drawer.
 
-        // Start packages screen
+        // Start questions screen
         onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_profile));
+                .perform(navigateTo(R.id.nav_questions));
     }
 
     @Test
-    public void test_PackagesScreenDisplayed() {
+    public void test_QuestionsScreenDisplayed() {
         // Check that the bottom navigation view was displayed.
         onView(withId(R.id.bottomNavigationView))
                 .check(matches(isDisplayed()));

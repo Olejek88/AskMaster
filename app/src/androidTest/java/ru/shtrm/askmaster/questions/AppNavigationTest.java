@@ -1,4 +1,4 @@
-package ru.shtrm.askmaster.packages;
+package ru.shtrm.askmaster.questions;
 
 import android.graphics.drawable.ColorDrawable;
 import android.support.test.filters.LargeTest;
