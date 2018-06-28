@@ -3,7 +3,9 @@ package ru.shtrm.askmaster.mvp.questionedit;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
@@ -12,6 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 
 public class QuestionEditPresenter implements QuestionEditContract.Presenter {
@@ -26,10 +29,7 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
     private CompositeDisposable compositeDisposable;
 
     private String questionTitle;
-
     private String questionText;
-
-    private ArrayList<Answer> answers;
     private ArrayList<Image> images;
 
     @NonNull
@@ -66,14 +66,10 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
                 .subscribeWith(new DisposableObserver<Question>() {
                     @Override
                     public void onNext(Question value) {
-
                         questionTitle = value.getTitle();
                         questionText = value.getText();
-                        if (value.getAnswers().size()>0)
-                            answers = new ArrayList<>(value.getAnswers());
                         if (value.getImages().size()>0)
                             images = new ArrayList<>(value.getImages());
-
                         view.showQuestionEdit(value);
                     }
 
@@ -91,66 +87,9 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
 
     }
 
-    /**
-     * Refresh the question by access the network.
-     * No matter the refresh is successful or failed,
-     * Do not forget to stop the indicator.
-     */
     @Override
-    public void refreshQuestion() {
-        Disposable disposable = questionsRepository
-                .refreshQuestion(questionId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Question>() {
-                    @Override
-                    public void onNext(Question value) {
-                        view.showQuestionEdit(value);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //view.setLoadingIndicator(false);
-                        view.showNetworkError();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                        //view.setLoadingIndicator(false);
-                    }
-                });
-        compositeDisposable.add(disposable);
+    public void saveQuestion(String id, String title, String text, Date date, boolean closed,
+                             RealmList<Image> images, RealmList<Answer> answers, User user) {
 
     }
-
-    /**
-     * Delete the question from repository(both in cache and database).
-     */
-    @Override
-    public void deleteQuestion() {
-        questionsRepository.deleteQuestion(questionId);
-        view.exit();
-    }
-
-    /**
-     * Get the current question title.
-     * @return Question title. See at {@link Question#title}
-     */
-    @Override
-    public String getQuestionTitle() {
-        return questionTitle;
-    }
-
-    /**
-     * Set the current question a new title(both in cache and database).
-     * @param newTitle The new title of .
-     *                See at {@link Question#title}
-     */
-    @Override
-    public void updateQuestionTitle(String newTitle) {
-        questionsRepository.updateQuestionTitle(questionId, newTitle);
-        openDetail();
-    }
-
 }

@@ -6,18 +6,16 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import ru.shtrm.askmaster.data.Question;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import ru.shtrm.askmaster.data.source.QuestionsDataSource;
+import ru.shtrm.askmaster.data.Question;
 
 public class QuestionsRepository implements QuestionsDataSource {
 
@@ -114,6 +112,16 @@ public class QuestionsRepository implements QuestionsDataSource {
             return Observable.just(cachedQuestion);
         }
         return getQuestionWithNumberFromLocalRepository(id);
+    }
+
+    /**
+     * Get a question of specific id from data source.
+     * @param id The primary key or the question id. See {@link Question}.
+     * @return The question.
+     */
+    @Override
+    public Question getQuestionById(@NonNull final String id) {
+        return questionsLocalDataSource.getQuestionById(id);
     }
 
     /**

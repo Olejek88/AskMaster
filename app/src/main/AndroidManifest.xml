@@ -48,6 +48,14 @@
             android:label="@string/activity_question_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".mvp.questionedit.QuestionEditActivity"
+            android:label="@string/activity_question_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mvp.addanswer.AddAnswerActivity"
+            android:label="@string/activity_add_answer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".mvp.trickdetails.TrickDetailsActivity"
             android:label="@string/activity_trick_details"
             android:theme="@style/AppTheme.NoActionBar" />

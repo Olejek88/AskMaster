@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
 import io.reactivex.Observable;
@@ -188,6 +189,16 @@ public class QuestionsLocalDataSource implements QuestionsDataSource {
             realm.close();
         }
     }
+
+    @Override
+    public Question getQuestionById(@NonNull String id) {
+        Realm realm = RealmHelper.newRealmInstance();
+        Question question = realm.where(Question.class).equalTo("id", id).findFirst();
+        if (question!=null)
+            return realm.copyFromRealm(question);
+        return null;
+    }
+
 
     @Override
     public Observable<List<Question>> searchQuestions(@NonNull String keyWords) {

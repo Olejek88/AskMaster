@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
+import ru.shtrm.askmaster.realm.RealmHelper;
 import ru.shtrm.askmaster.retrofit.RetrofitClient;
 import ru.shtrm.askmaster.retrofit.RetrofitService;
 import io.reactivex.Observable;
@@ -19,6 +20,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 import static ru.shtrm.askmaster.realm.RealmHelper.DATABASE_NAME;
+import static ru.shtrm.askmaster.realm.RealmHelper.newRealmInstance;
 
 public class QuestionsRemoteDataSource implements QuestionsDataSource {
 
@@ -175,6 +177,12 @@ public class QuestionsRemoteDataSource implements QuestionsDataSource {
     @Override
     public void updateQuestionClosed(@NonNull String id, boolean closed) {
         // Not required
+    }
+
+    @Override
+    public Question getQuestionById(@NonNull String id) {
+        // Not required
+        return null;
     }
 
     @Override

@@ -37,16 +37,12 @@ import java.io.InputStream;
 import java.util.Date;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.customtabs.CustomTabsHelper;
 import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.mvp.addquestion.AddQuestionFragment;
 import ru.shtrm.askmaster.mvp.profile.UserDetailActivity;
-import ru.shtrm.askmaster.mvp.profile.UserDetailFragment;
-import ru.shtrm.askmaster.mvp.users.UsersActivity;
-import ru.shtrm.askmaster.mvp.users.UsersFragment;
 import ru.shtrm.askmaster.util.MainUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -70,7 +66,6 @@ public class UserEditFragment extends Fragment
 
     private UserEditContract.Presenter presenter;
 
-    private String website;
     private String userUuid = null;
     private String imageName = null;
     private Bitmap userBitmap = null;
@@ -215,7 +210,6 @@ public class UserEditFragment extends Fragment
 
     @Override
     public void setUserWebsite(String website) {
-        this.website = website;
         Spannable spannable = new SpannableStringBuilder(website);
         spannable.setSpan(new URLSpan(website), 0, website.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textViewWebsite.setText(spannable);
@@ -331,7 +325,7 @@ public class UserEditFragment extends Fragment
                     image.setDate(new Date());
                     image.setTitle(getResources().getString(R.string.other));
                     if (data!=null && data.getData()!=null) {
-                        InputStream inputStream = null;
+                        InputStream inputStream;
                         try {
                             inputStream = mainActivityConnector.getApplicationContext()
                                     .getContentResolver().openInputStream(data.getData());

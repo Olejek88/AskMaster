@@ -12,6 +12,8 @@ public interface QuestionsDataSource {
 
     Observable<Question> getQuestion(@NonNull final String id);
 
+    Question getQuestionById(@NonNull final String id);
+
     void saveQuestion(@NonNull Question question);
 
     void deleteQuestion(@NonNull String id);

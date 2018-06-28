@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -33,6 +32,7 @@ import android.widget.RelativeLayout;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsFragment extends Fragment
@@ -101,7 +101,9 @@ public class QuestionDetailsFragment extends Fragment
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                Intent intent = new Intent(getContext(), QuestionEditActivity.class);
+                intent.putExtra(QuestionEditActivity.QUESTION_ID, currentQuestion.getId());
+                startActivity(intent);
             }
         });
 
@@ -352,16 +354,16 @@ public class QuestionDetailsFragment extends Fragment
     }
 
     private void hideFAB() {
-        hideFloatingActionButton(R.id.fab_edit_text, R.anim.fab1_hide, 0, 3.0);
-        hideFloatingActionButton(R.id.fab_edit, R.anim.fab2_hide, 0, 2.0);
-        hideFloatingActionButton(R.id.fab_delete, R.anim.fab3_hide, 0, 1.0);
-        hideFloatingActionButton(R.id.fab_answer, R.anim.fab4_hide, 0, 0.0);
+        hideFloatingActionButton(R.id.fab_edit_text, R.anim.fab1_hide,  3.0);
+        hideFloatingActionButton(R.id.fab_edit, R.anim.fab2_hide,  2.0);
+        hideFloatingActionButton(R.id.fab_delete, R.anim.fab3_hide,  1.0);
+        hideFloatingActionButton(R.id.fab_answer, R.anim.fab4_hide, 0.0);
     }
 
-    private void hideFloatingActionButton(int buttonId, int animationId, double kw, double kh) {
+    private void hideFloatingActionButton(int buttonId, int animationId,  double kh) {
         FloatingActionButton fab = view.findViewById(buttonId);
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fab.getLayoutParams();
-        lp.rightMargin -= (int) (fab.getWidth() * kw);
+        lp.rightMargin -= 0;
         lp.bottomMargin -= (int) (fab.getHeight() * kh);
         fab.setLayoutParams(lp);
         Animation animation = AnimationUtils.loadAnimation(mainActivityConnector, animationId);
