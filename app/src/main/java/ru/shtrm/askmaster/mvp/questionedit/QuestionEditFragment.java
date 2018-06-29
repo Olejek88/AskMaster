@@ -32,12 +32,11 @@ public class QuestionEditFragment extends Fragment
 
     private FloatingActionButton fab;
 
-    private QuestionEditAdapter adapter;
-
     private QuestionEditContract.Presenter presenter;
 
     private EditText textViewText;
     private EditText textViewTitle;
+    private GridView photoGridView;
 
     public QuestionEditFragment() {}
 
@@ -128,7 +127,7 @@ public class QuestionEditFragment extends Fragment
 
         textViewText = view.findViewById(R.id.questionText);
         textViewTitle = view.findViewById(R.id.questionTitle);
-        GridView photoGridView = view.findViewById(R.id.gridview);
+        photoGridView = view.findViewById(R.id.gridview);
 
         textViewTitle.setText(currentQuestion.getTitle());
         textViewText.setText(currentQuestion.getText());
@@ -153,10 +152,11 @@ public class QuestionEditFragment extends Fragment
     @Override
     public void showQuestionEdit(@NonNull Question question) {
         currentQuestion = question;
-        if (adapter == null) {
-            adapter = new QuestionEditAdapter(mainActivityConnector, question);
-            recyclerView.setAdapter(adapter);
-        }
+
+        textViewTitle.setText(currentQuestion.getTitle());
+        textViewText.setText(currentQuestion.getText());
+        photoGridView.setAdapter(new ImageGridAdapter(mainActivityConnector, currentQuestion.getImages()));
+        photoGridView.invalidateViews();
     }
 
     /**

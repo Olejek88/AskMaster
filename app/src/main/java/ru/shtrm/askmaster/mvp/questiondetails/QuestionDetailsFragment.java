@@ -32,6 +32,7 @@ import android.widget.RelativeLayout;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
+import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
@@ -118,9 +119,9 @@ public class QuestionDetailsFragment extends Fragment
         fab_answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getContext(), QuestionAnswerActivity.class);
-                //intent.putExtra(QuestionAnswerActivity.QUESTION_ID, currentQuestion.getId());
-                //startActivity(intent);
+                Intent intent = new Intent(getContext(), AddAnswerActivity.class);
+                intent.putExtra(QuestionEditActivity.QUESTION_ID, currentQuestion.getId());
+                startActivity(intent);
             }
         });
 

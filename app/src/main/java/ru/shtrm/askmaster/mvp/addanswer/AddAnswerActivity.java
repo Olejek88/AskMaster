@@ -8,12 +8,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.data.source.ImagesDataSource;
+import ru.shtrm.askmaster.data.source.AnswersRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.UsersRepository;
+import ru.shtrm.askmaster.data.source.local.AnswersLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
+import ru.shtrm.askmaster.data.source.remote.AnswersRemoteDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
 
 public class AddAnswerActivity extends AppCompatActivity {
@@ -51,6 +53,8 @@ public class AddAnswerActivity extends AppCompatActivity {
         new AddAnswerPresenter(QuestionsRepository.getInstance(
                 QuestionsRemoteDataSource.getInstance(),
                 QuestionsLocalDataSource.getInstance()),
+                AnswersRepository.getInstance(AnswersRemoteDataSource.getInstance(),
+                        AnswersLocalDataSource.getInstance()),
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),
                 ImagesLocalDataSource.getInstance(),
                 fragment);

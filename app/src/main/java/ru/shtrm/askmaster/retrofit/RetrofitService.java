@@ -3,6 +3,7 @@ package ru.shtrm.askmaster.retrofit;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 
 public interface RetrofitService {
@@ -15,4 +16,10 @@ public interface RetrofitService {
 
     @GET(Api.QUESTION_ID)
     Observable<Question> getQuestion(@Query("id") String id);
+
+    @GET(Api.ANSWER_ID)
+    Observable<Answer> getAnswer(@Query("id") String id);
+
+    @GET(Api.ANSWERS_ID)
+    Observable<Answer> getAnswers(@Query("id") String questionId);
 }

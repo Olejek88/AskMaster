@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mvp.questionedit.QuestionEditActivity"
-            android:label="@string/activity_question_edit"
+            android:label="@string/activity_edit_question"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mvp.addanswer.AddAnswerActivity"

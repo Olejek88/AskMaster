@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.mvp.BasePresenter;
 import ru.shtrm.askmaster.mvp.BaseView;
@@ -13,19 +14,14 @@ import ru.shtrm.askmaster.mvp.BaseView;
 public interface AddAnswerContract {
 
     interface View extends BaseView<Presenter> {
-
-        void showTitleExistError();
-
+        void showQuestion();
         void showTitleError();
-
-        void showQuestionsList();
-
     }
 
     interface Presenter extends BasePresenter {
 
-        void saveQuestion(Context context, String id, String title, String text,
-                          User user, ArrayList<Image> images);
+        void saveAnswer(Context context, String id, String title, String text,
+                        User user, ArrayList<Image> images, Question question);
 
     }
 

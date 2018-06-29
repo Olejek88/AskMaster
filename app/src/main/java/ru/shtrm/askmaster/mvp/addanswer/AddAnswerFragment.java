@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -38,9 +36,12 @@ import java.util.Date;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -59,6 +60,7 @@ public class AddAnswerFragment extends Fragment
     private FloatingActionButton fab;
     private ImageView imageView;
     private GridView gridView;
+    private Question currentQuestion;
 
     private AddAnswerContract.Presenter presenter;
 
@@ -77,7 +79,13 @@ public class AddAnswerFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_question, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_answer, container, false);
+        Bundle b = getArguments();
+        if (b!=null) {
+            String questionId = b.getString(QuestionEditActivity.QUESTION_ID);
+            if (questionId !=null)
+                currentQuestion= QuestionsLocalDataSource.getInstance().getQuestionById(questionId);
+        }
 
         initViews(view);
 
@@ -95,8 +103,8 @@ public class AddAnswerFragment extends Fragment
 
                 editTextName.setText(title);
                 final User user = UsersLocalDataSource.getInstance().getAuthorisedUser();
-                presenter.saveQuestion (mainActivityConnector, java.util.UUID.randomUUID().toString(),
-                        title, editText.getText().toString(), user, images);
+                presenter.saveAnswer (mainActivityConnector, java.util.UUID.randomUUID().toString(),
+                        title, editText.getText().toString(), user, images, currentQuestion);
             }
         });
 
@@ -129,32 +137,6 @@ public class AddAnswerFragment extends Fragment
         presenter.unsubscribe();
     }
 
-    /**
-     * Scroll the screen to avoid edit text being covered by imm such as the soft keyboard.
-     * It is better to set the height as 150 because some devices
-     * has the navigation bar. The height 100 might not trigger the scrolling action.
-     * @param main The scroll view.
-     * @param scroll The view to show.
-     */
-    private void addLayoutListener(final View main, final View scroll) {
-        main.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect rect = new Rect();
-                main.getWindowVisibleDisplayFrame(rect);
-                int mainInvisibleHeight = main.getRootView().getHeight() - rect.bottom;
-                if (mainInvisibleHeight > 150) {
-                    int[] location = new int[2];
-                    scroll.getLocationInWindow(location);
-                    int scrollHeight = (location[1] + scroll.getHeight()) - rect.bottom;
-                    main.scrollTo(0, scrollHeight);
-                } else {
-                    main.scrollTo(0, 0);
-                }
-            }
-        });
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -173,7 +155,8 @@ public class AddAnswerFragment extends Fragment
 
         AddAnswerActivity activity = (AddAnswerActivity) mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (activity.getSupportActionBar()!=null)
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = view.findViewById(R.id.question_add_image);
         editTextName = view.findViewById(R.id.editTextTitle);
@@ -216,7 +199,7 @@ public class AddAnswerFragment extends Fragment
                     gridView.setAdapter(new ImageGridAdapter(mainActivityConnector,images));
                     gridView.invalidateViews();
                     if (data!=null && data.getData()!=null) {
-                        InputStream inputStream = null;
+                        InputStream inputStream;
                         try {
                             inputStream = mainActivityConnector.getApplicationContext()
                                     .getContentResolver().openInputStream(data.getData());
@@ -322,11 +305,6 @@ public class AddAnswerFragment extends Fragment
     }
 
     @Override
-    public void showTitleExistError() {
-        Snackbar.make(fab, R.string.question_exist, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showTitleError() {
         Snackbar.make(fab, R.string.wrong_title, Snackbar.LENGTH_SHORT).show();
     }
@@ -335,7 +313,7 @@ public class AddAnswerFragment extends Fragment
      * Finish current activity.
      */
     @Override
-    public void showQuestionsList() {
+    public void showQuestion() {
         mainActivityConnector.setResult(Activity.RESULT_OK);
         mainActivityConnector.finish();
     }

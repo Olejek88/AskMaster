@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.realm.RealmList;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
@@ -26,6 +27,9 @@ public class AddAnswerPresenter implements AddAnswerContract.Presenter{
     private final QuestionsDataSource questionsDataSource;
 
     @NonNull
+    private final AnswersDataSource answersDataSource;
+
+    @NonNull
     private final ImagesDataSource imagesDataSource;
 
     @NonNull
@@ -35,12 +39,14 @@ public class AddAnswerPresenter implements AddAnswerContract.Presenter{
     private CompositeDisposable compositeDisposable;
 
     public AddAnswerPresenter(@NonNull QuestionsDataSource dataSource,
+                              @NonNull AnswersDataSource answerDataSource,
                                 @NonNull UsersDataSource userDataSource,
                                 @NonNull ImagesDataSource imagesDataSource,
                                 @NonNull AddAnswerContract.View view) {
         this.view = view;
         this.view.setPresenter(this);
         this.questionsDataSource = dataSource;
+        this.answersDataSource = answerDataSource;
         this.imagesDataSource = imagesDataSource;
         this.usersDataSource = userDataSource;
         compositeDisposable = new CompositeDisposable();
@@ -55,34 +61,36 @@ public class AddAnswerPresenter implements AddAnswerContract.Presenter{
     }
 
     @Override
-    public void saveQuestion(Context context, String id, String title, String text, User user,
-                             ArrayList<Image> images) {
+    public void saveAnswer(Context context, String id, String title, String text, User user,
+                             ArrayList<Image> images, Question question) {
         compositeDisposable.clear();
-        checkQuestion(context, id, title, text, user, images);
+        checkAnswer(context, id, title, text, user, images, question);
     }
 
-    private void checkQuestion(Context context, final String id, final String title,
-                               final String text, User user, ArrayList<Image> images) {
+    private void checkAnswer(Context context, final String id, final String title, final String text,
+                             User user, ArrayList<Image> images, Question question) {
         // TODO id - это uuid так что не сработает
         if (questionsDataSource.isQuestionExist(id)) {
             return;
         }
-        Question question = new Question();
-        question.setId(java.util.UUID.randomUUID().toString());
-        question.setPushable(true);
-        question.setClosed(false);
-        question.setUser(user);
-        question.setTitle(title);
-        question.setText(text);
-        question.setDate(new Date());
+        Answer answer = new Answer();
+        answer.setId(java.util.UUID.randomUUID().toString());
+        answer.setUser(user);
+        answer.setTitle(title);
+        answer.setText(text);
+        answer.setDate(new Date());
+        answer.setVoteDown(0);
+        answer.setVoteUp(1);
         for (Image image : images) {
             saveImage(context, title, image.getImageName());
         }
-        question.setImages(imagesDataSource.saveImages(images));
-        questionsDataSource.saveQuestion(question);
-        user.getQuestions().add(question);
+        answer.setImages(imagesDataSource.saveImages(images));
+        answersDataSource.saveAnswer(answer);
+        user.getAnswers().add(answer);
         usersDataSource.saveUser(user);
-        view.showQuestionsList();
+        question.getAnswers().add(answer);
+        questionsDataSource.saveQuestion(question);
+        view.showQuestion();
     }
 
     private void saveImage(Context context, String title, String imageName) {
