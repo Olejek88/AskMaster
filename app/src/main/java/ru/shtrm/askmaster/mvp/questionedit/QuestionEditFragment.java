@@ -21,6 +21,7 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
+import ru.shtrm.askmaster.mvp.MainActivity;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
 
 public class QuestionEditFragment extends Fragment
@@ -57,12 +58,13 @@ public class QuestionEditFragment extends Fragment
         Bundle b = getArguments();
         if (b!=null) {
             String questionId = b.getString(QuestionEditActivity.QUESTION_ID);
-            if (questionId !=null)
-                currentQuestion= QuestionsLocalDataSource.getInstance().getQuestionById(questionId);
+            if (questionId!=null)
+                currentQuestion=QuestionsLocalDataSource.getInstance().getQuestionById(questionId);
         }
 
         if (currentQuestion==null) {
             mainActivityConnector.finish();
+            return view;
         }
 
         initViews(view);
@@ -116,7 +118,7 @@ public class QuestionEditFragment extends Fragment
      */
     @Override
     public void initViews(View view) {
-        QuestionEditActivity activity = (QuestionEditActivity) mainActivityConnector;
+        MainActivity activity = (MainActivity)mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         if (activity.getSupportActionBar()!=null)
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

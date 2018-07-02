@@ -30,6 +30,7 @@ import android.widget.Toast;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.appwidget.AppWidgetProvider;
 import ru.shtrm.askmaster.data.AuthorizedUser;
+import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.ImagesRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
@@ -45,6 +46,8 @@ import ru.shtrm.askmaster.mvp.images.ImagesFragment;
 import ru.shtrm.askmaster.mvp.images.ImagesPresenter;
 import ru.shtrm.askmaster.mvp.profile.UserDetailFragment;
 import ru.shtrm.askmaster.mvp.profile.UserDetailPresenter;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditFragment;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditPresenter;
 import ru.shtrm.askmaster.mvp.questions.QuestionFilterType;
 import ru.shtrm.askmaster.mvp.questions.QuestionsFragment;
 import ru.shtrm.askmaster.mvp.questions.QuestionsPresenter;
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private ImagesFragment imagesFragment;
     private QuestionsFragment questionsFragment;
+    private QuestionEditFragment questionEditFragment;
     private UsersFragment usersFragment;
     private UserDetailFragment profileFragment;
     private TricksFragment tricksFragment;
@@ -119,12 +123,20 @@ public class MainActivity extends AppCompatActivity
                     getFragment(savedInstanceState, "ImagesFragment");
             tricksFragment = (TricksFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState, "TricksFragment");
+            questionEditFragment = (QuestionEditFragment) getSupportFragmentManager().
+                    getFragment(savedInstanceState,"QuestionEditFragment");
             selectedNavItem = savedInstanceState.getInt(KEY_NAV_ITEM);
         } else {
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().
                     findFragmentById(R.id.content_main);
             if (questionsFragment == null) {
                 questionsFragment = QuestionsFragment.newInstance();
+            }
+
+            questionEditFragment = (QuestionEditFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.content_main);
+            if (questionEditFragment == null) {
+                questionEditFragment = QuestionEditFragment.newInstance();
             }
 
             usersFragment = (UsersFragment) getSupportFragmentManager().
@@ -158,6 +170,14 @@ public class MainActivity extends AppCompatActivity
                     .add(R.id.content_main, questionsFragment, "QuestionsFragment")
                     .commit();
         }
+
+/*
+        if (!questionEditFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_main, questionEditFragment, "QuestionEditFragment")
+                    .commit();
+        }
+*/
 
         if (!usersFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
@@ -197,6 +217,10 @@ public class MainActivity extends AppCompatActivity
                         QuestionsLocalDataSource.getInstance()));
         new UsersPresenter(usersFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()));
+        new QuestionEditPresenter("",
+                QuestionsRepository.getInstance(
+                        QuestionsRemoteDataSource.getInstance(),
+                        QuestionsLocalDataSource.getInstance()), questionEditFragment);
 
         new UserDetailPresenter(profileFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),

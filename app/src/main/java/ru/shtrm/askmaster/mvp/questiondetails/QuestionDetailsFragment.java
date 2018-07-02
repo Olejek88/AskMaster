@@ -34,6 +34,7 @@ import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditFragment;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsFragment extends Fragment
@@ -92,16 +93,17 @@ public class QuestionDetailsFragment extends Fragment
             }
         });
 
-        fab_edit_text.setOnClickListener(new View.OnClickListener() {
+        fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEditTextDialog();
             }
         });
 
-        fab_edit.setOnClickListener(new View.OnClickListener() {
+        fab_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mainActivityConnector.finish();
                 Intent intent = new Intent(getContext(), QuestionEditActivity.class);
                 intent.putExtra(QuestionEditActivity.QUESTION_ID, currentQuestion.getId());
                 startActivity(intent);

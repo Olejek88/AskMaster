@@ -91,6 +91,7 @@
     <string name="add_question">Добавить вопрос</string>
     <!--add question end-->
 
+    <string name="tint_answer_title">Ответ</string>
     <string name="tint_trick_title">Совет</string>
 
     <!--user details-->

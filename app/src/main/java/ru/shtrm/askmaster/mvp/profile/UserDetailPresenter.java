@@ -31,7 +31,8 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
         this.view = view;
         this.usersRepository = usersRepository;
         this.userId = userId;
-        this.view.setPresenter(this);
+        if (this.view!=null)
+            this.view.setPresenter(this);
         compositeDisposable = new CompositeDisposable();
     }
 

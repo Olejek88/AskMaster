@@ -158,7 +158,7 @@ public class AddAnswerFragment extends Fragment
         if (activity.getSupportActionBar()!=null)
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imageView = view.findViewById(R.id.question_add_image);
+        imageView = view.findViewById(R.id.answer_add_image);
         editTextName = view.findViewById(R.id.editTextTitle);
         editText = view.findViewById(R.id.editDescription);
         fab = view.findViewById(R.id.fab);
