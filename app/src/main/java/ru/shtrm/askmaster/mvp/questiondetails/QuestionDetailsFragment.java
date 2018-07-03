@@ -29,7 +29,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
 import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
@@ -42,6 +45,7 @@ public class QuestionDetailsFragment extends Fragment
     private Activity mainActivityConnector = null;
 
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewAnswer;
     private View view;
     private AppCompatTextView userName;
     private AppCompatTextView userStatus;
@@ -58,6 +62,7 @@ public class QuestionDetailsFragment extends Fragment
     private FloatingActionButton fab_answer;
 
     private QuestionDetailsAdapter adapter;
+    private AnswersAdapter answerAdapter;
 
     private QuestionDetailsContract.Presenter presenter;
 
@@ -190,6 +195,10 @@ public class QuestionDetailsFragment extends Fragment
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        recyclerViewAnswer = view.findViewById(R.id.recyclerViewAnswers);
+
+
         fab = view.findViewById(R.id.fab);
         fab_edit_text = view.findViewById(R.id.fab_edit_text);
         fab_edit = view.findViewById(R.id.fab_edit);
@@ -258,6 +267,7 @@ public class QuestionDetailsFragment extends Fragment
                     imageView.setImageBitmap(MainUtil.getBitmapByPath(path, avatar));
             }
         }
+        showAnswers(currentQuestion.getAnswers());
     }
 
     /**
@@ -382,5 +392,12 @@ public class QuestionDetailsFragment extends Fragment
         // TODO решить что делать если контекст не приехал
         if (mainActivityConnector==null)
             onDestroyView();
+    }
+
+    public void showAnswers(final List<Answer> list) {
+        if (answerAdapter == null) {
+            answerAdapter = new AnswersAdapter(mainActivityConnector, list);
+            recyclerViewAnswer.setAdapter(adapter);
+        }
     }
 }

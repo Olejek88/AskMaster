@@ -20,6 +20,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,14 +34,17 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ru.shtrm.askmaster.R;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
+import ru.shtrm.askmaster.mvp.questiondetails.AnswersAdapter;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
@@ -163,7 +167,6 @@ public class AddAnswerFragment extends Fragment
         editText = view.findViewById(R.id.editDescription);
         fab = view.findViewById(R.id.fab);
         gridView = view.findViewById(R.id.gridview);
-        //gridView.setAdapter(new PhotoGridAdapter(mainActivityConnector, null));
     }
 
     /**
