@@ -3,13 +3,16 @@ package ru.shtrm.askmaster.data.source.local;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.realm.Case;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.source.TricksDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
@@ -66,12 +69,14 @@ public class TricksLocalDataSource implements TricksDataSource {
      * @param trick The Trick to save. See {@link Trick}
      */
     @Override
-    public void saveTrick(@NonNull final Trick trick) {
+    public void saveTrick(@NonNull final Trick trick, @NonNull final ArrayList<Image> images) {
         Realm realm = RealmHelper.newRealmInstance();
-        // DO NOT forget begin and commit the transaction.
+        final RealmList<Image> list = new RealmList<>();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                list.addAll(images);
+                trick.setImages(list);
                 realm.copyToRealmOrUpdate(trick);
             }
         });

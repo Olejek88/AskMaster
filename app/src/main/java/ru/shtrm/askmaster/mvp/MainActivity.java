@@ -123,8 +123,10 @@ public class MainActivity extends AppCompatActivity
                     getFragment(savedInstanceState, "ImagesFragment");
             tricksFragment = (TricksFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState, "TricksFragment");
+/*
             questionEditFragment = (QuestionEditFragment) getSupportFragmentManager().
                     getFragment(savedInstanceState,"QuestionEditFragment");
+*/
             selectedNavItem = savedInstanceState.getInt(KEY_NAV_ITEM);
         } else {
             questionsFragment = (QuestionsFragment) getSupportFragmentManager().
@@ -133,11 +135,13 @@ public class MainActivity extends AppCompatActivity
                 questionsFragment = QuestionsFragment.newInstance();
             }
 
+/*
             questionEditFragment = (QuestionEditFragment) getSupportFragmentManager().
                     findFragmentById(R.id.content_main);
             if (questionEditFragment == null) {
                 questionEditFragment = QuestionEditFragment.newInstance();
             }
+*/
 
             usersFragment = (UsersFragment) getSupportFragmentManager().
                     findFragmentById(R.id.content_main);
@@ -217,10 +221,13 @@ public class MainActivity extends AppCompatActivity
                         QuestionsLocalDataSource.getInstance()));
         new UsersPresenter(usersFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()));
+
+/*
         new QuestionEditPresenter("",
                 QuestionsRepository.getInstance(
                         QuestionsRemoteDataSource.getInstance(),
                         QuestionsLocalDataSource.getInstance()), questionEditFragment);
+*/
 
         new UserDetailPresenter(profileFragment,
                 UsersRepository.getInstance(UsersLocalDataSource.getInstance()),

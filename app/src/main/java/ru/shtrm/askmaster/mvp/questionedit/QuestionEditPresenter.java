@@ -42,7 +42,8 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
         this.view = questionDetailView;
         this.questionsRepository = questionsRepository;
         compositeDisposable = new CompositeDisposable();
-        this.view.setPresenter(this);
+        if (questionDetailView!=null)
+            this.view.setPresenter(this);
     }
 
     @Override
@@ -59,6 +60,12 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
      * Load data from repository.
      */
     private void openDetail() {
+        Question currentQuestion;
+        if (questionId!=null) {
+            currentQuestion = questionsRepository.getQuestionById(questionId);
+            view.showQuestionEdit(currentQuestion);
+        }
+/*
         Disposable disposable = questionsRepository
                 .getQuestion(questionId)
                 .subscribeOn(Schedulers.io())
@@ -84,6 +91,7 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
                     }
                 });
         compositeDisposable.add(disposable);
+*/
 
     }
 

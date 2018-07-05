@@ -81,9 +81,8 @@ public class AddAnswerPresenter implements AddAnswerContract.Presenter{
         answer.setDate(new Date());
         answer.setVoteDown(0);
         answer.setVoteUp(1);
-        for (Image image : images) {
-            image.setTitle(title);
-            //saveImage(context, title, image.getImageName());
+        for (int count=0;count < images.size();count++) {
+            images.get(count).setTitle(title);
         }
         answer.setImages(imagesDataSource.saveImages(images));
         answersDataSource.saveAnswer(answer);

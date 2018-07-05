@@ -127,14 +127,13 @@ public class AnswersLocalDataSource implements AnswersDataSource {
     @Override
     public void updateAnswerText(@NonNull String id, @NonNull String text) {
         Realm realm = RealmHelper.newRealmInstance();
-        Answer Answer = realm.where(Answer.class)
+        Answer answer = realm.where(Answer.class)
                 .equalTo("id", id)
                 .findFirst();
-        if (Answer != null) {
+        if (answer != null) {
             realm.beginTransaction();
-            realm.beginTransaction();
-            Answer.setTitle(text);
-            realm.copyToRealmOrUpdate(Answer);
+            answer.setTitle(text);
+            realm.copyToRealmOrUpdate(answer);
             realm.commitTransaction();
         }
         realm.close();
@@ -143,9 +142,9 @@ public class AnswersLocalDataSource implements AnswersDataSource {
     @Override
     public Answer getAnswerById(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
-        Answer Answer = realm.where(Answer.class).equalTo("id", id).findFirst();
-        if (Answer!=null)
-            return realm.copyFromRealm(Answer);
+        Answer answer = realm.where(Answer.class).equalTo("id", id).findFirst();
+        if (answer!=null)
+            return realm.copyFromRealm(answer);
         return null;
     }
 

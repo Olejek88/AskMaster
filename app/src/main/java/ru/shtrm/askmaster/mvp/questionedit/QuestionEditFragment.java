@@ -17,11 +17,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import io.reactivex.Observable;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.mvp.MainActivity;
+import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
 
 public class QuestionEditFragment extends Fragment
@@ -34,6 +36,7 @@ public class QuestionEditFragment extends Fragment
     private FloatingActionButton fab;
 
     private QuestionEditContract.Presenter presenter;
+    private QuestionsLocalDataSource questionsLocalDataSource;
 
     private EditText textViewText;
     private EditText textViewTitle;
@@ -48,6 +51,7 @@ public class QuestionEditFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        questionsLocalDataSource = QuestionsLocalDataSource.getInstance();
     }
 
     @Nullable
@@ -59,7 +63,7 @@ public class QuestionEditFragment extends Fragment
         if (b!=null) {
             String questionId = b.getString(QuestionEditActivity.QUESTION_ID);
             if (questionId!=null)
-                currentQuestion=QuestionsLocalDataSource.getInstance().getQuestionById(questionId);
+                currentQuestion = questionsLocalDataSource.getQuestionById(questionId);
         }
 
         if (currentQuestion==null) {
@@ -118,7 +122,7 @@ public class QuestionEditFragment extends Fragment
      */
     @Override
     public void initViews(View view) {
-        MainActivity activity = (MainActivity)mainActivityConnector;
+        AddAnswerActivity activity = (AddAnswerActivity)mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         if (activity.getSupportActionBar()!=null)
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

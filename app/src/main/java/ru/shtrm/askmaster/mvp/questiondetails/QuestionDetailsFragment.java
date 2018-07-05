@@ -108,9 +108,9 @@ public class QuestionDetailsFragment extends Fragment
         fab_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivityConnector.finish();
                 Intent intent = new Intent(getContext(), QuestionEditActivity.class);
-                intent.putExtra(QuestionEditActivity.QUESTION_ID, currentQuestion.getId());
+                final String curQuestId = currentQuestion.getId();
+                intent.putExtra(QuestionEditActivity.QUESTION_ID, curQuestId);
                 startActivity(intent);
             }
         });
@@ -131,15 +131,6 @@ public class QuestionDetailsFragment extends Fragment
                 startActivity(intent);
             }
         });
-
-        /*
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.refreshQuestion();
-            }
-        });
-*/
 
         setHasOptionsMenu(true);
 

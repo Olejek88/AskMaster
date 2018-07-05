@@ -40,9 +40,14 @@ public class QuestionEditActivity extends AppCompatActivity{
             fragment = QuestionEditFragment.newInstance();
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager, fragment)
-                .commit();
+        if (!fragment.isAdded()) {
+            Bundle b = new Bundle();
+            b.putString(QUESTION_ID,getIntent().getStringExtra(QUESTION_ID));
+            fragment.setArguments(b);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.view_pager, fragment, "QuestionEditFragment")
+                    .commit();
+        }
 
         // Create the presenter.
         new QuestionEditPresenter(

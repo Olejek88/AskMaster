@@ -17,10 +17,10 @@
     <translate
         android:duration="1200"
         android:fromXDelta="0%"
-        android:fromYDelta="-400%"
+        android:fromYDelta="-100%"
         android:interpolator="@android:anim/linear_interpolator"
         android:toXDelta="0%"
-        android:toYDelta="-50%"/>
+        android:toYDelta="0%"/>
 
     <!--Fade In-->
     <alpha

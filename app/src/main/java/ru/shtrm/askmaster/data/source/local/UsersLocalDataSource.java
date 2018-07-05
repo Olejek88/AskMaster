@@ -47,7 +47,9 @@ public class UsersLocalDataSource implements UsersDataSource {
 
     public User getLastUser() {
         Realm realm = RealmHelper.newRealmInstance();
-        return realm.where(User.class).findFirst();
+        User user = realm.copyFromRealm(realm.where(User.class).findFirst());
+        realm.close();
+        return user;
     }
 
     @Override
@@ -64,9 +66,11 @@ public class UsersLocalDataSource implements UsersDataSource {
     public User getUserById(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
         User user = realm.where(User.class).equalTo("id", id).findFirst();
-        if (user!=null)
-            return realm.copyFromRealm(user);
-        return null;
+        if (user!=null) {
+            user = realm.copyFromRealm(user);
+        }
+        realm.close();
+        return user;
     }
 
     @Override
@@ -154,6 +158,7 @@ public class UsersLocalDataSource implements UsersDataSource {
             @Override
             public void execute(Realm realm) {
                 user.getQuestions().add(question);
+                realm.copyToRealmOrUpdate(user);
             }
         });
         realm.close();
@@ -166,6 +171,7 @@ public class UsersLocalDataSource implements UsersDataSource {
             @Override
             public void execute(Realm realm) {
                 user.getTricks().add(trick);
+                realm.copyToRealmOrUpdate(user);
             }
         });
         realm.close();

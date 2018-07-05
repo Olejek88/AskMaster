@@ -156,7 +156,6 @@ public class QuestionsLocalDataSource implements QuestionsDataSource {
                 .findFirst();
         if (question != null) {
             realm.beginTransaction();
-            realm.beginTransaction();
             question.setTitle(text);
             realm.copyToRealmOrUpdate(question);
             realm.commitTransaction();
@@ -194,11 +193,13 @@ public class QuestionsLocalDataSource implements QuestionsDataSource {
     public Question getQuestionById(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
         Question question = realm.where(Question.class).equalTo("id", id).findFirst();
-        if (question!=null)
-            return realm.copyFromRealm(question);
+        if (question!=null) {
+            final Question question2 = realm.copyFromRealm(question);
+            realm.close();
+            return question2;
+        }
         return null;
     }
-
 
     @Override
     public Observable<List<Question>> searchQuestions(@NonNull String keyWords) {

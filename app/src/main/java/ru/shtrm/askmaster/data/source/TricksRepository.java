@@ -15,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 
@@ -79,8 +80,8 @@ public class TricksRepository implements TricksDataSource {
      * @param trick The Trick to save. See more @{@link Trick}.
      */
     @Override
-    public void saveTrick(@NonNull Trick trick) {
-        tricksLocalDataSource.saveTrick(trick);
+    public void saveTrick(@NonNull Trick trick, @NonNull final ArrayList<Image> images) {
+        tricksLocalDataSource.saveTrick(trick, images);
     }
 
     /**

@@ -18,6 +18,8 @@ import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.AnswersRemoteDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
 
+import static ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity.QUESTION_ID;
+
 public class AddAnswerActivity extends AppCompatActivity {
 
     private AddAnswerFragment fragment;
@@ -44,8 +46,11 @@ public class AddAnswerActivity extends AppCompatActivity {
         }
 
         if (!fragment.isAdded()) {
+            Bundle b = new Bundle();
+            b.putString(QUESTION_ID,getIntent().getStringExtra(QUESTION_ID));
+            fragment.setArguments(b);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.view_pager, fragment, "AddAnswerFragment")
+                    .add(R.id.view_pager, fragment, "AddAnswerFragment")
                     .commit();
         }
 

@@ -64,17 +64,15 @@ public class AddTrickPresenter implements AddTrickContract.Presenter{
         trick.setVoteDown(0);
         trick.setVoteUp(0);
 
-        int count=0;
-        for (Image image : images) {
+        for (int count=0;count < images.size();count++) {
             images.get(count).setTitle(title);
-            count++;
         }
-        trick.setImages(imagesDataSource.saveImages(images));
-        tricksDataSource.saveTrick(trick);
+        tricksDataSource.saveTrick(trick, images);
         usersDataSource.addTrick(trick, user);
         view.showTricksList();
     }
 
+/*
     private void saveImage(Context context, String title, String imageName) {
         Bitmap bitmap = MainUtil.getBitmapByPath(MainUtil.getPicturesDirectory(context),imageName);
         if (bitmap!=null) {
@@ -86,5 +84,6 @@ public class AddTrickPresenter implements AddTrickContract.Presenter{
             //imagesDataSource.saveImage(image);
         }
     }
+*/
 
 }

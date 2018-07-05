@@ -3,6 +3,7 @@ package ru.shtrm.askmaster.data.source.remote;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -13,6 +14,7 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.source.TricksDataSource;
 import ru.shtrm.askmaster.retrofit.RetrofitClient;
@@ -58,7 +60,7 @@ public class TricksRemoteDataSource implements TricksDataSource {
     }
 
     @Override
-    public void saveTrick(@NonNull Trick trick) {
+    public void saveTrick(@NonNull Trick trick, @NonNull final ArrayList<Image> images) {
         // Not required because the {@link TricksRepository} handles the logic
         // of refreshing the Tricks from all available data source
     }
