@@ -81,6 +81,7 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             String sDate =
                     new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(item.getDate());
 
+/*
             if (getItemViewType(position) == TYPE_SINGLE) {
                 viewHolder.timeLine.setStartLine(null);
                 viewHolder.timeLine.setFinishLine(null);
@@ -89,9 +90,14 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else if (getItemViewType(position) == TYPE_FINISH) {
                 viewHolder.timeLine.setFinishLine(null);
             }
+*/
 
+            //answerPhotoGridView
+            viewHolder.answerPhotoGridView.setAdapter(new ImageGridAdapter(context, item.getImages()));
+            viewHolder.answerPhotoGridView.invalidateViews();
             viewHolder.textViewDate.setText(sDate);
             viewHolder.textViewAuthor.setText(item.getUser().getName());
+            viewHolder.textViewText.setText(item.getText());
             viewHolder.imageViewAuthor.setImageBitmap(
                     MainUtil.getBitmapByPath(
                             MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
@@ -137,19 +143,21 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      */
     public class AnswersViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewUser;
         private TextView textViewDate;
         private TextView textViewText;
         private TextView textViewAuthor;
         private ImageView imageViewAuthor;
         private Timeline timeLine;
+        GridView answerPhotoGridView;
 
         AnswersViewHolder(View itemView) {
             super(itemView);
             textViewAuthor = (AppCompatTextView) itemView.findViewById(R.id.answerAuthor);
             textViewText = (AppCompatTextView) itemView.findViewById(R.id.answerText);
+            textViewDate = (AppCompatTextView) itemView.findViewById(R.id.answerDate);
+            answerPhotoGridView = itemView.findViewById(R.id.answerPhotoGrid);
             //timeLine = (Timeline) itemView.findViewById(R.id.tim);
-            imageViewAuthor = itemView.findViewById(R.id.answerAuthorImage);
+            imageViewAuthor = itemView.findViewById(R.id.imageViewAvatar);
         }
     }
 

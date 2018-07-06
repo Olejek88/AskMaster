@@ -60,12 +60,13 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
      * Load data from repository.
      */
     private void openDetail() {
+/*
         Question currentQuestion;
         if (questionId!=null) {
             currentQuestion = questionsRepository.getQuestionById(questionId);
             view.showQuestionEdit(currentQuestion);
         }
-/*
+*/
         Disposable disposable = questionsRepository
                 .getQuestion(questionId)
                 .subscribeOn(Schedulers.io())
@@ -91,8 +92,6 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
                     }
                 });
         compositeDisposable.add(disposable);
-*/
-
     }
 
     @Override

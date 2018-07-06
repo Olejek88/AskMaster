@@ -13,6 +13,7 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
@@ -102,4 +103,11 @@ public class UsersRemoteDataSource implements UsersDataSource {
         // Not required because the {@link UsersRepository} handles the logic
         // of refreshing the users from all available data source
     }
+
+    @Override
+    public void addAnswer(@NonNull Answer answer, User user) {
+        // Not required because the {@link UsersRepository} handles the logic
+        // of refreshing the users from all available data source
+    }
+
 }

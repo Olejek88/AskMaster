@@ -88,7 +88,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public AnswerViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
-            textViewAnswerTitle = itemView.findViewById(R.id.answerTitle);
+            //textViewAnswerTitle = itemView.findViewById(R.id.answerTitle);
             textViewDate = itemView.findViewById(R.id.answerDate);
             textViewText = itemView.findViewById(R.id.answerText);
             textViewAvatar = itemView.findViewById(R.id.textViewAvatar);

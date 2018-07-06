@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.reactivex.Observable;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
@@ -28,4 +29,6 @@ public interface UsersDataSource {
     void addQuestion(@NonNull Question question, User user);
 
     void addTrick(@NonNull Trick trick, User user);
+
+    void addAnswer(@NonNull Answer answer, User user);
 }

@@ -84,25 +84,10 @@ public class AddAnswerPresenter implements AddAnswerContract.Presenter{
         for (int count=0;count < images.size();count++) {
             images.get(count).setTitle(title);
         }
-        answer.setImages(imagesDataSource.saveImages(images));
-        answersDataSource.saveAnswer(answer);
-        user.getAnswers().add(answer);
-        usersDataSource.saveUser(user);
+        answersDataSource.saveAnswer(answer, images);
+        usersDataSource.addAnswer(answer, user);
         question.getAnswers().add(answer);
         questionsDataSource.saveQuestion(question);
         view.showQuestion();
     }
-
-    private void saveImage(Context context, String title, String imageName) {
-        Bitmap bitmap = MainUtil.getBitmapByPath(MainUtil.getPicturesDirectory(context),imageName);
-        if (bitmap!=null) {
-            Image image = new Image();
-            image.setId(java.util.UUID.randomUUID().toString());
-            image.setImageName(imageName);
-            image.setDate(new Date());
-            image.setTitle(title);
-            //imagesDataSource.saveImage(image);
-        }
-    }
-
 }

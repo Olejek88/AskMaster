@@ -2,10 +2,12 @@ package ru.shtrm.askmaster.data.source;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import ru.shtrm.askmaster.data.Answer;
+import ru.shtrm.askmaster.data.Image;
 
 public interface AnswersDataSource {
 
@@ -27,4 +29,5 @@ public interface AnswersDataSource {
 
     Observable<List<Answer>> searchAnswers(@NonNull String keyWords);
 
+    void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images);
 }

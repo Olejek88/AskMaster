@@ -109,8 +109,7 @@ public class QuestionDetailsFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), QuestionEditActivity.class);
-                final String curQuestId = currentQuestion.getId();
-                intent.putExtra(QuestionEditActivity.QUESTION_ID, curQuestId);
+                intent.putExtra(QuestionEditActivity.QUESTION_ID, currentQuestion.getId());
                 startActivity(intent);
             }
         });

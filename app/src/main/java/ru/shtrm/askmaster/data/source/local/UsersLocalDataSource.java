@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmResults;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
@@ -176,4 +177,18 @@ public class UsersLocalDataSource implements UsersDataSource {
         });
         realm.close();
     }
+
+    @Override
+    public void addAnswer(@NonNull final Answer answer, final User user) {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                user.getAnswers().add(answer);
+                realm.copyToRealmOrUpdate(user);
+            }
+        });
+        realm.close();
+    }
+
 }

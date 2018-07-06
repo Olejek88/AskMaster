@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 import io.reactivex.Observable;
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
@@ -74,4 +75,10 @@ public class UsersRepository implements UsersDataSource {
     public void addTrick(@NonNull Trick trick, User user) {
         localDataSource.addTrick(trick, user);
     }
+
+    @Override
+    public void addAnswer(@NonNull Answer answer, User user) {
+        localDataSource.addAnswer(answer, user);
+    }
+
 }

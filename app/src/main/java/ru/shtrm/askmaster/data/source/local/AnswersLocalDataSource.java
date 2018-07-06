@@ -3,13 +3,17 @@ package ru.shtrm.askmaster.data.source.local;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.realm.Case;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.Sort;
 import ru.shtrm.askmaster.data.Answer;
+import ru.shtrm.askmaster.data.Image;
+import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
 
@@ -161,4 +165,25 @@ public class AnswersLocalDataSource implements AnswersDataSource {
                 .toList()
                 .toObservable();
     }
+
+    /**
+     * Save a Answer with images to database.
+     * @param answer The Answer to save. See {@link Answer}
+     * @param images The images to save. See {@link Image}
+     */
+    @Override
+    public void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images) {
+        Realm realm = RealmHelper.newRealmInstance();
+        final RealmList<Image> list = new RealmList<>();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                list.addAll(images);
+                answer.setImages(list);
+                realm.copyToRealmOrUpdate(answer);
+            }
+        });
+        realm.close();
+    }
+
 }

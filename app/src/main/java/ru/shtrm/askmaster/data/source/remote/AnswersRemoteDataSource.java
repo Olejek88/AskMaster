@@ -3,6 +3,7 @@ package ru.shtrm.askmaster.data.source.remote;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -14,6 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import ru.shtrm.askmaster.data.Answer;
+import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.retrofit.RetrofitClient;
 import ru.shtrm.askmaster.retrofit.RetrofitService;
@@ -71,6 +73,7 @@ public class AnswersRemoteDataSource implements AnswersDataSource {
 
     /**
      * Update and save the Answers' status by accessing the Internet.
+     *
      * @return The observable Answers whose status are the latest.
      */
     @Override
@@ -83,7 +86,7 @@ public class AnswersRemoteDataSource implements AnswersDataSource {
                 .build());
 
         return Observable.fromIterable(realm.copyFromRealm(realm.where(Answer.class).
-                equalTo("question.id",questionId).findAll()))
+                equalTo("question.id", questionId).findAll()))
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Function<Answer, ObservableSource<Answer>>() {
                     @Override
@@ -98,6 +101,7 @@ public class AnswersRemoteDataSource implements AnswersDataSource {
 
     /**
      * Update and save Answer by accessing the network.
+     *
      * @param id The Answers id. See {@link Answer#id}
      * @return The observable answer.
      */
@@ -150,4 +154,7 @@ public class AnswersRemoteDataSource implements AnswersDataSource {
         return null;
     }
 
+    @Override
+    public void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images){
+    }
 }

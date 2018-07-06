@@ -16,6 +16,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import ru.shtrm.askmaster.data.Answer;
+import ru.shtrm.askmaster.data.Image;
 
 public class AnswersRepository implements AnswersDataSource {
     
@@ -192,6 +193,12 @@ public class AnswersRepository implements AnswersDataSource {
         // Do nothing but just let local data source handle it.
         return answersLocalDataSource.searchAnswers(keyWords);
     }
+
+    @Override
+    public void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images) {
+        answersLocalDataSource.saveAnswer(answer,images);
+    }
+
 
     /**
      * Get a Answer with Answer number.
