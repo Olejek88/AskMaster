@@ -20,6 +20,7 @@ public interface ImagesContract {
 
     interface Presenter extends BasePresenter {
         List<Image> getImages();
+        Image getImage(String id);
     }
 
 }

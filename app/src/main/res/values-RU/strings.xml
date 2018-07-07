@@ -17,6 +17,7 @@
     <string name="activity_tricks">Трюки</string>
     <string name="activity_users">Пользователи</string>
     <string name="activity_add_answer">Ответить</string>
+    <string name="activity_image_preview">Просмотр изображения</string>
     <string name="activity_edit_question">Редактировать вопрос</string>
     <string name="message_no_write_permission">Нет разрешений на запись</string>
     <!--activities end-->

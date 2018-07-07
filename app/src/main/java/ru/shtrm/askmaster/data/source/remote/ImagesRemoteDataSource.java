@@ -42,7 +42,7 @@ public class ImagesRemoteDataSource implements ImagesDataSource {
     }
 
     @Override
-    public Observable<Image> getImage(@NonNull String id) {
+    public Image getImage(@NonNull String id) {
         // Not required because the {@link ImagesRepository} handles the logic
         // of refreshing the Images from all available data source
         return null;

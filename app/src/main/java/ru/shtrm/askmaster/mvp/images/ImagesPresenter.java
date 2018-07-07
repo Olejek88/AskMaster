@@ -50,4 +50,9 @@ public class ImagesPresenter implements ImagesContract.Presenter{
     public List<Image> getImages() {
         return imagesDataSource.getImages();
     }
+
+    public Image getImage(String id) {
+        return imagesDataSource.getImage(id);
+    }
+
 }

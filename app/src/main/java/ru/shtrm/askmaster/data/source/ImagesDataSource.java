@@ -14,7 +14,7 @@ public interface ImagesDataSource {
 
     List<Image> getImages();
 
-    Observable<Image> getImage(@NonNull final String id);
+    Image getImage(@NonNull final String id);
 
     void saveImage(@NonNull Image image);
 

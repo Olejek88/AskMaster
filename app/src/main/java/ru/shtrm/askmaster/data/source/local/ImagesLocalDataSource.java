@@ -40,10 +40,9 @@ public class ImagesLocalDataSource implements ImagesDataSource {
     }
 
     @Override
-    public Observable<Image> getImage(@NonNull String id) {
+    public Image getImage(@NonNull String id) {
         Realm realm = RealmHelper.newRealmInstance();
-        return Observable
-                .just(realm.copyFromRealm(realm.where(Image.class).equalTo("id", id).findFirst()));
+        return realm.copyFromRealm(realm.where(Image.class).equalTo("id", id).findFirst());
     }
 
     public void deleteImage(@NonNull String id) {

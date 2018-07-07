@@ -36,7 +36,7 @@ public class ImagesRepository implements ImagesDataSource {
     }
 
     @Override
-    public Observable<Image> getImage(@NonNull String id) {
+    public Image getImage(@NonNull String id) {
         return localDataSource.getImage(id);
     }
 

@@ -61,6 +61,13 @@ public final class ImageGridAdapter extends BaseAdapter {
                 MainUtil.getPicturesDirectory(context),item.getImageName());
         if (bitmap!=null)
             picture.setImageBitmap(bitmap);
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return v;
     }
 }

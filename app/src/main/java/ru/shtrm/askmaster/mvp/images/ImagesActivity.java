@@ -18,6 +18,7 @@ import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
 public class ImagesActivity extends AppCompatActivity {
 
     private ImagesFragment fragment;
+    public static final String IMAGE_ID = "IMAGE_ID";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
