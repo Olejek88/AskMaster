@@ -8,14 +8,13 @@ import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageButton;
@@ -24,10 +23,8 @@ import android.widget.ImageView;
 import java.util.Arrays;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.data.source.UsersRepository;
-import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
-import ru.shtrm.askmaster.mvp.addquestion.AddQuestionActivity;
 import ru.shtrm.askmaster.mvp.MainActivity;
+import ru.shtrm.askmaster.mvp.addquestion.AddQuestionActivity;
 import ru.shtrm.askmaster.mvp.search.SearchActivity;
 import ru.shtrm.askmaster.util.SettingsUtil;
 

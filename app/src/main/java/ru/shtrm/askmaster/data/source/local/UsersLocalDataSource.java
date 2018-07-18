@@ -5,8 +5,10 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import io.realm.RealmList;
-import io.realm.RealmResults;
+import io.reactivex.Observable;
+import io.realm.Case;
+import io.realm.Realm;
+import io.realm.Sort;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.AuthorizedUser;
 import ru.shtrm.askmaster.data.Question;
@@ -14,10 +16,6 @@ import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
-import io.reactivex.Observable;
-import io.realm.Case;
-import io.realm.Realm;
-import io.realm.Sort;
 
 public class UsersLocalDataSource implements UsersDataSource {
 

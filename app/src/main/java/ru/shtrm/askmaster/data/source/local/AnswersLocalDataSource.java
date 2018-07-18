@@ -13,7 +13,6 @@ import io.realm.RealmList;
 import io.realm.Sort;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
-import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
 

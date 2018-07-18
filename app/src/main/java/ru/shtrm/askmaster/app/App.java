@@ -4,8 +4,8 @@ import android.app.Application;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 
-import ru.shtrm.askmaster.util.SettingsUtil;
 import io.realm.Realm;
+import ru.shtrm.askmaster.util.SettingsUtil;
 
 public class App extends Application {
 

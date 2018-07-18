@@ -3,6 +3,7 @@ package ru.shtrm.askmaster.data.source;
 import android.support.annotation.NonNull;
 
 import java.util.List;
+
 import io.reactivex.Observable;
 import ru.shtrm.askmaster.data.Question;
 

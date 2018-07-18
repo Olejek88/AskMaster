@@ -1,13 +1,16 @@
 package ru.shtrm.askmaster.mvp.addanswer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
@@ -16,7 +19,6 @@ import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
-import ru.shtrm.askmaster.util.MainUtil;
 
 public class AddAnswerPresenter implements AddAnswerContract.Presenter{
 

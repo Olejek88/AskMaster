@@ -17,12 +17,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 
-import io.reactivex.Observable;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
-import ru.shtrm.askmaster.mvp.MainActivity;
 import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
 

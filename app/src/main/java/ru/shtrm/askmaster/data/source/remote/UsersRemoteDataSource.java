@@ -6,23 +6,11 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 import ru.shtrm.askmaster.data.User;
-import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
-import ru.shtrm.askmaster.retrofit.RetrofitClient;
-import ru.shtrm.askmaster.retrofit.RetrofitService;
-
-import static ru.shtrm.askmaster.realm.RealmHelper.DATABASE_NAME;
 
 public class UsersRemoteDataSource implements UsersDataSource {
 

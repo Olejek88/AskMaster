@@ -6,15 +6,12 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.Sort;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
-
-import static java.util.stream.Collectors.toList;
 
 public class ImagesLocalDataSource implements ImagesDataSource {
 

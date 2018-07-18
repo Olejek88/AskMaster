@@ -64,8 +64,11 @@ public final class ImageGridWithTextAdapter extends BaseAdapter {
         Image item = getItem(i);
         Bitmap bitmap = MainUtil.getBitmapByPath(
                 MainUtil.getPicturesDirectory(context),item.getImageName());
-        if (bitmap!=null)
+        if (bitmap!=null) {
             picture.setImageBitmap(bitmap);
+            // TODO реализовать переход по клику на совет или как определить откуда изображение
+            picture.setOnClickListener(null);
+        }
         description.setText(item.getTitle());
         return v;
     }

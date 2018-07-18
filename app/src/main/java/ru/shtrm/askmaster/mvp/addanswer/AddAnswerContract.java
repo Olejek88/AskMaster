@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;

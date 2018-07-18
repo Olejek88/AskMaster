@@ -4,19 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import ru.shtrm.askmaster.data.Image;
-import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.Trick;
 
 public class TricksRepository implements TricksDataSource {

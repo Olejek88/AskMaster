@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Trick;
 

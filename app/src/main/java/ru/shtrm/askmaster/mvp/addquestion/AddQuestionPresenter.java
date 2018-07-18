@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;

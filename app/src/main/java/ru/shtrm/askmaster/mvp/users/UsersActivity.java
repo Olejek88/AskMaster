@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.source.UsersRepository;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
-import ru.shtrm.askmaster.mvp.profileedit.UserEditFragment;
-import ru.shtrm.askmaster.mvp.profileedit.UserEditPresenter;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class UsersActivity extends AppCompatActivity {

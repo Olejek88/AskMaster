@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
 

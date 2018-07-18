@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.source.TricksRepository;
-import ru.shtrm.askmaster.data.source.UsersDataSource;
 import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.TricksLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;

@@ -1,6 +1,5 @@
 package ru.shtrm.askmaster.mvp.trickdetails;
 
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 import ru.shtrm.askmaster.data.Trick;

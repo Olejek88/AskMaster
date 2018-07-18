@@ -1,26 +1,18 @@
 package ru.shtrm.askmaster.mvp.images;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.ImagesRepository;
-import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.local.ImagesLocalDataSource;
-import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
-import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
-import ru.shtrm.askmaster.mvp.profile.UserDetailActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
 import static ru.shtrm.askmaster.mvp.images.ImagesActivity.IMAGE_ID;

@@ -61,6 +61,10 @@ public class TricksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
             else
                 pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
+
+        if (item.getImages().size()>0)
+            pvh.circleImageView.setImageBitmap(MainUtil.getBitmapByPath(
+                    MainUtil.getPicturesDirectory(context),item.getImages().first().getImageName()));
     }
 
     @Override

@@ -1,24 +1,12 @@
 package ru.shtrm.askmaster.mvp.images;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.realm.RealmList;
 import ru.shtrm.askmaster.data.Image;
-import ru.shtrm.askmaster.data.Question;
-import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsDataSource;
-import ru.shtrm.askmaster.data.source.UsersDataSource;
-import ru.shtrm.askmaster.mvp.BasePresenter;
-import ru.shtrm.askmaster.util.MainUtil;
 
 public class ImagesPresenter implements ImagesContract.Presenter{
 

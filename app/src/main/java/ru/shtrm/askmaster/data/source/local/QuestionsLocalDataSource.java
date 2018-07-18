@@ -5,16 +5,14 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import io.realm.RealmList;
-import ru.shtrm.askmaster.data.Question;
-import ru.shtrm.askmaster.data.User;
-import ru.shtrm.askmaster.data.source.QuestionsDataSource;
-import ru.shtrm.askmaster.realm.RealmHelper;
 import io.reactivex.Observable;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.source.QuestionsDataSource;
+import ru.shtrm.askmaster.realm.RealmHelper;
 
 public class QuestionsLocalDataSource implements QuestionsDataSource {
 

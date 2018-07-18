@@ -20,7 +20,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,17 +33,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import ru.shtrm.askmaster.R;
-import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.local.UsersLocalDataSource;
 import ru.shtrm.askmaster.mvp.images.ImageGridAdapter;
-import ru.shtrm.askmaster.mvp.questiondetails.AnswersAdapter;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
@@ -60,7 +56,7 @@ public class AddAnswerFragment extends Fragment
     public static final String ACTION_CODE = "ru.shtrm.askmaster.mvp.addpackage.ImagesActivity";
 
     // View references.
-    private TextInputEditText editText, editTextName;
+    private TextInputEditText editText;
     private FloatingActionButton fab;
     private ImageView imageView;
     private GridView gridView;
@@ -98,17 +94,18 @@ public class AddAnswerFragment extends Fragment
             @Override
             public void onClick(View v) {
                 hideImm();
+/*
                 String title = editTextName.getText().toString();
                 // Check the length of the input number
                 if (title.length() < 5) {
                     showTitleError();
                     return;
                 }
-
                 editTextName.setText(title);
+*/
                 final User user = UsersLocalDataSource.getInstance().getAuthorisedUser();
                 presenter.saveAnswer (mainActivityConnector, java.util.UUID.randomUUID().toString(),
-                        title, editText.getText().toString(), user, images, currentQuestion);
+                        "", editText.getText().toString(), user, images, currentQuestion);
             }
         });
 
@@ -163,7 +160,7 @@ public class AddAnswerFragment extends Fragment
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = view.findViewById(R.id.answer_add_image);
-        editTextName = view.findViewById(R.id.editTextTitle);
+        //editTextName = view.findViewById(R.id.editTextTitle);
         editText = view.findViewById(R.id.editDescription);
         fab = view.findViewById(R.id.fab);
         gridView = view.findViewById(R.id.gridview);

@@ -5,7 +5,7 @@
     android:layout_marginRight="5dp"
     android:paddingStart="5dp"
     android:paddingEnd="5dp"
-    android:paddingTop="10dp"
+    android:paddingTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -58,6 +58,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:id="@+id/answerDate"/>
 
         <TextView
@@ -65,87 +66,86 @@
             android:layout_height="wrap_content"
             android:id="@+id/answerAuthor"/>
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:clickable="true"
             android:background="?android:attr/selectableItemBackground"
-            android:focusable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:paddingEnd="24dp"
+            android:paddingStart="24dp">
 
             <ImageView
                 android:id="@+id/answerRatePlusThumb"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_thumb_up_alt_black_24dp"
+                android:contentDescription="@string/app_name"
                 android:padding="4dp"
-                android:contentDescription="@string/app_name" />
+                android:src="@drawable/baseline_thumb_up_alt_black_24dp" />
 
             <TextView
+                android:id="@+id/answerRatePlus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/answerRatePlusThumb"
-                android:text="+100"
-                android:id="@+id/answerRatePlus"/>
+                android:text="@string/default_rate_plus" />
 
             <ImageView
                 android:id="@+id/answerRateMinusThumb"
-                android:layout_toEndOf="@id/answerRatePlus"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_thumb_down_alt_black_24dp"
+                android:contentDescription="@string/app_name"
                 android:padding="4dp"
-                android:contentDescription="@string/app_name" />
+                android:src="@drawable/baseline_thumb_down_alt_black_24dp" />
 
             <TextView
-                android:layout_toEndOf="@id/answerRateMinusThumb"
+                android:id="@+id/answerRateMinus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="-500"
-                android:id="@+id/answerRateMinus"/>
+                android:text="@string/default_rate_minus" />
 
             <ImageView
-                android:layout_toEndOf="@id/answerRateMinus"
+                android:id="@+id/answerRate1"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_star_black_24dp"
-                android:padding="4dp"
                 android:contentDescription="@string/app_name"
-                android:id="@+id/answerRate1" />
+                android:padding="4dp"
+                android:src="@drawable/baseline_star_black_24dp" />
 
             <ImageView
-                android:layout_toEndOf="@id/answerRateMinus"
+                android:id="@+id/answerRate2"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_star_black_24dp"
-                android:padding="4dp"
                 android:contentDescription="@string/app_name"
-                android:id="@+id/answerRate2"/>
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/baseline_star_black_24dp"
                 android:padding="4dp"
-                android:contentDescription="@string/app_name"
-                android:layout_toEndOf="@id/answerRate2"
-                android:id="@+id/answerRate3"/>
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/baseline_star_half_black_24dp"
-                android:padding="4dp"
-                android:contentDescription="@string/app_name"
-                android:id="@+id/answerRate4"/>
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/baseline_star_border_black_24dp"
-                android:padding="4dp"
-                android:contentDescription="@string/app_name"
-                android:id="@+id/answerRate5"/>
+                android:src="@drawable/baseline_star_black_24dp" />
 
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/answerRate3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:padding="4dp"
+                android:src="@drawable/baseline_star_black_24dp" />
+
+            <ImageView
+                android:id="@+id/answerRate4"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:padding="4dp"
+                android:src="@drawable/baseline_star_half_black_24dp" />
+
+            <ImageView
+                android:id="@+id/answerRate5"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:padding="4dp"
+                android:src="@drawable/baseline_star_border_black_24dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

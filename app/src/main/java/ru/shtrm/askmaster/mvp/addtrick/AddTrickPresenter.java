@@ -1,8 +1,6 @@
 package ru.shtrm.askmaster.mvp.addtrick;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.ImagesDataSource;
 import ru.shtrm.askmaster.data.source.TricksDataSource;
 import ru.shtrm.askmaster.data.source.UsersDataSource;
-import ru.shtrm.askmaster.util.MainUtil;
 
 public class AddTrickPresenter implements AddTrickContract.Presenter{
 

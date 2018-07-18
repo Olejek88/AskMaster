@@ -19,8 +19,7 @@ public class WidgetListFactory implements RemoteViewsService.RemoteViewsFactory 
     private final Context context;
 
     private String statusError;
-
-    private String[] answers;
+    //private String[] answers;
 
     public WidgetListFactory(Context context) {
         this.context = context;

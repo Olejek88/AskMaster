@@ -37,7 +37,6 @@ import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
-import ru.shtrm.askmaster.mvp.questionedit.QuestionEditFragment;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class QuestionDetailsFragment extends Fragment
