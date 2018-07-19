@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,6 +64,8 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
             else
                 pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
+
+        // TODO добавить подсветку звезд
     }
 
     @Override
@@ -83,6 +86,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView imageViewAnswer;
         CircleImageView circleImageView;
 
+        ImageView voteUp, voteDown;
+        ArrayList <ImageView> stars;
+
         private OnRecyclerViewItemClickListener listener;
 
         public AnswerViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
@@ -93,6 +99,17 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             textViewAvatar = itemView.findViewById(R.id.textViewAvatar);
             imageViewAnswer = itemView.findViewById(R.id.imageViewAnswer);
             circleImageView = itemView.findViewById(R.id.circleImageView);
+
+            voteUp = itemView.findViewById(R.id.answerRatePlusThumb);
+            voteDown = itemView.findViewById(R.id.answerRateMinusThumb);
+            stars = new ArrayList<>(5);
+            stars.add((ImageView) itemView.findViewById(R.id.star1));
+            stars.add((ImageView) itemView.findViewById(R.id.star2));
+            stars.add((ImageView) itemView.findViewById(R.id.star3));
+            stars.add((ImageView) itemView.findViewById(R.id.star4));
+            stars.add((ImageView) itemView.findViewById(R.id.star5));
+
+            // TODO добавить обработчики нажатий
 
             this.listener = listener;
             itemView.setOnClickListener(this);

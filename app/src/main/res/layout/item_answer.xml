@@ -58,13 +58,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/light_blue_500"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:id="@+id/answerDate"/>
 
+<!--
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/answerAuthor"/>
+-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,21 +77,23 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
-            android:paddingEnd="24dp"
-            android:paddingStart="24dp">
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp">
 
             <ImageView
                 android:id="@+id/answerRatePlusThumb"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:src="@drawable/baseline_thumb_up_alt_black_24dp" />
 
             <TextView
                 android:id="@+id/answerRatePlus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="2dp"
                 android:text="@string/default_rate_plus" />
 
             <ImageView
@@ -96,53 +101,55 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:src="@drawable/baseline_thumb_down_alt_black_24dp" />
 
             <TextView
                 android:id="@+id/answerRateMinus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="2dp"
                 android:text="@string/default_rate_minus" />
 
             <ImageView
                 android:id="@+id/answerRate1"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingTop="3dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
                 android:src="@drawable/baseline_star_black_24dp" />
 
             <ImageView
                 android:id="@+id/answerRate2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingTop="3dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
                 android:src="@drawable/baseline_star_black_24dp" />
 
             <ImageView
                 android:id="@+id/answerRate3"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingTop="3dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
                 android:src="@drawable/baseline_star_black_24dp" />
 
             <ImageView
                 android:id="@+id/answerRate4"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingTop="3dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
                 android:src="@drawable/baseline_star_half_black_24dp" />
 
             <ImageView
                 android:id="@+id/answerRate5"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingTop="3dp"
                 android:contentDescription="@string/app_name"
-                android:padding="4dp"
                 android:src="@drawable/baseline_star_border_black_24dp" />
 
         </LinearLayout>

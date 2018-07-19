@@ -18,6 +18,8 @@ public interface QuestionEditContract {
 
         void showQuestionEdit(@NonNull Question question);
 
+        void showQuestion();
+
         void showErrorMsg();
 
         void exit();

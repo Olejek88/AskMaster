@@ -87,6 +87,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_done_white_24dp"
             android:tint="@android:color/white"
+            app:layout_anchor="@id/gridview"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchorGravity="bottom|end" />
 

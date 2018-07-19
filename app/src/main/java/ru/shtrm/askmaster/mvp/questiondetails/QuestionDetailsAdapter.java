@@ -69,9 +69,9 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             HeaderViewHolder vh = (HeaderViewHolder) holder;
             vh.textViewTitle.setText(aQuestion.getTitle());
             vh.textViewText.setText(aQuestion.getText());
-            vh.textViewAuthor.setText(aQuestion.getUser().getName());
             String sDate =
                     new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(aQuestion.getDate());
+            vh.textViewAuthor.setText(aQuestion.getUser().getName());
             vh.textViewDate.setText(sDate);
             vh.photoGridView.setAdapter(new ImageGridAdapter(context, aQuestion.getImages()));
             vh.photoGridView.invalidateViews();
@@ -95,8 +95,8 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             //answerPhotoGridView
             viewHolder.answerPhotoGridView.setAdapter(new ImageGridAdapter(context, item.getImages()));
             viewHolder.answerPhotoGridView.invalidateViews();
-            viewHolder.textViewDate.setText(sDate);
-            viewHolder.textViewAuthor.setText(item.getUser().getName());
+            //viewHolder.textViewDate.setText(sDate);
+            viewHolder.textViewDate.setText(item.getUser().getName().concat(" ").concat(sDate));
             viewHolder.textViewText.setText(item.getText());
             viewHolder.imageViewAuthor.setImageBitmap(
                     MainUtil.getBitmapByPath(
@@ -145,14 +145,14 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private TextView textViewDate;
         private TextView textViewText;
-        private TextView textViewAuthor;
+        //private TextView textViewAuthor;
         private ImageView imageViewAuthor;
         private Timeline timeLine;
         GridView answerPhotoGridView;
 
         AnswersViewHolder(View itemView) {
             super(itemView);
-            textViewAuthor = (AppCompatTextView) itemView.findViewById(R.id.answerAuthor);
+            //textViewAuthor = (AppCompatTextView) itemView.findViewById(R.id.answerAuthor);
             textViewText = (AppCompatTextView) itemView.findViewById(R.id.answerText);
             textViewDate = (AppCompatTextView) itemView.findViewById(R.id.answerDate);
             answerPhotoGridView = itemView.findViewById(R.id.answerPhotoGrid);

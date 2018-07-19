@@ -102,7 +102,7 @@
                             android:drawablePadding="8dp"
                             android:drawableStart="@drawable/ic_assignment_black_24dp"
                             android:drawableTint="@color/colorPrimaryText"
-                            android:hint="@string/tint_question_text"
+                            android:hint="@string/tint_answer_text"
                             android:lines="3"
                             android:maxLines="3"
                             android:textColor="@color/colorPrimaryText"

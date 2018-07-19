@@ -11,6 +11,7 @@ import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.data.source.local.QuestionsLocalDataSource;
 import ru.shtrm.askmaster.data.source.remote.QuestionsRemoteDataSource;
+import ru.shtrm.askmaster.mvp.addanswer.AddAnswerFragment;
 
 public class QuestionEditActivity extends AppCompatActivity{
 

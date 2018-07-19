@@ -96,6 +96,7 @@
 
     <string name="tint_answer_title">Ответ</string>
     <string name="tint_trick_title">Совет</string>
+    <string name="tint_answer_text">Ваш ответ</string>
 
     <!--user details-->
     <string name="profile_name">Ваше имя или никнейм</string>

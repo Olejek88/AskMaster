@@ -15,6 +15,7 @@ import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.data.User;
+import ru.shtrm.askmaster.data.source.QuestionsDataSource;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 
 public class QuestionEditPresenter implements QuestionEditContract.Presenter {
@@ -36,8 +37,8 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
     private String questionId;
 
     public QuestionEditPresenter(@NonNull String id,
-                                    @NonNull QuestionsRepository questionsRepository,
-                                    @NonNull QuestionEditContract.View questionDetailView) {
+                                 @NonNull QuestionsRepository questionsRepository,
+                                 @NonNull QuestionEditContract.View questionDetailView) {
         this.questionId = id;
         this.view = questionDetailView;
         this.questionsRepository = questionsRepository;
@@ -97,6 +98,21 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
     @Override
     public void saveQuestion(String id, String title, String text, Date date, boolean closed,
                              RealmList<Image> images, RealmList<Answer> answers, User user) {
-
+        Question question = new Question();
+        question.setId(java.util.UUID.randomUUID().toString());
+        question.setPushable(true);
+        question.setClosed(false);
+        question.setUser(user);
+        question.setTitle(title);
+        question.setText(text);
+        question.setDate(new Date());
+        for (int count=0;count < images.size();count++) {
+            images.get(count).setTitle(title);
+        }
+        //question.setImages(imagesDataSource.saveImages(images));
+        questionsRepository.saveQuestion(question);
+        //user.getQuestions().add(question);
+        //usersDataSource.saveUser(user);
+        view.showQuestion();
     }
 }

@@ -120,7 +120,7 @@ public class QuestionEditFragment extends Fragment
      */
     @Override
     public void initViews(View view) {
-        AddAnswerActivity activity = (AddAnswerActivity)mainActivityConnector;
+        QuestionEditActivity activity = (QuestionEditActivity)mainActivityConnector;
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         if (activity.getSupportActionBar()!=null)
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -181,6 +181,15 @@ public class QuestionEditFragment extends Fragment
     @Override
     public void showErrorMsg() {
         Snackbar.make(fab, R.string.something_wrong, Snackbar.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Finish current activity.
+     */
+    @Override
+    public void showQuestion() {
+        mainActivityConnector.setResult(Activity.RESULT_OK);
+        mainActivityConnector.finish();
     }
 
     @Override
