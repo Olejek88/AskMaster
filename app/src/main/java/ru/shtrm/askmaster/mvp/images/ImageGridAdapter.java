@@ -1,6 +1,7 @@
 package ru.shtrm.askmaster.mvp.images;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -13,7 +14,10 @@ import java.util.List;
 
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Image;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
+
+import static ru.shtrm.askmaster.mvp.images.ImagesActivity.IMAGE_ID;
 
 public final class ImageGridAdapter extends BaseAdapter {
     @NonNull
@@ -56,7 +60,7 @@ public final class ImageGridAdapter extends BaseAdapter {
             v.setTag(R.id.gridViewImage, v.findViewById(R.id.gridViewImage));
         }
         picture = (ImageView) v.getTag(R.id.gridViewImage);
-        Image item = getItem(i);
+        final Image item = getItem(i);
         Bitmap bitmap = MainUtil.getBitmapByPath(
                 MainUtil.getPicturesDirectory(context),item.getImageName());
         if (bitmap!=null)
@@ -64,7 +68,9 @@ public final class ImageGridAdapter extends BaseAdapter {
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), ImagePreviewActivity.class);
+                intent.putExtra(IMAGE_ID,item.getId());
+                v.getContext().startActivity(intent);
             }
         });
 

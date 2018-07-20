@@ -161,6 +161,22 @@ public class QuestionsLocalDataSource implements QuestionsDataSource {
         realm.close();
     }
 
+    @Override
+    public void updateQuestion(@NonNull String id, @NonNull String title, @NonNull String text) {
+        Realm realm = RealmHelper.newRealmInstance();
+        Question question = realm.where(Question.class)
+                .equalTo("id", id)
+                .findFirst();
+        if (question != null) {
+            realm.beginTransaction();
+            question.setTitle(title);
+            question.setTitle(text);
+            realm.copyToRealmOrUpdate(question);
+            realm.commitTransaction();
+        }
+        realm.close();
+    }
+
     /**
      * Set a question of specific id to closed state
      * @param id The primary key or the question id.

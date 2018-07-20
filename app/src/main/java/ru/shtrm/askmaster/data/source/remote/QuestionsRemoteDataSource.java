@@ -69,8 +69,13 @@ public class QuestionsRemoteDataSource implements QuestionsDataSource {
         // of refreshing the questions from all available data source
     }
 
+    @Override
+    public void updateQuestion(@NonNull String id, @NonNull String title, @NonNull String text) {
+    }
+
     /**
      * Update and save the questions' status by accessing the Internet.
+     *
      * @return The observable questions whose status are the latest.
      */
     @Override

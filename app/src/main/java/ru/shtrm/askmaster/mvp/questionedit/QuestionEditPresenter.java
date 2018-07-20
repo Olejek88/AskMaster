@@ -98,8 +98,9 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
     @Override
     public void saveQuestion(String id, String title, String text, Date date, boolean closed,
                              RealmList<Image> images, RealmList<Answer> answers, User user) {
+/*
         Question question = new Question();
-        question.setId(java.util.UUID.randomUUID().toString());
+        question.setId(id);
         question.setPushable(true);
         question.setClosed(false);
         question.setUser(user);
@@ -109,8 +110,9 @@ public class QuestionEditPresenter implements QuestionEditContract.Presenter {
         for (int count=0;count < images.size();count++) {
             images.get(count).setTitle(title);
         }
-        //question.setImages(imagesDataSource.saveImages(images));
-        questionsRepository.saveQuestion(question);
+        question.setImages(imagesDataSource.saveImages(images));
+*/
+        questionsRepository.updateQuestion(id,text,title);
         //user.getQuestions().add(question);
         //usersDataSource.saveUser(user);
         view.showQuestion();

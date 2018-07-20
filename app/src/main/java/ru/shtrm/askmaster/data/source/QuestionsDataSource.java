@@ -29,6 +29,8 @@ public interface QuestionsDataSource {
 
     void updateQuestionText(@NonNull String id, @NonNull String text);
 
+    void updateQuestion(@NonNull String id, @NonNull String title, @NonNull String text);
+
     void updateQuestionClosed(@NonNull String id, boolean closed);
 
     Observable<List<Question>> searchQuestions(@NonNull String keyWords);

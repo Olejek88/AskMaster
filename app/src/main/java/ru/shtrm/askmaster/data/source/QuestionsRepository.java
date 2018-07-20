@@ -222,24 +222,37 @@ public class QuestionsRepository implements QuestionsDataSource {
 
     @Override
     public void updateQuestionTitle(@NonNull String questionId, @NonNull String title) {
-        if (getQuestionWithNumber(questionId) != null) {
-            getQuestionWithNumber(questionId).setTitle(title);
+        Question question = getQuestionWithNumber(questionId);
+        if (question != null) {
+            question.setTitle(title);
         }
         questionsLocalDataSource.updateQuestionTitle(questionId, title);
     }
 
     @Override
     public void updateQuestionText(@NonNull String questionId, @NonNull String text) {
-        if (getQuestionWithNumber(questionId) != null) {
-            getQuestionWithNumber(questionId).setText(text);
+        Question question = getQuestionWithNumber(questionId);
+        if (question != null) {
+            question.setText(text);
+        }
+        questionsLocalDataSource.updateQuestionTitle(questionId, text);
+    }
+
+    @Override
+    public void updateQuestion(@NonNull String questionId, @NonNull String text, @NonNull String title) {
+        Question question = getQuestionWithNumber(questionId);
+        if (question != null) {
+            question.setText(text);
+            question.setTitle(title);
         }
         questionsLocalDataSource.updateQuestionTitle(questionId, text);
     }
 
     @Override
     public void updateQuestionClosed(@NonNull String id, boolean closed) {
-        if (getQuestionWithNumber(id) != null) {
-            getQuestionWithNumber(id).setClosed(closed);
+        Question question = getQuestionWithNumber(id);
+        if (question != null) {
+            question.setClosed(closed);
         }
         questionsLocalDataSource.updateQuestionClosed(id, closed);
     }
