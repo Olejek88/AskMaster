@@ -234,4 +234,14 @@ public class AnswersRepository implements AnswersDataSource {
                 });
     }
 
+    @Override
+    public void voteUpAnswer(@NonNull Answer answer) {
+        answersLocalDataSource.voteUpAnswer(answer);
+    }
+
+    @Override
+    public void voteDownAnswer(@NonNull Answer answer) {
+        answersLocalDataSource.voteDownAnswer(answer);
+    }
+
 }

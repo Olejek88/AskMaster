@@ -24,7 +24,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_image);
+        setContentView(R.layout.item_image_full);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         if (getSupportActionBar()!=null)
@@ -38,7 +38,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
              if (imageId !=null) {
                  Image image = imagesDataSource.getImage(imageId);
                  if (image !=null) {
-                     ImageView imageView = findViewById(R.id.gridViewImage);
+                     ImageView imageView = findViewById(R.id.fullImage);
                      imageView.setImageBitmap(
                              MainUtil.getBitmapByPath(
                                      MainUtil.getPicturesDirectory

@@ -1,6 +1,7 @@
 package ru.shtrm.askmaster.mvp.questiondetails;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,9 +22,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.interfaces.OnRecyclerViewItemClickListener;
+import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
+import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
 import ru.shtrm.askmaster.util.MainUtil;
 
 public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    @NonNull
+    QuestionDetailsContract.Presenter presenter;
 
     @NonNull
     private final Context context;
@@ -37,8 +43,10 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Nullable
     private OnRecyclerViewItemClickListener listener;
 
-    AnswersAdapter(@NonNull Context context, @NonNull List<Answer> list) {
+    AnswersAdapter(@NonNull Context context, @NonNull List<Answer> list,
+                   @NonNull QuestionDetailsContract.Presenter presenter) {
         this.context = context;
+        this.presenter = presenter;
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -51,7 +59,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Answer item = list.get(position);
+        final Answer item = list.get(position);
         AnswerViewHolder pvh = (AnswerViewHolder) holder;
         String sDate = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(item.getDate());
         pvh.textViewDate.setText(sDate);
@@ -66,6 +74,21 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 pvh.textViewAvatar.setText(item.getTitle().substring(0,1));
 
         // TODO добавить подсветку звезд
+        // TODO добавить обработчики нажатий
+        pvh.voteUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.setAnswerVoteUp(item);
+            }
+        });
+
+        pvh.voteDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.setAnswerVoteDown(item);
+            }
+        });
+
     }
 
     @Override
@@ -91,7 +114,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private OnRecyclerViewItemClickListener listener;
 
-        public AnswerViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
+        public AnswerViewHolder(final View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
             //textViewAnswerTitle = itemView.findViewById(R.id.answerTitle);
             textViewDate = itemView.findViewById(R.id.answerDate);
@@ -108,8 +131,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             stars.add((ImageView) itemView.findViewById(R.id.star3));
             stars.add((ImageView) itemView.findViewById(R.id.star4));
             stars.add((ImageView) itemView.findViewById(R.id.star5));
-
-            // TODO добавить обработчики нажатий
 
             this.listener = listener;
             itemView.setOnClickListener(this);

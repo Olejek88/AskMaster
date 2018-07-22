@@ -2,6 +2,7 @@ package ru.shtrm.askmaster.mvp.questiondetails;
 
 import android.support.annotation.NonNull;
 
+import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
 import ru.shtrm.askmaster.mvp.BasePresenter;
 import ru.shtrm.askmaster.mvp.BaseView;
@@ -28,6 +29,9 @@ public interface QuestionDetailsContract {
 
         void updateQuestionTitle(String newTitle);
 
+        void setAnswerVoteUp(Answer answer);
+
+        void setAnswerVoteDown(Answer answer);
     }
 
 }

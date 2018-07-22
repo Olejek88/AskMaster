@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.source.AnswersRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 
 public class QuestionDetailsPresenter implements QuestionDetailsContract.Presenter {
@@ -21,6 +22,9 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
 
     @NonNull
     private QuestionsRepository questionsRepository;
+
+    @NonNull
+    private AnswersRepository answersRepository;
 
     @NonNull
     private CompositeDisposable compositeDisposable;
@@ -37,10 +41,12 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
 
     public QuestionDetailsPresenter(@NonNull String id,
                                     @NonNull QuestionsRepository questionsRepository,
+                                    @NonNull AnswersRepository answersRepository,
                                     @NonNull QuestionDetailsContract.View questionDetailView) {
         this.questionId = id;
         this.view = questionDetailView;
         this.questionsRepository = questionsRepository;
+        this.answersRepository = answersRepository;
         compositeDisposable = new CompositeDisposable();
         this.view.setPresenter(this);
     }
@@ -149,6 +155,24 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
     @Override
     public void updateQuestionTitle(String newTitle) {
         questionsRepository.updateQuestionTitle(questionId, newTitle);
+        openDetail();
+    }
+
+    /**
+     * set answer vote up
+     */
+    @Override
+    public void setAnswerVoteUp(Answer answer) {
+        answersRepository.voteUpAnswer(answer);
+        openDetail();
+    }
+
+    /**
+     * set answer vote up
+     */
+    @Override
+    public void setAnswerVoteDown(Answer answer) {
+        answersRepository.voteUpAnswer(answer);
         openDetail();
     }
 

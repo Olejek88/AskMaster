@@ -156,4 +156,14 @@ public class AnswersRemoteDataSource implements AnswersDataSource {
     @Override
     public void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images){
     }
+
+    @Override
+    public void voteUpAnswer(@NonNull Answer answer) {
+        // Not required
+    }
+
+    @Override
+    public void voteDownAnswer(@NonNull Answer answer) {
+        // Not required
+    }
 }

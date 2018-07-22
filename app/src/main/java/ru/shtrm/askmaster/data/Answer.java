@@ -108,4 +108,15 @@ public class Answer extends RealmObject {
     public String toString() {
         return new Gson().toJson(this);
     }
+
+    public double getRating () {
+        double rate=0.0;
+        // up = 0, down = 0 -> 3
+        // up = 1, down = 0 -> 5
+        // up > 0, down >= 0 -> up*5/(up+down)
+        if (voteUp==0 && voteDown==0) rate=3.0;
+        if (voteUp==1 && voteDown==0) rate=5.0;
+        if (voteUp>0 && voteDown>=0) rate=voteUp*5/(voteUp+voteDown);
+        return rate;
+    }
 }

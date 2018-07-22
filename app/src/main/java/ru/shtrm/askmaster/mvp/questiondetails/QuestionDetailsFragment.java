@@ -34,6 +34,7 @@ import java.util.List;
 import ru.shtrm.askmaster.R;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Question;
+import ru.shtrm.askmaster.data.source.AnswersRepository;
 import ru.shtrm.askmaster.data.source.QuestionsRepository;
 import ru.shtrm.askmaster.mvp.addanswer.AddAnswerActivity;
 import ru.shtrm.askmaster.mvp.questionedit.QuestionEditActivity;
@@ -385,7 +386,7 @@ public class QuestionDetailsFragment extends Fragment
 
     public void showAnswers(final List<Answer> list) {
         if (answerAdapter == null) {
-            answerAdapter = new AnswersAdapter(mainActivityConnector, list);
+            answerAdapter = new AnswersAdapter(mainActivityConnector, list, presenter);
             recyclerViewAnswer.setAdapter(adapter);
         }
     }

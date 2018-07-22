@@ -17,7 +17,7 @@ public interface AnswersDataSource {
 
     Answer getAnswerById(@NonNull final String id);
 
-    void saveAnswer(@NonNull Answer Answer);
+    void saveAnswer(@NonNull Answer answer);
 
     void deleteAnswer(@NonNull String id);
 
@@ -30,4 +30,8 @@ public interface AnswersDataSource {
     Observable<List<Answer>> searchAnswers(@NonNull String keyWords);
 
     void saveAnswer(@NonNull final Answer answer, @NonNull final ArrayList<Image> images);
+
+    void voteUpAnswer(@NonNull Answer answer);
+
+    void voteDownAnswer(@NonNull Answer answer);
 }

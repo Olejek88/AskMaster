@@ -116,7 +116,7 @@
                 android:id="@+id/answerRate1"
                 android:layout_width="16dp"
                 android:layout_height="18dp"
-                android:paddingTop="3dp"
+                android:paddingTop="4dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/baseline_star_black_24dp" />
 
@@ -124,7 +124,7 @@
                 android:id="@+id/answerRate2"
                 android:layout_width="16dp"
                 android:layout_height="18dp"
-                android:paddingTop="3dp"
+                android:paddingTop="4dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/baseline_star_black_24dp" />
 
@@ -132,7 +132,7 @@
                 android:id="@+id/answerRate3"
                 android:layout_width="16dp"
                 android:layout_height="18dp"
-                android:paddingTop="3dp"
+                android:paddingTop="4dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/baseline_star_black_24dp" />
 
@@ -140,9 +140,7 @@
                 android:id="@+id/answerRate4"
                 android:layout_width="16dp"
                 android:layout_height="18dp"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp"
-                android:paddingTop="3dp"
+                android:paddingTop="4dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/baseline_star_half_black_24dp" />
 
@@ -150,9 +148,7 @@
                 android:id="@+id/answerRate5"
                 android:layout_width="16dp"
                 android:layout_height="18dp"
-                android:paddingTop="3dp"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp"
+                android:paddingTop="4dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/baseline_star_border_black_24dp" />
 

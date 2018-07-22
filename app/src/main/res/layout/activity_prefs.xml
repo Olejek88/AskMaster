@@ -21,7 +21,7 @@
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize"
                 android:id="@+id/toolbar"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/view_pager"
-            android:layout_marginTop="?actionBarSize"/>
+            android:layout_marginTop="?android:attr/actionBarSize"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

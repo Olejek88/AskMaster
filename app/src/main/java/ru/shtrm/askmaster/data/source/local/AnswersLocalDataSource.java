@@ -185,4 +185,37 @@ public class AnswersLocalDataSource implements AnswersDataSource {
         realm.close();
     }
 
+    /**
+     * Vote to answer Up.
+     * @param answer The Answer to change. See {@link Answer}
+     */
+    @Override
+    public void voteUpAnswer(@NonNull final Answer answer) {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                answer.setVoteUp(answer.getVoteUp()+1);
+                realm.copyToRealmOrUpdate(answer);
+            }
+        });
+        realm.close();
+    }
+
+    /**
+     * Vote to answer Down.
+     * @param answer The Answer to change. See {@link Answer}
+     */
+    @Override
+    public void voteDownAnswer(@NonNull final Answer answer) {
+        Realm realm = RealmHelper.newRealmInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                answer.setVoteDown(answer.getVoteDown()+1);
+                realm.copyToRealmOrUpdate(answer);
+            }
+        });
+        realm.close();
+    }
 }
