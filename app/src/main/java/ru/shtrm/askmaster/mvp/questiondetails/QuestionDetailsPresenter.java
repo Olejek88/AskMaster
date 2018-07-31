@@ -172,7 +172,7 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
      */
     @Override
     public void setAnswerVoteDown(Answer answer) {
-        answersRepository.voteUpAnswer(answer);
+        answersRepository.voteDownAnswer(answer);
         openDetail();
     }
 

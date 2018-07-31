@@ -240,7 +240,7 @@ public class QuestionDetailsFragment extends Fragment
     public void showQuestionDetails(@NonNull Question question) {
         currentQuestion = question;
         if (adapter == null) {
-            adapter = new QuestionDetailsAdapter(mainActivityConnector, question);
+            adapter = new QuestionDetailsAdapter(mainActivityConnector, question, presenter);
             recyclerView.setAdapter(adapter);
         } else {
             adapter.updateData(question.getAnswers());

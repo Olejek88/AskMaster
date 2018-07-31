@@ -132,6 +132,8 @@ public class AnswersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             stars.add((ImageView) itemView.findViewById(R.id.star4));
             stars.add((ImageView) itemView.findViewById(R.id.star5));
 
+
+
             this.listener = listener;
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);

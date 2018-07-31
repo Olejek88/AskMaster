@@ -74,8 +74,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
+            android:clickable="false"
+            android:focusable="false"
             android:orientation="horizontal"
             android:paddingEnd="0dp"
             android:paddingStart="0dp">

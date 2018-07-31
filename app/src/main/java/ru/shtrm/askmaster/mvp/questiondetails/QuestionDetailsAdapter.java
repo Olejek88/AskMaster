@@ -1,6 +1,7 @@
 package ru.shtrm.askmaster.mvp.questiondetails;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,8 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     private final LayoutInflater inflater;
 
+    private QuestionDetailsContract.Presenter presenter;
+
     @NonNull
     private final Question aQuestion;
 
@@ -43,11 +46,12 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int TYPE_FINISH = 0x03;
     private static final int TYPE_SINGLE = 0x04;
 
-    QuestionDetailsAdapter(@NonNull Context context, @NonNull Question question) {
+    QuestionDetailsAdapter(@NonNull Context context, @NonNull Question question,
+                           @NonNull QuestionDetailsContract.Presenter presenter) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.aQuestion = question;
-
+        this.presenter = presenter;
         this.answers = new ArrayList<>();
         answers.addAll(question.getAnswers());
     }
@@ -76,7 +80,7 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             vh.photoGridView.setAdapter(new ImageGridAdapter(context, aQuestion.getImages()));
             vh.photoGridView.invalidateViews();
         } else {
-            Answer item = answers.get(position - 1);
+            final Answer item = answers.get(position - 1);
             AnswersViewHolder viewHolder = (AnswersViewHolder) holder;
             String sDate =
                     new SimpleDateFormat("dd.MM.yy HH:mm", Locale.US).format(item.getDate());
@@ -101,8 +105,25 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             viewHolder.imageViewAuthor.setImageBitmap(
                     MainUtil.getBitmapByPath(
                             MainUtil.getPicturesDirectory(context),item.getUser().getAvatar()));
-        }
+            viewHolder.voteUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.setAnswerVoteUp(item);
+                }
+            });
+            viewHolder.voteDown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.setAnswerVoteDown(item);
+                }
+            });
 
+            if (item.getVoteUp()>0)
+                viewHolder.rateUp.setText("".concat("+").concat(String.valueOf(item.getVoteUp())));
+            if (item.getVoteDown()>0)
+                viewHolder.rateDown.setText("".concat("-").concat(String.valueOf(item.getVoteDown())));
+            setStars (viewHolder, item);
+        }
     }
 
     @Override
@@ -145,10 +166,13 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private TextView textViewDate;
         private TextView textViewText;
-        //private TextView textViewAuthor;
         private ImageView imageViewAuthor;
         private Timeline timeLine;
         GridView answerPhotoGridView;
+        ImageView voteUp, voteDown;
+        ArrayList <ImageView> stars;
+
+        private TextView rateUp, rateDown;
 
         AnswersViewHolder(View itemView) {
             super(itemView);
@@ -158,6 +182,19 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             answerPhotoGridView = itemView.findViewById(R.id.answerPhotoGrid);
             //timeLine = (Timeline) itemView.findViewById(R.id.tim);
             imageViewAuthor = itemView.findViewById(R.id.imageViewAvatar);
+
+            voteUp = itemView.findViewById(R.id.answerRatePlusThumb);
+            voteDown = itemView.findViewById(R.id.answerRateMinusThumb);
+
+            stars = new ArrayList<>(5);
+            stars.add((ImageView) itemView.findViewById(R.id.answerRate1));
+            stars.add((ImageView) itemView.findViewById(R.id.answerRate2));
+            stars.add((ImageView) itemView.findViewById(R.id.answerRate3));
+            stars.add((ImageView) itemView.findViewById(R.id.answerRate4));
+            stars.add((ImageView) itemView.findViewById(R.id.answerRate5));
+
+            rateUp = itemView.findViewById(R.id.answerRatePlus);
+            rateDown = itemView.findViewById(R.id.answerRateMinus);
         }
     }
 
@@ -180,6 +217,19 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             textViewDate = itemView.findViewById(R.id.questionDate);
             photoGridView = itemView.findViewById(R.id.gridview);
         }
+    }
 
+    private void setStars (AnswersViewHolder viewHolder, Answer answer) {
+        double rating = answer.getRating();
+        if (rating>=0.5) viewHolder.stars.get(0).setImageResource(R.drawable.baseline_star_half_black_24dp);
+        if (rating>=1) viewHolder.stars.get(0).setImageResource(R.drawable.baseline_star_black_24dp);
+        if (rating>=1.5) viewHolder.stars.get(1).setImageResource(R.drawable.baseline_star_half_black_24dp);
+        if (rating>=2) viewHolder.stars.get(1).setImageResource(R.drawable.baseline_star_black_24dp);
+        if (rating>=2.5) viewHolder.stars.get(2).setImageResource(R.drawable.baseline_star_half_black_24dp);
+        if (rating>=3) viewHolder.stars.get(2).setImageResource(R.drawable.baseline_star_black_24dp);
+        if (rating>=3.5) viewHolder.stars.get(3).setImageResource(R.drawable.baseline_star_half_black_24dp);
+        if (rating>=4) viewHolder.stars.get(3).setImageResource(R.drawable.baseline_star_black_24dp);
+        if (rating>=4.5) viewHolder.stars.get(4).setImageResource(R.drawable.baseline_star_half_black_24dp);
+        if (rating>=4.8) viewHolder.stars.get(4).setImageResource(R.drawable.baseline_star_black_24dp);
     }
 }

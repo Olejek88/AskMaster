@@ -77,8 +77,8 @@
     <string name="edit_name">Редактирование вопроса</string>
     <string name="input_empty">Вопрос не может быть пустым</string>
     <string name="delete_trick">Удалить совет</string>
-    <string name="default_rate_plus">+100</string>
-    <string name="default_rate_minus">-100</string>
+    <string name="default_rate_plus">0</string>
+    <string name="default_rate_minus">0</string>
     <!--details end-->
 
     <!--add question-->
