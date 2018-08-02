@@ -65,35 +65,16 @@ public class QuestionDetailsPresenter implements QuestionDetailsContract.Present
      * Load data from repository.
      */
     private void openDetail() {
-        Disposable disposable = questionsRepository
-                .getQuestion(questionId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Question>() {
-                    @Override
-                    public void onNext(Question value) {
-
-                        questionTitle = value.getTitle();
-                        questionText = value.getText();
-                        if (value.getAnswers()!=null)
-                            answers = new ArrayList<>(value.getAnswers());
-                        if (value.getImages()!=null)
-                            images = new ArrayList<>(value.getImages());
-                        view.showQuestionDetails(value);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-        compositeDisposable.add(disposable);
-
+        Question question = questionsRepository.getQuestionById(questionId);
+        if (question!=null) {
+            questionTitle = question.getTitle();
+            questionText = question.getText();
+            if (question.getAnswers()!=null)
+                answers = new ArrayList<>(question.getAnswers());
+            if (question.getImages()!=null)
+                images = new ArrayList<>(question.getImages());
+            view.showQuestionDetails(question);
+        }
     }
 
     /**

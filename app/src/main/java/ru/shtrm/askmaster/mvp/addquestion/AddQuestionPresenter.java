@@ -82,6 +82,7 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         user.getQuestions().add(question);
         usersDataSource.saveUser(user);
         view.showQuestionsList();
+
     }
 
     private void saveImage(Context context, String title, String imageName) {

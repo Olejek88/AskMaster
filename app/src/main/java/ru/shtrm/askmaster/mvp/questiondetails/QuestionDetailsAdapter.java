@@ -53,7 +53,9 @@ public class QuestionDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.aQuestion = question;
         this.presenter = presenter;
         this.answers = new ArrayList<>();
-        answers.addAll(question.getAnswers());
+
+        if (question.getAnswers().size()>0)
+            this.answers.addAll(question.getAnswers());
     }
 
     @Override
