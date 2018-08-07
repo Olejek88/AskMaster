@@ -13,6 +13,7 @@ import io.realm.RealmList;
 import io.realm.Sort;
 import ru.shtrm.askmaster.data.Answer;
 import ru.shtrm.askmaster.data.Image;
+import ru.shtrm.askmaster.data.User;
 import ru.shtrm.askmaster.data.source.AnswersDataSource;
 import ru.shtrm.askmaster.realm.RealmHelper;
 
@@ -71,15 +72,17 @@ public class AnswersLocalDataSource implements AnswersDataSource {
      * @param Answer The Answer to save. See {@link Answer}
      */
     @Override
-    public void saveAnswer(@NonNull final Answer Answer) {
+    public void saveAnswer(@NonNull final Answer answer) {
         Realm realm = RealmHelper.newRealmInstance();
         // DO NOT forget begin and commit the transaction.
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(Answer);
+                realm.copyToRealmOrUpdate(answer);
             }
         });
+
+        updateUserRating(answer.getUser(),realm);
         realm.close();
     }
 
@@ -199,6 +202,8 @@ public class AnswersLocalDataSource implements AnswersDataSource {
                 realm.copyToRealmOrUpdate(answer);
             }
         });
+
+        updateUserRating(answer.getUser(),realm);
         realm.close();
     }
 
@@ -216,6 +221,27 @@ public class AnswersLocalDataSource implements AnswersDataSource {
                 realm.copyToRealmOrUpdate(answer);
             }
         });
+
+        updateUserRating(answer.getUser(),realm);
         realm.close();
+    }
+
+    private void updateUserRating (final User user, Realm realm) {
+        RealmList<Answer> answers = user.getAnswers();
+        Answer answerU;
+        double initialRating=0;
+        initialRating = user.getQuestions().size()+user.getTricks().size()*5;
+        for (int a=0; a<answers.size(); a++) {
+            answerU = answers.get(a);
+            initialRating+= (answerU.getVoteUp() - answerU.getVoteDown())*0.5;
+        }
+        final String rating = String.valueOf(initialRating);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                user.setRating(rating);
+                realm.copyToRealmOrUpdate(user);
+            }
+        });
     }
 }

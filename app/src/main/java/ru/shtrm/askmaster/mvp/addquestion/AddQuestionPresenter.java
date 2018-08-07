@@ -82,19 +82,5 @@ public class AddQuestionPresenter implements AddQuestionContract.Presenter{
         user.getQuestions().add(question);
         usersDataSource.saveUser(user);
         view.showQuestionsList();
-
     }
-
-    private void saveImage(Context context, String title, String imageName) {
-        Bitmap bitmap = MainUtil.getBitmapByPath(MainUtil.getPicturesDirectory(context),imageName);
-        if (bitmap!=null) {
-            Image image = new Image();
-            image.setId(java.util.UUID.randomUUID().toString());
-            image.setImageName(imageName);
-            image.setDate(new Date());
-            image.setTitle(title);
-            //imagesDataSource.saveImage(image);
-        }
-    }
-
 }

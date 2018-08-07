@@ -206,6 +206,7 @@ public class QuestionDetailsFragment extends Fragment
         userStatus = user_info.findViewById(R.id.profile_status);
         userStats = user_info.findViewById(R.id.profile_stats);
         imageView = user_info.findViewById(R.id.profile_image);
+
     }
 
     /**
@@ -382,6 +383,7 @@ public class QuestionDetailsFragment extends Fragment
         // TODO решить что делать если контекст не приехал
         if (mainActivityConnector==null)
             onDestroyView();
+        presenter.refreshQuestion();
     }
 
     public void showAnswers(final List<Answer> list) {
@@ -390,4 +392,4 @@ public class QuestionDetailsFragment extends Fragment
             recyclerViewAnswer.setAdapter(adapter);
         }
     }
-}
+ }

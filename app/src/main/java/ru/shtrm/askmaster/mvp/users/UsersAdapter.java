@@ -161,5 +161,4 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
     }
-
 }
