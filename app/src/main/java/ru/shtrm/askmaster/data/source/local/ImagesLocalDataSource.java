@@ -33,7 +33,8 @@ public class ImagesLocalDataSource implements ImagesDataSource {
     @Override
     public List<Image> getImages() {
         Realm realm = RealmHelper.newRealmInstance();
-        return realm.copyFromRealm(realm.where(Image.class).findAllSorted("date", Sort.DESCENDING));
+        return realm.copyFromRealm(realm.where(Image.class)
+                .sort("date", Sort.DESCENDING).findAll());
     }
 
     @Override

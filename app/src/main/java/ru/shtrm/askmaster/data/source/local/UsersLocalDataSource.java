@@ -39,14 +39,18 @@ public class UsersLocalDataSource implements UsersDataSource {
         Realm realm = RealmHelper.newRealmInstance();
         return Observable
                 .fromIterable(realm.copyFromRealm(
-                        realm.where(User.class).findAllSorted("name", Sort.ASCENDING)))
+                        realm.where(User.class)
+                                .findAll()))
                 .toList()
                 .toObservable();
     }
 
     public User getLastUser() {
         Realm realm = RealmHelper.newRealmInstance();
-        User user = realm.copyFromRealm(realm.where(User.class).findFirst());
+        User user = realm.where(User.class).findFirst();
+        if (user!=null) {
+            user = realm.copyFromRealm(user);
+        }
         realm.close();
         return user;
     }
@@ -82,7 +86,8 @@ public class UsersLocalDataSource implements UsersDataSource {
                         .like("phone", "*" + keyWords + "*", Case.INSENSITIVE)
                         .or()
                         .like("website", "*" + keyWords + "*", Case.INSENSITIVE)
-                        .findAllSorted("name", Sort.ASCENDING));
+                        .sort("date", Sort.ASCENDING)
+                        .findAll());
         return Observable.fromIterable(results)
                 .toList()
                 .toObservable();

@@ -49,7 +49,7 @@ public class AnswersLocalDataSource implements AnswersDataSource {
 
         return Observable.just(rlm.copyFromRealm(rlm.where(Answer.class)
                 .equalTo("question.id", questionId)
-                .findAllSorted("date", Sort.DESCENDING)));
+                .sort("date", Sort.DESCENDING).findAll()));
     }
 
     /**
@@ -69,7 +69,6 @@ public class AnswersLocalDataSource implements AnswersDataSource {
 
     /**
      * Save a Answer to database.
-     * @param Answer The Answer to save. See {@link Answer}
      */
     @Override
     public void saveAnswer(@NonNull final Answer answer) {

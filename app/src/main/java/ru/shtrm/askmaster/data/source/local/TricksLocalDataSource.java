@@ -43,7 +43,8 @@ public class TricksLocalDataSource implements TricksDataSource {
     @Override
     public List<Trick> getTricks() {
         Realm rlm = RealmHelper.newRealmInstance();
-        return rlm.copyFromRealm(rlm.where(Trick.class).findAllSorted("date", Sort.DESCENDING));
+        return rlm.copyFromRealm(rlm.where(Trick.class)
+                .sort("date", Sort.DESCENDING).findAll());
     }
 
     /**

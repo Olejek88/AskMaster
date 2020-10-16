@@ -45,7 +45,7 @@ public class QuestionsLocalDataSource implements QuestionsDataSource {
         Realm rlm = RealmHelper.newRealmInstance();
 
         return Observable.just(rlm.copyFromRealm(rlm.where(Question.class)
-                .findAllSorted("date", Sort.DESCENDING)));
+                .sort("date", Sort.ASCENDING).findAll()));
     }
 
     /**

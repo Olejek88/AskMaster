@@ -49,7 +49,7 @@ public class WidgetListFactory implements RemoteViewsService.RemoteViewsFactory 
                 .build())
                 .where(Question.class)
                 .equalTo("closed", false)
-                .findAllSorted("date", Sort.DESCENDING)
+                .findAll()
                 .size();
     }
 
@@ -64,7 +64,7 @@ public class WidgetListFactory implements RemoteViewsService.RemoteViewsFactory 
                 .build());
         List<Question> results = rlm.copyFromRealm(rlm.where(Question.class)
                 .equalTo("closed", false)
-                .findAllSorted("date", Sort.DESCENDING));
+                .sort("date", Sort.DESCENDING).findAll());
 
         Question question = results.get(position);
         // TODO реализовать обновление ответов
