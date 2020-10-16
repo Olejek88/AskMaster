@@ -6,9 +6,9 @@ The program was originally conceived as an operational advisor in the field of c
 It didn't go further than the implementation of the mobile application, I switched to another idea.
 Distributed freely as an example.
 
-<img src=“images/screen1.png” />
-<img src=“images/screen2.png” />
-<img src=“images/screen3.png” />
-<img src=“images/screen4.png” />
-<img src=“images/screen5.png” />
-<img src=“images/screen6.png” />
+<img src=“images/screen1.png” alt="screen" align="left" />
+<img src=“images/screen2.png” alt="screen" align="left" />
+<img src=“images/screen3.png” alt="screen" align="left" />
+<img src=“images/screen4.png” alt="screen" align="left" />
+<img src=“images/screen5.png” alt="screen" align="left" />
+<img src=“images/screen6.png” alt="screen" align="left" />
