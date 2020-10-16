@@ -1,2 +1,3 @@
 # AskMaster
-Q&amp;A service for construction and building
+Questions and Answers service for construction, building area and maybe some other.
+ 
